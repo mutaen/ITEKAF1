@@ -2,350 +2,279 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>جدول برنامج الاعتكاف</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تطبيق برنامج الاعتكاف</title>
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Tajawal:wght@500;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --dark-green: #013220;
             --gold: #D4AF37;
             --light-gold: #f9f6ef;
+            --bg-color: #f4f7f6;
             --white: #ffffff;
-        }
-        @page {
-            size: A4;
-            margin: 0;
         }
         body {
             font-family: 'Tajawal', sans-serif;
-            background-color: #e9ecef;
-            display: flex;
-            justify-content: center;
+            background-color: var(--bg-color);
             margin: 0;
-            padding: 20px;
-        }
-        .a4-container {
-            width: 210mm;
-            min-height: 297mm;
-            background-color: var(--white);
-            background-image: repeating-linear-gradient(45deg, rgba(212, 175, 55, 0.03) 0px, rgba(212, 175, 55, 0.03) 2px, transparent 2px, transparent 10px);
-            border: 4px solid var(--gold);
-            padding: 20px;
-            box-sizing: border-box;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
-        }
-        .inner-border {
-            border: 1px solid var(--dark-green);
-            padding: 30px;
-            height: 100%;
-            box-sizing: border-box;
-            position: relative;
-        }
-        .decoration {
-            text-align: center;
-            color: var(--gold);
-            font-size: 24px;
-            margin-bottom: -10px;
+            padding: 0;
+            padding-bottom: 70px; /* مساحة للشريط السفلي */
+            color: #333;
         }
         .header {
+            background-color: var(--dark-green);
+            color: var(--gold);
             text-align: center;
-            margin-bottom: 25px;
+            padding: 20px 10px;
+            border-bottom: 4px solid var(--gold);
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
         .header h1 {
             font-family: 'Amiri', serif;
-            font-size: 46px;
-            color: var(--dark-green);
             margin: 0;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            font-size: 28px;
         }
-        .header h2 {
-            font-family: 'Amiri', serif;
-            color: var(--gold);
-            font-size: 20px;
-            margin-top: 5px;
-            border-bottom: 2px solid var(--gold);
-            display: inline-block;
-            padding-bottom: 5px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-            font-size: 15px;
-        }
-        th {
-            background-color: var(--dark-green);
-            color: var(--gold);
-            padding: 12px;
-            font-family: 'Amiri', serif;
-            font-size: 20px;
-            border: 1px solid var(--gold);
-        }
-        td {
-            padding: 9px 12px;
-            border-bottom: 1px dashed rgba(1, 50, 32, 0.2);
-            text-align: center;
-            color: #222;
-        }
-        tr:nth-child(even) {
-            background-color: var(--light-gold);
-        }
-        .time-col { font-weight: bold; color: var(--dark-green); direction: ltr; display: inline-block;}
-        .prog-col { font-size: 16px; font-weight: 700; position: relative; cursor: pointer; }
-        .dur-col { color: #555; font-size: 14px; }
-        .icon { margin-right: 8px; font-size: 18px; }
-
-        /* إعدادات التفاعل (Tooltip) */
-        .tooltiptext {
-            visibility: hidden;
-            width: 260px;
-            background-color: var(--dark-green);
-            color: var(--white);
-            text-align: center;
-            border-radius: 8px;
-            padding: 12px;
-            position: absolute;
-            z-index: 10;
-            bottom: 110%; /* ظهور أعلى النص */
-            left: 50%;
-            transform: translateX(-50%);
-            opacity: 0;
-            transition: opacity 0.3s, bottom 0.3s;
-            border: 2px solid var(--gold);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            font-weight: normal;
+        .header p {
+            margin: 5px 0 0;
             font-size: 14px;
-            line-height: 1.6;
+            color: var(--white);
         }
-        .tooltiptext::after {
-            content: "";
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            margin-left: -8px;
-            border-width: 8px;
-            border-style: solid;
-            border-color: var(--gold) transparent transparent transparent;
+        
+        /* الحاويات والصفحات */
+        .container {
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
         }
-        .tooltip-title {
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s;
+        }
+        .tab-content.active {
             display: block;
-            color: var(--gold);
-            font-weight: bold;
-            font-size: 15px;
-            margin-bottom: 5px;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
-            padding-bottom: 5px;
         }
-        .tooltip-ayah {
-            font-family: 'Amiri', serif;
-            font-size: 16px;
-            color: var(--light-gold);
-        }
-        .prog-col:hover .tooltiptext {
-            visibility: visible;
-            opacity: 1;
-            bottom: 130%;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* إخفاء التفاعلات عند الطباعة لتبقى الورقة نظيفة */
-        @media print {
-            .tooltiptext { display: none !important; }
-            .a4-container { box-shadow: none; border: 4px solid #D4AF37 !important; }
-            body { background: white; }
+        /* تصميم البطاقات للجدول */
+        .card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-right: 5px solid var(--gold);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: 0.2s;
         }
+        .card:active { transform: scale(0.98); }
+        .card-info { flex-grow: 1; margin-right: 15px; }
+        .card-time { color: var(--gold); font-weight: bold; font-size: 14px; margin-bottom: 5px; direction: ltr; text-align: right;}
+        .card-title { font-size: 16px; font-weight: bold; color: var(--dark-green); }
+        .card-icon { font-size: 24px; background: var(--light-gold); width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%; }
+
+        /* الأقسام الأخرى */
+        .section-title {
+            color: var(--dark-green);
+            border-bottom: 2px solid var(--gold);
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+            font-family: 'Amiri', serif;
+        }
+        .team-member {
+            background: var(--white); padding: 15px; border-radius: 10px; margin-bottom: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .team-member h3 { margin: 0 0 5px; color: var(--dark-green); }
+        .team-member p { margin: 0; color: #666; font-size: 14px; }
+
+        /* الشريط السفلي */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: var(--white);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            border-top: 1px solid #ddd;
+            z-index: 100;
+        }
+        .nav-item {
+            text-align: center;
+            color: #888;
+            font-size: 12px;
+            cursor: pointer;
+            flex: 1;
+            transition: 0.3s;
+        }
+        .nav-item.active { color: var(--dark-green); font-weight: bold; }
+        .nav-icon { font-size: 20px; display: block; margin-bottom: 3px; }
+
+        /* النافذة المنبثقة (Modal) */
+        .modal {
+            display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.5); align-items: center; justify-content: center;
+        }
+        .modal-content {
+            background-color: var(--white); padding: 20px; border-radius: 15px; width: 80%; max-width: 400px;
+            text-align: center; border: 3px solid var(--gold); position: relative;
+        }
+        .close-btn {
+            position: absolute; top: 10px; left: 15px; font-size: 24px; font-weight: bold; color: #aaa; cursor: pointer;
+        }
+        .modal-title { font-size: 20px; color: var(--dark-green); margin-bottom: 10px; font-weight: bold; }
+        .modal-manager { display: inline-block; background: var(--light-gold); padding: 5px 15px; border-radius: 20px; color: var(--dark-green); font-size: 14px; margin-bottom: 15px; font-weight: bold;}
+        .modal-ayah { font-family: 'Amiri', serif; font-size: 18px; color: #444; line-height: 1.6; }
     </style>
 </head>
 <body>
 
-    <div class="a4-container">
-        <div class="inner-border">
-            <div class="decoration">﷽</div>
-            <div class="header">
-                <h1>جدول برنامج الاعتكاف</h1>
-                <h2>نسأل الله القبول والتوفيق</h2>
+    <div class="header">
+        <h1>برنامج الاعتكاف</h1>
+        <p>نسأل الله القبول والتوفيق</p>
+    </div>
+
+    <div class="container">
+        
+        <div id="schedule" class="tab-content active">
+            <h2 class="section-title">الجدول اليومي (اضغط للتفاصيل)</h2>
+            
+            <div class="card" onclick="openModal('صلاة الفجر والأذكار', 'عبدالرحمن زعل', '﴿إِنَّ الصَّلَاةَ كَانَتْ عَلَى الْمُؤْمِنِينَ كِتَابًا مَّوْقُوتًا﴾')">
+                <div class="card-icon">🕌</div>
+                <div class="card-info">
+                    <div class="card-title">صلاة الفجر والأذكار</div>
+                    <div class="card-time">5:29 – 6:05 ص</div>
+                </div>
             </div>
 
-            <table>
-                <thead>
-                    <tr>
-                        <th width="25%">الوقت</th>
-                        <th width="50%">البرنامج (مرر الماوس للتفاصيل)</th>
-                        <th width="25%">المدة</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="time-col">5:29 – 6:05 ص</td>
-                        <td class="prog-col"><span class="icon">🕌</span>صلاة الفجر والأذكار
-                            <div class="tooltiptext">
-                                <span class="tooltip-title">المسؤول: عبدالرحمن زعل</span>
-                                <span class="tooltip-ayah">﴿إِنَّ الصَّلَاةَ كَانَتْ عَلَى الْمُؤْمِنِينَ كِتَابًا مَّوْقُوتًا﴾</span>
-                            </div>
-                        </td>
-                        <td class="dur-col">36 دقيقة</td>
-                    </tr>
-                    <tr>
-                        <td class="time-col">6:05 – 6:35 ص</td>
-                        <td class="prog-col"><span class="icon">📚</span>درس بعد الفجر
-                            <div class="tooltiptext">
-                                <span class="tooltip-title">المسؤول: عبدالله غزواني</span>
-                                <span class="tooltip-ayah">﴿يَرْفَعِ اللَّهُ الَّذِينَ آمَنُوا مِنكُمْ وَالَّذِينَ أُوتُوا الْعِلْمَ دَرَجَاتٍ﴾</span>
-                            </div>
-                        </td>
-                        <td class="dur-col">30 دقيقة</td>
-                    </tr>
-                    <tr>
-                        <td class="time-col">6:35 – 6:49 ص</td>
-                        <td class="prog-col"><span class="icon">📿</span>انتظار الشروق (ذكر وقرآن)
-                            <div class="tooltiptext">
-                                <span class="tooltip-title">المسؤول: عبدالرحمن زعل</span>
-                                <span class="tooltip-ayah">﴿فَاذْكُرُونِي أَذْكُرْكُمْ وَاشْكُرُوا لِي وَلَا تَكْفُرُونِ﴾</span>
-                            </div>
-                        </td>
-                        <td class="dur-col">14 دقيقة</td>
-                    </tr>
-                    <tr>
-                        <td class="time-col">6:49 – 7:05 ص</td>
-                        <td class="prog-col"><span class="icon">🕌</span>صلاة الضحى
-                            <div class="tooltiptext">
-                                <span class="tooltip-title">المسؤول: عبدالرحمن زعل</span>
-                                <span class="tooltip-ayah">صلاة الأوابين حين ترمض الفصال</span>
-                            </div>
-                        </td>
-                        <td class="dur-col">16 دقيقة</td>
-                    </tr>
-                    <tr><td class="time-col">7:05 – 12:15 م</td><td class="prog-col"><span class="icon">🌿</span>وقت مفتوح للعبادة أو الراحة</td><td class="dur-col">5 ساعات 10 د</td></tr>
-                    <tr>
-                        <td class="time-col">12:15 – 12:30 م</td>
-                        <td class="prog-col"><span class="icon">🕌</span>صلاة الظهر
-                            <div class="tooltiptext">
-                                <span class="tooltip-title">المسؤول: عبدالرحمن زعل</span>
-                                <span class="tooltip-ayah">﴿حَافِظُوا عَلَى الصَّلَوَاتِ وَالصَّلَاةِ الْوُسْطَىٰ وَقُومُوا لِلَّهِ قَانِتِينَ﴾</span>
-                            </div>
-                        </td>
-                        <td class="dur-col">15 دقيقة</td>
-                    </tr>
-                    <tr><td class="time-col">12:30 – 1:10 م</td><td class="prog-col"><span class="icon">📖</span>قراءة جزء من القرآن</td><td class="dur-col">40 دقيقة</td></tr>
-                    <tr>
-                        <td class="time-col">1:10 – 1:40 م</td>
-                        <td class="prog-col"><span class="icon">💭</span>تدبر آيات مختارة
-                            <div class="tooltiptext">
-                                <span class="tooltip-title">المسؤول: مطاعن جبيع</span>
-                                <span class="tooltip-ayah">﴿أَفَلَا يَتَدَبَّرُونَ الْقُرْآنَ أَمْ عَلَىٰ قُلُوبٍ أَقْفَالُهَا﴾</span>
-                            </div>
-                        </td>
-                        <td class="dur-col">30 دقيقة</td>
-                    </tr>
-                    <tr><td class="time-col">1:40 – 3:45 م</td><td class="prog-col"><span class="icon">🌿</span>وقت مفتوح</td><td class="dur-col">2 س 5 د</td></tr>
-                    <tr>
-                        <td class="time-col">3:45 – 4:00 م</td>
-                        <td class="prog-col"><span class="icon">🚰</span>الاستعداد لصلاة العصر
-                            <div class="tooltiptext">
-                                <span class="tooltip-title">المسؤول: عبدالرحمن زعل</span>
-                            </div>
-                        </td>
-                        <td class="dur-col">15 دقيقة</td>
-                    </tr>
-                    <tr>
-                        <td class="time-col">4:00 – 4:15 م</td>
-                        <td class="prog-col"><span class="icon">🕌</span>صلاة العصر
-                            <div class="tooltiptext">
-                                <span class="tooltip-title">المسؤول: عبدالرحمن زعل</span>
-                                <span class="tooltip-ayah">من حافظ على العصرين دخل الجنة</span>
-                            </div>
-                        </td>
-                        <td class="dur-col">15 دقيقة</td>
-                    </tr>
-                    <tr><td class="time-col">4:15 – 5:00 م</td><td class="prog-col"><span class="icon">📖</span>قراءة جزء من القرآن</td><td class="dur-col">45 دقيقة</td></tr>
-                    <tr><td class="time-col">5:00 – 6:45 م</td><td class="prog-col"><span class="icon">🌿</span>وقت مفتوح للعبادة</td><td class="dur-col">1 س 45 د</td></tr>
-                    <tr>
-                        <td class="time-col">6:45 – 7:00 م</td>
-                        <td class="prog-col"><span class="icon">🤲</span>الاستعداد للمغرب والدعاء
-                            <div class="tooltiptext">
-                                <span class="tooltip-title">المسؤول: عبدالرحمن زعل</span>
-                                <span class="tooltip-ayah">﴿وَإِذَا سَأَلَكَ عِبَادِي عَنِّي فَإِنِّي قَرِيبٌ﴾</span>
-                            </div>
-                        </td>
-                        <td class="dur-col">15 دقيقة</td>
-                    </tr>
-                    <tr>
-                        <td class="time-col">7:00 – 7:15 م</td>
-                        <td class="prog-col"><span class="icon">🕌</span>صلاة المغرب
-                            <div class="tooltiptext">
-                                <span class="tooltip-title">المسؤول: عبدالرحمن زعل</span>
-                            </div>
-                        </td>
-                        <td class="dur-col">15 دقيقة</td>
-                    </tr>
-                    <tr><td class="time-col">7:15 – 8:00 م</td><td class="prog-col"><span class="icon">📖</span>راحة + قراءة قرآن</td><td class="dur-col">45 دقيقة</td></tr>
-                    <tr>
-                        <td class="time-col">8:00 – 8:15 م</td>
-                        <td class="prog-col"><span class="icon">🕌</span>صلاة العشاء
-                            <div class="tooltiptext">
-                                <span class="tooltip-title">المسؤول: عبدالرحمن زعل</span>
-                            </div>
-                        </td>
-                        <td class="dur-col">15 دقيقة</td>
-                    </tr>
-                    <tr>
-                        <td class="time-col">8:15 – 10:30 م</td>
-                        <td class="prog-col"><span class="icon">📖</span>حلقة قرآنية (تسميع وتلاوة)
-                            <div class="tooltiptext">
-                                <span class="tooltip-title">المسؤول: عبدالله غزواني</span>
-                                <span class="tooltip-ayah">﴿وَرَتِّلِ الْقُرْآنَ تَرْتِيلًا﴾</span>
-                            </div>
-                        </td>
-                        <td class="dur-col">2 س 15 د</td>
-                    </tr>
-                    <tr>
-                        <td class="time-col">11:00 – 11:15 م</td>
-                        <td class="prog-col"><span class="icon">☕</span>سناك بسيط
-                            <div class="tooltiptext">
-                                <span class="tooltip-title">المسؤول: صالح الزهراني</span>
-                                <span class="tooltip-ayah">﴿وَكُلُوا وَاشْرَبُوا وَلَا تُسْرِفُوا﴾</span>
-                            </div>
-                        </td>
-                        <td class="dur-col">15 دقيقة</td>
-                    </tr>
-                    <tr>
-                        <td class="time-col">11:15 – 12:00 ص</td>
-                        <td class="prog-col"><span class="icon">🛌</span>راحة</td>
-                        <td class="dur-col">45 دقيقة</td>
-                    </tr>
-                    <tr>
-                        <td class="time-col">12:00 – 12:40 ص</td>
-                        <td class="prog-col"><span class="icon">📚</span>درس (إن وجد)
-                            <div class="tooltiptext">
-                                <span class="tooltip-title">المسؤول: عبدالله غزواني</span>
-                                <span class="tooltip-ayah">﴿وَقُل رَّبِّ زِدْنِي عِلْمًا﴾</span>
-                            </div>
-                        </td>
-                        <td class="dur-col">40 دقيقة</td>
-                    </tr>
-                    <tr>
-                        <td class="time-col">1:00 – 1:30 ص</td>
-                        <td class="prog-col"><span class="icon">☕</span>ضيافة
-                            <div class="tooltiptext">
-                                <span class="tooltip-title">المسؤول: صالح الزهراني</span>
-                            </div>
-                        </td>
-                        <td class="dur-col">30 دقيقة</td>
-                    </tr>
-                    <tr>
-                        <td class="time-col">2:30 – 3:00 ص</td>
-                        <td class="prog-col"><span class="icon">🌙</span>السحور
-                            <div class="tooltiptext">
-                                <span class="tooltip-title">المسؤول: صالح الزهراني</span>
-                                <span class="tooltip-ayah">تسحروا فإن في السحور بركة</span>
-                            </div>
-                        </td>
-                        <td class="dur-col">30 دقيقة</td>
-                    </tr>
-                    <tr><td class="time-col">3:00 – 3:40 ص</td><td class="prog-col"><span class="icon">📚</span>قراءة كتاب</td><td class="dur-col">40 دقيقة</td></tr>
-                    <tr><td class="time-col">3:40 – 5:29 ص</td><td class="prog-col"><span class="icon">🚰</span>راحة واستعداد للفجر</td><td class="dur-col">1 س 49 د</td></tr>
-                </tbody>
-            </table>
+            <div class="card" onclick="openModal('درس بعد الفجر', 'عبدالله غزواني', '﴿يَرْفَعِ اللَّهُ الَّذِينَ آمَنُوا مِنكُمْ وَالَّذِينَ أُوتُوا الْعِلْمَ دَرَجَاتٍ﴾')">
+                <div class="card-icon">📚</div>
+                <div class="card-info">
+                    <div class="card-title">درس بعد الفجر</div>
+                    <div class="card-time">6:05 – 6:35 ص</div>
+                </div>
+            </div>
+
+            <div class="card" onclick="openModal('تدبر آيات مختارة', 'مطاعن جبيع', '﴿أَفَلَا يَتَدَبَّرُونَ الْقُرْآنَ أَمْ عَلَىٰ قُلُوبٍ أَقْفَالُهَا﴾')">
+                <div class="card-icon">💭</div>
+                <div class="card-info">
+                    <div class="card-title">تدبر آيات مختارة</div>
+                    <div class="card-time">1:10 – 1:40 م</div>
+                </div>
+            </div>
+
+            <div class="card" onclick="openModal('حلقة قرآنية', 'عبدالله غزواني', '﴿وَرَتِّلِ الْقُرْآنَ تَرْتِيلًا﴾')">
+                <div class="card-icon">📖</div>
+                <div class="card-info">
+                    <div class="card-title">حلقة قرآنية (تسميع وتلاوة)</div>
+                    <div class="card-time">8:15 – 10:30 م</div>
+                </div>
+            </div>
+
+            <div class="card" onclick="openModal('السحور', 'صالح الزهراني', 'تسحروا فإن في السحور بركة')">
+                <div class="card-icon">🌙</div>
+                <div class="card-info">
+                    <div class="card-title">السحور</div>
+                    <div class="card-time">2:30 – 3:00 ص</div>
+                </div>
+            </div>
+            </div>
+
+        <div id="adhkar" class="tab-content">
+            <h2 class="section-title">وِرد المعتكف</h2>
+            <div class="team-member">
+                <h3>أذكار الصباح والمساء</h3>
+                <p>احرص على أذكار الصباح بعد الفجر، وأذكار المساء بعد العصر.</p>
+            </div>
+            <div class="team-member">
+                <h3>ورد القرآن الكريم</h3>
+                <p>الهدف المقترح: قراءة 3 أجزاء يومياً لختم القرآن خلال الاعتكاف.</p>
+            </div>
+        </div>
+
+        <div id="team" class="tab-content">
+            <h2 class="section-title">فريق إدارة الاعتكاف</h2>
+            <div class="team-member"><h3>عبدالرحمن زعل</h3><p>مسؤول الصلاة، الأذكار، والمتابعة العامة.</p></div>
+            <div class="team-member"><h3>عبدالله غزواني</h3><p>مسؤول الدروس العلمية والحلقات القرآنية.</p></div>
+            <div class="team-member"><h3>مطاعن جبيع</h3><p>مسؤول جلسات التدبر الإيمانية.</p></div>
+            <div class="team-member"><h3>صالح الزهراني</h3><p>مسؤول الوجبات، السحور، والضيافة.</p></div>
+        </div>
+
+        <div id="rules" class="tab-content">
+            <h2 class="section-title">إرشادات هامة</h2>
+            <ul style="line-height: 1.8; color: #444;">
+                <li>إخلاص النية لله تعالى واستشعار عظمة المكان والزمان.</li>
+                <li>الحفاظ على الهدوء وتقليل الكلام إلا في خير.</li>
+                <li>يُمنع استخدام الجوال إلا للضرورة القصوى.</li>
+                <li>التعاون مع المشرفين والمحافظة على نظافة المسجد.</li>
+            </ul>
+        </div>
+
+    </div>
+
+    <div class="bottom-nav">
+        <div class="nav-item active" onclick="switchTab('schedule', this)">
+            <span class="nav-icon">📅</span>الجدول
+        </div>
+        <div class="nav-item" onclick="switchTab('adhkar', this)">
+            <span class="nav-icon">📿</span>الأذكار
+        </div>
+        <div class="nav-item" onclick="switchTab('team', this)">
+            <span class="nav-icon">👥</span>الفريق
+        </div>
+        <div class="nav-item" onclick="switchTab('rules', this)">
+            <span class="nav-icon">📌</span>إرشادات
         </div>
     </div>
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <div class="modal-title" id="modalTitle">اسم البرنامج</div>
+            <div class="modal-manager" id="modalManager">المسؤول</div>
+            <div class="modal-ayah" id="modalAyah">الآية</div>
+        </div>
+    </div>
+
+    <script>
+        // دالة التنقل بين الصفحات
+        function switchTab(tabId, element) {
+            // إخفاء كل المحتوى
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            // إزالة التفعيل من كل الأزرار
+            document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+            
+            // إظهار المحتوى المطلوب وتفعيل الزر
+            document.getElementById(tabId).classList.add('active');
+            element.classList.add('active');
+            window.scrollTo(0, 0); // رفع الشاشة للأعلى عند التبديل
+        }
+
+        // دوال النافذة المنبثقة (Popup)
+        function openModal(title, manager, ayah) {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalManager').innerText = 'المسؤول: ' + manager;
+            document.getElementById('modalAyah').innerText = ayah;
+            document.getElementById('myModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('myModal').style.display = 'none';
+        }
+
+        // إغلاق النافذة عند الضغط خارجها
+        window.onclick = function(event) {
+            let modal = document.getElementById('myModal');
+            if (event.target == modal) { modal.style.display = "none"; }
+        }
+    </script>
 
 </body>
 </html>
