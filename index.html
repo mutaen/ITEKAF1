@@ -18,7 +18,7 @@
             background-color: var(--bg-color);
             margin: 0;
             padding: 0;
-            padding-bottom: 70px; /* مساحة للشريط السفلي */
+            padding-bottom: 80px;
             color: #333;
         }
         .header {
@@ -30,107 +30,58 @@
             border-radius: 0 0 20px 20px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
-        .header h1 {
-            font-family: 'Amiri', serif;
-            margin: 0;
-            font-size: 28px;
-        }
-        .header p {
-            margin: 5px 0 0;
-            font-size: 14px;
-            color: var(--white);
-        }
+        .header h1 { font-family: 'Amiri', serif; margin: 0; font-size: 28px; }
+        .header p { margin: 5px 0 0; font-size: 14px; color: var(--white); }
         
-        /* الحاويات والصفحات */
-        .container {
-            padding: 20px;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.3s;
-        }
-        .tab-content.active {
-            display: block;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        .container { padding: 20px; max-width: 600px; margin: 0 auto; }
+        .tab-content { display: none; animation: fadeIn 0.3s; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* تصميم البطاقات للجدول */
+        /* تصميم بطاقات الجدول */
         .card {
-            background: var(--white);
-            border-radius: 12px;
-            padding: 15px;
-            margin-bottom: 15px;
-            border-right: 5px solid var(--gold);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            transition: 0.2s;
+            background: var(--white); border-radius: 12px; padding: 15px; margin-bottom: 12px;
+            border-right: 5px solid var(--gold); box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: 0.2s;
         }
         .card:active { transform: scale(0.98); }
         .card-info { flex-grow: 1; margin-right: 15px; }
         .card-time { color: var(--gold); font-weight: bold; font-size: 14px; margin-bottom: 5px; direction: ltr; text-align: right;}
         .card-title { font-size: 16px; font-weight: bold; color: var(--dark-green); }
-        .card-icon { font-size: 24px; background: var(--light-gold); width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%; }
+        .card-icon { font-size: 24px; background: var(--light-gold); width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%; min-width: 40px;}
 
-        /* الأقسام الأخرى */
-        .section-title {
-            color: var(--dark-green);
-            border-bottom: 2px solid var(--gold);
-            padding-bottom: 5px;
-            margin-bottom: 15px;
-            font-family: 'Amiri', serif;
-        }
-        .team-member {
-            background: var(--white); padding: 15px; border-radius: 10px; margin-bottom: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
-        .team-member h3 { margin: 0 0 5px; color: var(--dark-green); }
-        .team-member p { margin: 0; color: #666; font-size: 14px; }
+        /* قسم الأعضاء والعداد */
+        .section-title { color: var(--dark-green); border-bottom: 2px solid var(--gold); padding-bottom: 5px; margin-bottom: 15px; font-family: 'Amiri', serif; }
+        .team-member { background: var(--white); padding: 15px; border-radius: 10px; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border: 1px solid #eee;}
+        .team-member h3 { margin: 0 0 5px; color: var(--dark-green); font-size: 18px;}
+        .team-member p { margin: 0 0 10px; color: #666; font-size: 14px; }
+        
+        /* شريط نسبة التقدم بالختمة */
+        .progress-container { background: var(--light-gold); padding: 12px; border-radius: 8px; margin-top: 10px; border: 1px dashed var(--gold);}
+        .progress-header { display: flex; justify-content: space-between; font-weight: bold; color: var(--dark-green); font-size: 14px; margin-bottom: 8px; }
+        .progress-bar { background: #e0e0e0; border-radius: 10px; height: 12px; width: 100%; overflow: hidden; margin-bottom: 10px; }
+        .progress-fill { background: var(--gold); height: 100%; width: 0%; transition: width 0.4s ease; }
+        .progress-controls { display: flex; justify-content: space-between; gap: 10px; }
+        .btn { flex: 1; padding: 6px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-family: 'Tajawal', sans-serif;}
+        .btn-plus { background: var(--dark-green); color: white; }
+        .btn-minus { background: #c0392b; color: white; }
+        .btn:active { opacity: 0.8; }
 
         /* الشريط السفلي */
         .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            background-color: var(--white);
-            display: flex;
-            justify-content: space-around;
-            padding: 10px 0;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-            border-top: 1px solid #ddd;
-            z-index: 100;
+            position: fixed; bottom: 0; width: 100%; background-color: var(--white);
+            display: flex; justify-content: space-around; padding: 10px 0; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); border-top: 1px solid #ddd; z-index: 100;
         }
-        .nav-item {
-            text-align: center;
-            color: #888;
-            font-size: 12px;
-            cursor: pointer;
-            flex: 1;
-            transition: 0.3s;
-        }
+        .nav-item { text-align: center; color: #888; font-size: 12px; cursor: pointer; flex: 1; transition: 0.3s; }
         .nav-item.active { color: var(--dark-green); font-weight: bold; }
         .nav-icon { font-size: 20px; display: block; margin-bottom: 3px; }
 
-        /* النافذة المنبثقة (Modal) */
-        .modal {
-            display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%;
-            background-color: rgba(0,0,0,0.5); align-items: center; justify-content: center;
-        }
-        .modal-content {
-            background-color: var(--white); padding: 20px; border-radius: 15px; width: 80%; max-width: 400px;
-            text-align: center; border: 3px solid var(--gold); position: relative;
-        }
-        .close-btn {
-            position: absolute; top: 10px; left: 15px; font-size: 24px; font-weight: bold; color: #aaa; cursor: pointer;
-        }
+        /* النافذة المنبثقة (Popup) */
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); align-items: center; justify-content: center; }
+        .modal-content { background-color: var(--white); padding: 20px; border-radius: 15px; width: 85%; max-width: 400px; text-align: center; border: 3px solid var(--gold); position: relative; }
+        .close-btn { position: absolute; top: 10px; left: 15px; font-size: 24px; font-weight: bold; color: #aaa; cursor: pointer; }
         .modal-title { font-size: 20px; color: var(--dark-green); margin-bottom: 10px; font-weight: bold; }
-        .modal-manager { display: inline-block; background: var(--light-gold); padding: 5px 15px; border-radius: 20px; color: var(--dark-green); font-size: 14px; margin-bottom: 15px; font-weight: bold;}
+        .modal-manager { display: inline-block; background: var(--light-gold); padding: 5px 15px; border-radius: 20px; color: var(--dark-green); font-size: 14px; margin-bottom: 15px; font-weight: bold; border: 1px solid var(--gold);}
         .modal-ayah { font-family: 'Amiri', serif; font-size: 18px; color: #444; line-height: 1.6; }
     </style>
 </head>
@@ -146,76 +97,96 @@
         <div id="schedule" class="tab-content active">
             <h2 class="section-title">الجدول اليومي (اضغط للتفاصيل)</h2>
             
-            <div class="card" onclick="openModal('صلاة الفجر والأذكار', 'عبدالرحمن زعل', '﴿إِنَّ الصَّلَاةَ كَانَتْ عَلَى الْمُؤْمِنِينَ كِتَابًا مَّوْقُوتًا﴾')">
-                <div class="card-icon">🕌</div>
-                <div class="card-info">
-                    <div class="card-title">صلاة الفجر والأذكار</div>
-                    <div class="card-time">5:29 – 6:05 ص</div>
-                </div>
+            <div class="card" onclick="openModal('صلاة الفجر والأذكار', 'أبو زعل', '﴿إِنَّ الصَّلَاةَ كَانَتْ عَلَى الْمُؤْمِنِينَ كِتَابًا مَّوْقُوتًا﴾')">
+                <div class="card-icon">🕌</div><div class="card-info"><div class="card-title">صلاة الفجر والأذكار</div><div class="card-time">5:29 – 6:05 ص</div></div>
             </div>
-
             <div class="card" onclick="openModal('درس بعد الفجر', 'عبدالله غزواني', '﴿يَرْفَعِ اللَّهُ الَّذِينَ آمَنُوا مِنكُمْ وَالَّذِينَ أُوتُوا الْعِلْمَ دَرَجَاتٍ﴾')">
-                <div class="card-icon">📚</div>
-                <div class="card-info">
-                    <div class="card-title">درس بعد الفجر</div>
-                    <div class="card-time">6:05 – 6:35 ص</div>
-                </div>
+                <div class="card-icon">📚</div><div class="card-info"><div class="card-title">درس بعد الفجر</div><div class="card-time">6:05 – 6:35 ص</div></div>
             </div>
-
+            <div class="card" onclick="openModal('صلاة الضحى', 'أبو زعل', 'صلاة الأوابين حين ترمض الفصال')">
+                <div class="card-icon">🕌</div><div class="card-info"><div class="card-title">صلاة الضحى</div><div class="card-time">6:49 – 7:05 ص</div></div>
+            </div>
+            <div class="card" onclick="openModal('وقت مفتوح للعبادة', 'الجميع', '﴿فَاذْكُرُونِي أَذْكُرْكُمْ﴾')">
+                <div class="card-icon">🌿</div><div class="card-info"><div class="card-title">وقت مفتوح</div><div class="card-time">8:00 – 9:30 ص</div></div>
+            </div>
+            <div class="card" onclick="openModal('درس تجويد', 'عبدالله غزواني', '﴿وَرَتِّلِ الْقُرْآنَ تَرْتِيلًا﴾')">
+                <div class="card-icon">📖</div><div class="card-info"><div class="card-title">درس تجويد</div><div class="card-time">9:30 – 11:30 ص</div></div>
+            </div>
+            <div class="card" onclick="openModal('وقت مفتوح', 'الجميع', 'راحة وعبادة شخصية')">
+                <div class="card-icon">🌿</div><div class="card-info"><div class="card-title">وقت مفتوح</div><div class="card-time">11:30 – 12:15 م</div></div>
+            </div>
+            <div class="card" onclick="openModal('صلاة الظهر', 'أبو زعل', '﴿حَافِظُوا عَلَى الصَّلَوَاتِ وَالصَّلَاةِ الْوُسْطَىٰ﴾')">
+                <div class="card-icon">🕌</div><div class="card-info"><div class="card-title">صلاة الظهر</div><div class="card-time">12:15 – 12:30 م</div></div>
+            </div>
             <div class="card" onclick="openModal('تدبر آيات مختارة', 'مطاعن جبيع', '﴿أَفَلَا يَتَدَبَّرُونَ الْقُرْآنَ أَمْ عَلَىٰ قُلُوبٍ أَقْفَالُهَا﴾')">
-                <div class="card-icon">💭</div>
-                <div class="card-info">
-                    <div class="card-title">تدبر آيات مختارة</div>
-                    <div class="card-time">1:10 – 1:40 م</div>
-                </div>
+                <div class="card-icon">💭</div><div class="card-info"><div class="card-title">تدبر آيات مختارة</div><div class="card-time">1:10 – 1:40 م</div></div>
             </div>
-
-            <div class="card" onclick="openModal('حلقة قرآنية', 'عبدالله غزواني', '﴿وَرَتِّلِ الْقُرْآنَ تَرْتِيلًا﴾')">
-                <div class="card-icon">📖</div>
-                <div class="card-info">
-                    <div class="card-title">حلقة قرآنية (تسميع وتلاوة)</div>
-                    <div class="card-time">8:15 – 10:30 م</div>
-                </div>
+            <div class="card" onclick="openModal('وقت مفتوح', 'الجميع', 'قراءة قرآن وراحة')">
+                <div class="card-icon">🌿</div><div class="card-info"><div class="card-title">وقت مفتوح</div><div class="card-time">2:00 – 3:30 م</div></div>
             </div>
-
+            <div class="card" onclick="openModal('صلاة العصر', 'أبو زعل', 'من حافظ على العصرين دخل الجنة')">
+                <div class="card-icon">🕌</div><div class="card-info"><div class="card-title">صلاة العصر</div><div class="card-time">4:00 – 4:15 م</div></div>
+            </div>
+            <div class="card" onclick="openModal('صلاة المغرب', 'أبو زعل', '﴿فَسُبْحَانَ اللَّهِ حِينَ تُمْسُونَ وَحِينَ تُصْبِحُونَ﴾')">
+                <div class="card-icon">🕌</div><div class="card-info"><div class="card-title">صلاة المغرب</div><div class="card-time">7:00 – 7:15 م</div></div>
+            </div>
+            <div class="card" onclick="openModal('صلاة العشاء', 'أبو زعل', '﴿إِنَّ الصَّلَاةَ كَانَتْ عَلَى الْمُؤْمِنِينَ كِتَابًا مَّوْقُوتًا﴾')">
+                <div class="card-icon">🕌</div><div class="card-info"><div class="card-title">صلاة العشاء</div><div class="card-time">8:00 – 8:15 م</div></div>
+            </div>
+            <div class="card" onclick="openModal('حلقة قرآنية', 'عبدالله غزواني', 'تلاوة وتسميع ومراجعة')">
+                <div class="card-icon">📖</div><div class="card-info"><div class="card-title">حلقة قرآنية</div><div class="card-time">8:15 – 10:30 م</div></div>
+            </div>
             <div class="card" onclick="openModal('السحور', 'صالح الزهراني', 'تسحروا فإن في السحور بركة')">
-                <div class="card-icon">🌙</div>
-                <div class="card-info">
-                    <div class="card-title">السحور</div>
-                    <div class="card-time">2:30 – 3:00 ص</div>
-                </div>
-            </div>
-            </div>
-
-        <div id="adhkar" class="tab-content">
-            <h2 class="section-title">وِرد المعتكف</h2>
-            <div class="team-member">
-                <h3>أذكار الصباح والمساء</h3>
-                <p>احرص على أذكار الصباح بعد الفجر، وأذكار المساء بعد العصر.</p>
-            </div>
-            <div class="team-member">
-                <h3>ورد القرآن الكريم</h3>
-                <p>الهدف المقترح: قراءة 3 أجزاء يومياً لختم القرآن خلال الاعتكاف.</p>
+                <div class="card-icon">🌙</div><div class="card-info"><div class="card-title">السحور</div><div class="card-time">2:30 – 3:00 ص</div></div>
             </div>
         </div>
 
         <div id="team" class="tab-content">
-            <h2 class="section-title">فريق إدارة الاعتكاف</h2>
-            <div class="team-member"><h3>عبدالرحمن زعل</h3><p>مسؤول الصلاة، الأذكار، والمتابعة العامة.</p></div>
-            <div class="team-member"><h3>عبدالله غزواني</h3><p>مسؤول الدروس العلمية والحلقات القرآنية.</p></div>
-            <div class="team-member"><h3>مطاعن جبيع</h3><p>مسؤول جلسات التدبر الإيمانية.</p></div>
-            <div class="team-member"><h3>صالح الزهراني</h3><p>مسؤول الوجبات، السحور، والضيافة ، مدير الاعتكاف.</p></div>
-            <div class="team-member"><h3>ريان عري</h3><p>اشراف عام ونائب مدير الاعتكاف</p></div>
-            <div class="team-member"><h3>عبدالرحمن عسيري</h3><p>معلم الحلقة القرأنية، و ملقي الدروس </p></div>
+            <h2 class="section-title">أعضاء الاعتكاف</h2>
+            
+            <script>
+                const members = [
+                    { id: 'm1', name: 'أبو زعل', role: 'مسؤول مواقيت الصلاة والأذكار' },
+                    { id: 'm2', name: 'عبدالله غزواني', role: 'مسؤول الدروس العلمية والحلقات' },
+                    { id: 'm3', name: 'مطاعن جبيع', role: 'مسؤول جلسات التدبر' },
+                    { id: 'm4', name: 'صالح الزهراني', role: 'مسؤول الوجبات والضيافة والسحور' },
+                    { id: 'm5', name: 'عبدالرحمن العنزي', role: 'مسؤول التنظيف' },
+                    { id: 'm6', name: 'بتال القبيسي', role: 'مسؤول الترتيب' },
+                    { id: 'm7', name: 'محمد جبيع', role: 'الاحتياجات العامة' }
+                ];
+
+                members.forEach(member => {
+                    document.write(`
+                        <div class="team-member">
+                            <h3>${member.name}</h3>
+                            <p>${member.role}</p>
+                            <div class="progress-container">
+                                <div class="progress-header">
+                                    <span>نسبة التقدم بالختمة</span>
+                                    <span id="val-${member.id}">0%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="fill-${member.id}"></div>
+                                </div>
+                                <div class="progress-controls">
+                                    <button class="btn btn-plus" onclick="updateProgress('${member.id}', 1)">+ زيادة 1%</button>
+                                    <button class="btn btn-minus" onclick="updateProgress('${member.id}', -1)">- تنقيص 1%</button>
+                                </div>
+                            </div>
+                        </div>
+                    `);
+                });
+            </script>
         </div>
 
         <div id="rules" class="tab-content">
-            <h2 class="section-title">إرشادات هامة</h2>
-            <ul style="line-height: 1.8; color: #444;">
-                <li>إخلاص النية لله تعالى واستشعار عظمة المكان والزمان.</li>
-                <li>الحفاظ على الهدوء وتقليل الكلام إلا في خير.</li>
-                <li>يُمنع استخدام الجوال إلا للضرورة القصوى.</li>
-                <li>التعاون مع المشرفين والمحافظة على نظافة المسجد.</li>
+            <h2 class="section-title">إرشادات ومهام عامة</h2>
+            <ul style="line-height: 2; color: #444; font-size: 15px;">
+                <li><strong>إخلاص النية:</strong> استشعار عظمة المكان والزمان.</li>
+                <li><strong>الهدوء:</strong> تقليل الكلام إلا في خير لعدم إزعاج المصلين.</li>
+                <li><strong>الجوال:</strong> يُمنع استخدام الجوال إلا للضرورة القصوى.</li>
+                <li><strong>التعاون:</strong> الالتزام بالمهام الموكلة لكل عضو ومساعدة البقية.</li>
+                <li><strong>الورد اليومي:</strong> الحرص على أذكار الصباح والمساء يومياً.</li>
             </ul>
         </div>
 
@@ -225,11 +196,8 @@
         <div class="nav-item active" onclick="switchTab('schedule', this)">
             <span class="nav-icon">📅</span>الجدول
         </div>
-        <div class="nav-item" onclick="switchTab('adhkar', this)">
-            <span class="nav-icon">📿</span>الأذكار
-        </div>
         <div class="nav-item" onclick="switchTab('team', this)">
-            <span class="nav-icon">👥</span>الفريق
+            <span class="nav-icon">👥</span>الأعضاء والختمة
         </div>
         <div class="nav-item" onclick="switchTab('rules', this)">
             <span class="nav-icon">📌</span>إرشادات
@@ -239,42 +207,64 @@
     <div id="myModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal()">&times;</span>
-            <div class="modal-title" id="modalTitle">اسم البرنامج</div>
+            <div class="modal-title" id="modalTitle">البرنامج</div>
             <div class="modal-manager" id="modalManager">المسؤول</div>
             <div class="modal-ayah" id="modalAyah">الآية</div>
         </div>
     </div>
 
     <script>
-        // دالة التنقل بين الصفحات
+        // التنقل بين الصفحات
         function switchTab(tabId, element) {
-            // إخفاء كل المحتوى
             document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-            // إزالة التفعيل من كل الأزرار
             document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
-            
-            // إظهار المحتوى المطلوب وتفعيل الزر
             document.getElementById(tabId).classList.add('active');
             element.classList.add('active');
-            window.scrollTo(0, 0); // رفع الشاشة للأعلى عند التبديل
+            window.scrollTo(0, 0);
         }
 
-        // دوال النافذة المنبثقة (Popup)
+        // النوافذ المنبثقة
         function openModal(title, manager, ayah) {
             document.getElementById('modalTitle').innerText = title;
             document.getElementById('modalManager').innerText = 'المسؤول: ' + manager;
             document.getElementById('modalAyah').innerText = ayah;
             document.getElementById('myModal').style.display = 'flex';
         }
-
-        function closeModal() {
-            document.getElementById('myModal').style.display = 'none';
-        }
-
-        // إغلاق النافذة عند الضغط خارجها
+        function closeModal() { document.getElementById('myModal').style.display = 'none'; }
         window.onclick = function(event) {
             let modal = document.getElementById('myModal');
             if (event.target == modal) { modal.style.display = "none"; }
+        }
+
+        // نظام عداد الختمة (حفظ تلقائي)
+        function updateProgress(memberId, change) {
+            let currentVal = parseInt(localStorage.getItem('khatma_' + memberId)) || 0;
+            currentVal += change;
+            if(currentVal > 100) currentVal = 100;
+            if(currentVal < 0) currentVal = 0;
+            
+            localStorage.setItem('khatma_' + memberId, currentVal);
+            renderProgress(memberId, currentVal);
+        }
+
+        function renderProgress(memberId, val) {
+            document.getElementById('val-' + memberId).innerText = val + '%';
+            document.getElementById('fill-' + memberId).style.width = val + '%';
+            
+            // تغيير لون العداد إذا اكتمل 100%
+            if(val === 100) {
+                document.getElementById('fill-' + memberId).style.backgroundColor = '#2ecc71'; // أخضر فاتح للختم
+            } else {
+                document.getElementById('fill-' + memberId).style.backgroundColor = 'var(--gold)';
+            }
+        }
+
+        // تحميل العدادات عند فتح الصفحة
+        window.onload = function() {
+            members.forEach(member => {
+                let savedVal = parseInt(localStorage.getItem('khatma_' + member.id)) || 0;
+                renderProgress(member.id, savedVal);
+            });
         }
     </script>
 
