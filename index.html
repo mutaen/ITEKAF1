@@ -12,6 +12,7 @@
             --light-gold: #f9f6ef;
             --bg-color: #f4f7f6;
             --white: #ffffff;
+            --red-alert: #c0392b;
         }
         body {
             font-family: 'Tajawal', sans-serif;
@@ -21,13 +22,17 @@
             padding-bottom: 80px;
             color: #333;
         }
+        
+        /* شريط الإعلانات العاجلة */
+        .announcement-bar {
+            background-color: var(--red-alert); color: var(--white); text-align: center;
+            padding: 10px; font-weight: bold; font-size: 14px; display: none;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
         .header {
-            background-color: var(--dark-green);
-            color: var(--gold);
-            text-align: center;
-            padding: 20px 10px;
-            border-bottom: 4px solid var(--gold);
-            border-radius: 0 0 20px 20px;
+            background-color: var(--dark-green); color: var(--gold); text-align: center;
+            padding: 20px 10px; border-bottom: 4px solid var(--gold); border-radius: 0 0 20px 20px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
         .header h1 { font-family: 'Amiri', serif; margin: 0; font-size: 28px; }
@@ -52,16 +57,31 @@
 
         /* الأقسام العامة */
         .section-title { color: var(--dark-green); border-bottom: 2px solid var(--gold); padding-bottom: 5px; margin-bottom: 15px; font-family: 'Amiri', serif; }
-        .team-member { background: var(--white); padding: 15px; border-radius: 10px; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border: 1px solid #eee;}
+        .team-member { background: var(--white); padding: 15px; border-radius: 10px; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border: 1px solid #eee; position: relative;}
         .team-member h3 { margin: 0 0 5px; color: var(--dark-green); font-size: 18px;}
         .team-member p { margin: 0 0 10px; color: #666; font-size: 14px; line-height: 1.6;}
         
+        /* شارة النقاط */
+        .points-badge {
+            position: absolute; top: 15px; left: 15px; background: var(--light-gold);
+            color: var(--dark-green); font-weight: bold; padding: 5px 10px;
+            border-radius: 20px; font-size: 14px; border: 1px solid var(--gold);
+        }
+
         /* شريط نسبة التقدم بالختمة */
         .progress-container { background: var(--light-gold); padding: 12px; border-radius: 8px; margin-top: 10px; border: 1px dashed var(--gold);}
         .progress-header { display: flex; justify-content: space-between; font-weight: bold; color: var(--dark-green); font-size: 14px; margin-bottom: 8px; }
         .progress-bar { background: #e0e0e0; border-radius: 10px; height: 12px; width: 100%; overflow: hidden; }
         .progress-fill { background: var(--gold); height: 100%; width: 0%; transition: width 0.8s ease; }
         .progress-percent { font-size: 12px; color: #555; text-align: left; margin-top: 5px; font-weight: bold;}
+
+        /* جداول النقاط */
+        .points-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 14px; background: var(--white); box-shadow: 0 2px 5px rgba(0,0,0,0.05);}
+        .points-table th, .points-table td { border: 1px solid #ddd; padding: 10px; text-align: center; }
+        .points-table th { background-color: var(--dark-green); color: var(--gold); font-family: 'Amiri', serif;}
+        .points-table tr:nth-child(even) { background-color: var(--light-gold); }
+        .positive { color: green; font-weight: bold; }
+        .negative { color: red; font-weight: bold; }
 
         /* الشريط السفلي المتجاوب لـ 4 أزرار */
         .bottom-nav {
@@ -83,6 +103,8 @@
 </head>
 <body>
 
+    <div id="announcement" class="announcement-bar"></div>
+
     <div class="header">
         <h1>برنامج الاعتكاف</h1>
         <p>نسأل الله القبول والتوفيق</p>
@@ -97,7 +119,7 @@
                 <div class="card-icon">🕌</div><div class="card-info"><div class="card-title">صلاة الفجر والأذكار</div><div class="card-time">5:29 – 6:05 ص</div></div>
             </div>
             <div class="card" onclick="openModal('درس بعد الفجر', 'المسؤول: عبدالله غزواني', '﴿يَرْفَعِ اللَّهُ الَّذِينَ آمَنُوا مِنكُمْ وَالَّذِينَ أُوتُوا الْعِلْمَ دَرَجَاتٍ﴾')">
-                <div class="card-icon">📚</div><div class="card-info"><div class="card-title">درس بعد الفجر</div><div class="card-time">6:05 – 6:45 ص</div></div>
+                <div class="card-icon">📚</div><div class="card-info"><div class="card-title">درس بعد الفجر</div><div class="card-time">6:05 – 6:35 ص</div></div>
             </div>
             <div class="card" onclick="openModal('صلاة الضحى', 'المسؤول: عبدالرحمن زعل', 'صلاة الأوابين حين ترمض الفصال')">
                 <div class="card-icon">🕌</div><div class="card-info"><div class="card-title">صلاة الضحى</div><div class="card-time">6:49 – 7:05 ص</div></div>
@@ -154,39 +176,49 @@
             <h2 class="section-title">أعضاء الاعتكاف والختمة</h2>
             
             <script>
-                // -------------------------------------------------------------
-                // ⚙️ منطقة التعديل الخاصة بصاحب الرابط ⚙️
-                // لتحديث الختمة: فقط قم بتغيير الرقم الموجود بجانب كلمة (parts)
-                // وسيتم حساب النسبة المئوية وتحديث الشريط تلقائياً لجميع المعتكفين
-                // -------------------------------------------------------------
-                
+                // =============================================================
+                // ⚙️ منطقة التعديل الخاصة بصاحب الرابط (مدير الاعتكاف) ⚙️
+                // =============================================================
+
+                // 1. شريط الإعلانات: اكتب التنبيه بين علامتي التنصيص. اتركه فارغاً "" ليختفي الشريط.
+                const alertMessage = "تنبيه: اجتماع قصير بعد صلاة العصر لتوزيع المهام.";
+
+                // 2. تحديث بيانات الأعضاء (الأجزاء والنقاط): 
+                // - لتحديث الختمة: غير الرقم بجانب (parts) من 0 إلى 30 كحد أقصى.
+                // - لتحديث النقاط: غير الرقم بجانب (points).
                 const members = [
-                    { name: 'صالح الزهراني', role: 'مدير الاعتكاف', parts: 0 },
-                    { name: 'عبدالرحمن زعل', role: 'مسؤول مواقيت الصلاة والأذكار', parts: 8 },
-                    { name: 'عبدالله غزواني', role: 'مسؤول الدروس العلمية والحلقات', parts: 0 },
-                    { name: 'مطاعن جبيع', role: 'مسؤول جلسات التدبر', parts: 8 },
-                    { name: 'ريان عري', role: 'نائب المدير ومدير المتابعة', parts: 6 },
-                    { name: 'عبدالرحمن عسيري', role: 'معلم الحلقة الرمضانية', parts: 0 },
-                    { name: 'عبدالرحمن العنزي', role: 'مسؤول التنظيف', parts: 0 },
-                    { name: 'بتال القبيسي', role: 'مسؤول الترتيب', parts: 8 },
-                    { name: 'يزن الامير', role: 'عضو', parts: 0 },
-                    { name: 'محمد جبيع', role: 'الاحتياجات العامة', parts: 0 }
+                    { name: 'صالح الزهراني', role: 'مدير الاعتكاف', parts: 0, points: 0 },
+                    { name: 'عبدالرحمن زعل', role: 'مسؤول مواقيت الصلاة والأذكار', parts: 0, points: 0 },
+                    { name: 'عبدالله غزواني', role: 'مسؤول الدروس العلمية والحلقات', parts: 0, points: 0 },
+                    { name: 'مطاعن جبيع', role: 'مسؤول جلسات التدبر', parts: 0, points: 0 },
+                    { name: 'عبدالرحمن عسيري', role: 'معلم الحلقة الرمضانية', parts: 0, points: 0 },
+                    { name: 'عبدالرحمن العنزي', role: 'مسؤول التنظيف', parts: 0, points: 0 },
+                    { name: 'بتال القبيسي', role: 'مسؤول الترتيب', parts: 0, points: 0 },
+                    { name: 'محمد جبيع', role: 'الاحتياجات العامة', parts: 0, points: 0 }
                 ];
 
-                // -------------------------------------------------------------
-                // لا تقم بتعديل الكود أسفل هذا السطر
-                // -------------------------------------------------------------
+                // =============================================================
+                // ⛔️ لا تقم بتعديل الكود أسفل هذا السطر ⛔️
+                // =============================================================
 
+                // إظهار أو إخفاء الإعلان
+                window.onload = function() {
+                    const alertBar = document.getElementById('announcement');
+                    if (alertMessage.trim() !== "") {
+                        alertBar.innerText = alertMessage;
+                        alertBar.style.display = 'block';
+                    }
+                };
+
+                // توليد بطاقات الأعضاء
                 members.forEach(member => {
-                    // التأكد أن الأجزاء لا تتجاوز 30
                     let currentParts = member.parts > 30 ? 30 : (member.parts < 0 ? 0 : member.parts);
-                    // حساب النسبة المئوية
                     let percentage = Math.round((currentParts / 30) * 100);
-                    // تحديد لون الشريط (أخضر إذا ختم، ذهبي إذا لم يختم)
                     let barColor = currentParts === 30 ? '#2ecc71' : 'var(--gold)';
 
                     document.write(`
                         <div class="team-member">
+                            <div class="points-badge">🏆 ${member.points} نقطة</div>
                             <h3>${member.name}</h3>
                             <p>${member.role}</p>
                             <div class="progress-container">
@@ -206,13 +238,52 @@
         </div>
 
         <div id="rules" class="tab-content">
-            <h2 class="section-title">التعليمات</h2>
+            <h2 class="section-title">نظام نقاط برنامج الاعتكاف</h2>
+            <p style="font-size: 14px; color: #555; text-align: justify;">تم تصميم هذا النظام لتعزيز التنافس على الطاعات والمبادرات الإيجابية بين المعتكفين.</p>
+            
+            <h3 style="color: var(--dark-green); font-size: 16px;">الالتزام والصلوات</h3>
+            <table class="points-table">
+                <tr><th>البند</th><th>النقاط</th></tr>
+                <tr><td>الحضور المبكر لصلاة الفجر قبل الإقامة</td><td class="positive">+6</td></tr>
+                <tr><td>الصلاة في الصف الأول</td><td class="positive">+5</td></tr>
+                <tr><td>التبكير لبقية الصلوات</td><td class="positive">+4</td></tr>
+                <tr><td>الحضور بعد الإقامة مباشرة</td><td class="positive">+1</td></tr>
+                <tr><td>الصلاة مع جماعة ثانية</td><td class="negative">-4</td></tr>
+                <tr><td>الغياب عن صلاة الجماعة بدون عذر</td><td class="negative">-8</td></tr>
+            </table>
+
+            <h3 style="color: var(--dark-green); font-size: 16px;">البرامج والدروس</h3>
+            <table class="points-table">
+                <tr><th>البند</th><th>النقاط</th></tr>
+                <tr><td>الالتزام بحضور الدروس</td><td class="positive">+5</td></tr>
+                <tr><td>الالتزام بحضور الحلقة القرآنية</td><td class="positive">+5</td></tr>
+                <tr><td>تسميع ممتاز في الحلقة</td><td class="positive">+4</td></tr>
+                <tr><td>قراءة الجزء المقرر</td><td class="positive">+3</td></tr>
+                <tr><td>الالتزام بجدول الاعتكاف</td><td class="positive">+5</td></tr>
+            </table>
+
+            <h3 style="color: var(--dark-green); font-size: 16px;">السلوك والمبادرات</h3>
+            <table class="points-table">
+                <tr><th>البند</th><th>النقاط</th></tr>
+                <tr><td>قلة الخروج من المسجد</td><td class="positive">+4</td></tr>
+                <tr><td>كثرة الخروج بدون حاجة</td><td class="negative">-4</td></tr>
+                <tr><td>حسن الأدب واحترام المعتكفين</td><td class="positive">+4</td></tr>
+                <tr><td>التعاون مع المشرفين وإنجاز المهام</td><td class="positive">+5</td></tr>
+                <tr><td>مبادرة في خدمة المعتكفين / مساعدة زميل</td><td class="positive">+5</td></tr>
+                <tr><td>ترتيب المسجد أو تنظيفه بدون طلب</td><td class="positive">+4</td></tr>
+                <tr><td>استغلال الوقت بعبادة ملحوظة</td><td class="positive">+3</td></tr>
+                <tr><td>اقتراح فكرة نافعة أو التطوع لنشاط</td><td class="positive">+4</td></tr>
+            </table>
+            
+            <div style="background: var(--light-gold); padding: 10px; border-radius: 8px; border: 1px dashed var(--gold); text-align: center;">
+                <strong>💡 نقاط خاصة:</strong> يمكن للمشرف إضافة (+1 إلى +5) نقاط لأي عمل مميز يراه غير مذكور أعلاه.
+            </div>
+
+            <h2 class="section-title" style="margin-top: 25px;">تعليمات عامة</h2>
             <ul style="line-height: 2; color: #444; font-size: 15px;">
                 <li><strong>إخلاص النية:</strong> استشعار عظمة المكان والزمان واحتساب الأجر.</li>
                 <li><strong>الهدوء:</strong> تقليل الكلام إلا في خير لعدم إزعاج المصلين والمعتكفين.</li>
                 <li><strong>الجوال:</strong> يُمنع استخدام الجوال إلا للضرورة القصوى.</li>
-                <li><strong>التعاون:</strong> الالتزام بالمهام الموكلة لكل عضو ومساعدة البقية.</li>
-                <li><strong>النظافة:</strong> المحافظة على نظافة وترتيب مكان الاعتكاف.</li>
             </ul>
         </div>
 
@@ -226,7 +297,7 @@
             <span class="nav-icon">📿</span>الأذكار
         </div>
         <div class="nav-item" onclick="switchTab('team', this)">
-            <span class="nav-icon">👥</span>الأعضاء
+            <span class="nav-icon">👥</span>النقاط
         </div>
         <div class="nav-item" onclick="switchTab('rules', this)">
             <span class="nav-icon">📌</span>التعليمات
