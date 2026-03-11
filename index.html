@@ -57,19 +57,26 @@
 
         /* الأقسام العامة */
         .section-title { color: var(--dark-green); border-bottom: 2px solid var(--gold); padding-bottom: 5px; margin-bottom: 15px; font-family: 'Amiri', serif; }
-        .team-member { background: var(--white); padding: 15px; border-radius: 10px; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border: 1px solid #eee; position: relative;}
-        .team-member h3 { margin: 0 0 5px; color: var(--dark-green); font-size: 18px;}
-        .team-member p { margin: 0 0 10px; color: #666; font-size: 14px; line-height: 1.6;}
         
-        /* شارة النقاط */
-        .points-badge {
-            position: absolute; top: 15px; left: 15px; background: var(--light-gold);
-            color: var(--dark-green); font-weight: bold; padding: 5px 10px;
-            border-radius: 20px; font-size: 14px; border: 1px solid var(--gold);
-        }
+        /* تصميم بطاقات لوحة الشرف (متطورة) */
+        .team-member { background: var(--white); padding: 20px 15px 15px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border: 1px solid #eee; position: relative; margin-top: 15px;}
+        .team-member h3 { margin: 0 0 5px; color: var(--dark-green); font-size: 18px; padding-right: 10px;}
+        .team-member p { margin: 0 0 10px; color: #666; font-size: 14px; padding-right: 10px;}
+        
+        /* شارة الترتيب والنقاط */
+        .rank-badge { position: absolute; right: -10px; top: -10px; width: 35px; height: 35px; background: var(--dark-green); color: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 18px; border: 2px solid var(--gold); box-shadow: 0 2px 5px rgba(0,0,0,0.2); font-family: 'Amiri', serif;}
+        .points-display { position: absolute; left: 15px; top: 15px; text-align: center; background: var(--light-gold); padding: 5px 15px; border-radius: 8px; border: 1px solid var(--gold); min-width: 50px;}
+        .points-number { font-size: 20px; font-weight: bold; color: var(--dark-green); display: block; line-height: 1.2; }
+        .points-text { font-size: 11px; color: #777; }
+        .medal-icon { font-size: 22px; position: absolute; left: -10px; top: -15px; background: white; border-radius: 50%; padding: 2px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);}
+
+        /* تمييز المراكز الأولى */
+        .rank-1 { border: 2px solid #FFD700; background: linear-gradient(to right, #ffffff, #fffdf2); box-shadow: 0 4px 15px rgba(255, 215, 0, 0.2); transform: scale(1.02); z-index: 10;}
+        .rank-2 { border: 2px solid #C0C0C0; background: linear-gradient(to right, #ffffff, #f8f9fa); }
+        .rank-3 { border: 2px solid #CD7F32; background: linear-gradient(to right, #ffffff, #fff5ee); }
 
         /* شريط نسبة التقدم بالختمة */
-        .progress-container { background: var(--light-gold); padding: 12px; border-radius: 8px; margin-top: 10px; border: 1px dashed var(--gold);}
+        .progress-container { background: var(--light-gold); padding: 12px; border-radius: 8px; margin-top: 15px; border: 1px dashed var(--gold);}
         .progress-header { display: flex; justify-content: space-between; font-weight: bold; color: var(--dark-green); font-size: 14px; margin-bottom: 8px; }
         .progress-bar { background: #e0e0e0; border-radius: 10px; height: 12px; width: 100%; overflow: hidden; }
         .progress-fill { background: var(--gold); height: 100%; width: 0%; transition: width 0.8s ease; }
@@ -83,16 +90,13 @@
         .positive { color: green; font-weight: bold; }
         .negative { color: red; font-weight: bold; }
 
-        /* الشريط السفلي المتجاوب لـ 4 أزرار */
-        .bottom-nav {
-            position: fixed; bottom: 0; width: 100%; background-color: var(--white);
-            display: flex; justify-content: space-around; padding: 10px 0; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); border-top: 1px solid #ddd; z-index: 100;
-        }
+        /* الشريط السفلي المتجاوب */
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background-color: var(--white); display: flex; justify-content: space-around; padding: 10px 0; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); border-top: 1px solid #ddd; z-index: 100; }
         .nav-item { text-align: center; color: #888; font-size: 11px; cursor: pointer; flex: 1; transition: 0.3s; }
         .nav-item.active { color: var(--dark-green); font-weight: bold; }
         .nav-icon { font-size: 20px; display: block; margin-bottom: 3px; }
 
-        /* النافذة المنبثقة (Popup) */
+        /* النافذة المنبثقة */
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); align-items: center; justify-content: center; }
         .modal-content { background-color: var(--white); padding: 20px; border-radius: 15px; width: 85%; max-width: 400px; text-align: center; border: 3px solid var(--gold); position: relative; }
         .close-btn { position: absolute; top: 10px; left: 15px; font-size: 24px; font-weight: bold; color: #aaa; cursor: pointer; }
@@ -114,7 +118,6 @@
         
         <div id="schedule" class="tab-content active">
             <h2 class="section-title">الجدول اليومي (اضغط للتفاصيل)</h2>
-            
             <div class="card" onclick="openModal('صلاة الفجر والأذكار', 'المسؤول: عبدالرحمن زعل', '﴿إِنَّ الصَّلَاةَ كَانَتْ عَلَى الْمُؤْمِنِينَ كِتَابًا مَّوْقُوتًا﴾')">
                 <div class="card-icon">🕌</div><div class="card-info"><div class="card-title">صلاة الفجر والأذكار</div><div class="card-time">5:29 – 6:05 ص</div></div>
             </div>
@@ -158,7 +161,7 @@
 
         <div id="adhkar" class="tab-content">
             <h2 class="section-title">الأذكار والوِرد اليومي</h2>
-            <div class="team-member">
+            <div class="team-member" style="margin-top:0;">
                 <h3>أذكار الصباح والمساء</h3>
                 <p>احرص على أذكار الصباح بعد صلاة الفجر، وأذكار المساء بعد صلاة العصر. حصن نفسك واجعل لسانك رطباً بذكر الله.</p>
             </div>
@@ -173,70 +176,8 @@
         </div>
 
         <div id="team" class="tab-content">
-            <h2 class="section-title">أعضاء الاعتكاف والختمة</h2>
-            
-            <script>
-                // =============================================================
-                // ⚙️ منطقة التعديل الخاصة بصاحب الرابط (مدير الاعتكاف) ⚙️
-                // =============================================================
-
-                // 1. شريط الإعلانات: اكتب التنبيه بين علامتي التنصيص. اتركه فارغاً "" ليختفي الشريط.
-                const alertMessage = "تنبيه: تم اضافة نظام نقاط لكل المعتكفين الرجاء مراجعة قسم التعليمات .";
-
-                // 2. تحديث بيانات الأعضاء (الأجزاء والنقاط): 
-                // - لتحديث الختمة: غير الرقم بجانب (parts) من 0 إلى 30 كحد أقصى.
-                // - لتحديث النقاط: غير الرقم بجانب (points).
-                const members = [
-                    { name: 'صالح الزهراني', role: 'مدير الاعتكاف', parts: 0, points: 7 },
-                    { name: 'عبدالرحمن زعل', role: 'مسؤول مواقيت الصلاة والأذكار', parts: 9, points: 13 },
-                    { name: 'عبدالله غزواني', role: 'مسؤول الدروس العلمية والحلقات', parts: 0, points: 17 },
-                    { name: 'مطاعن جبيع', role: 'مسؤول جلسات التدبر', parts: 9, points: 22 },
-                    { name: 'عبدالرحمن عسيري', role: 'معلم الحلقة الرمضانية', parts: 0, points: 0 },
-                    { name: 'عبدالرحمن العنزي', role: 'مسؤول التنظيف', parts: 0, points: 0 },
-                    { name: 'بتال القبيسي', role: 'مسؤول الترتيب', parts: 8, points: 19 },
-                    { name: 'يزن الامير', role: 'مسؤول الترفية', parts: 18, points: 0 },
-                    { name: 'ريان عري ', role: 'نائب مدير الاعتكاف ، والاشراف العام', parts: 8, points: 12 },
-                    { name: 'محمد جبيع', role: 'الاحتياجات العامة', parts: 0, points: 0 }
-                ];
-
-                // =============================================================
-                // ⛔️ لا تقم بتعديل الكود أسفل هذا السطر ⛔️
-                // =============================================================
-
-                // إظهار أو إخفاء الإعلان
-                window.onload = function() {
-                    const alertBar = document.getElementById('announcement');
-                    if (alertMessage.trim() !== "") {
-                        alertBar.innerText = alertMessage;
-                        alertBar.style.display = 'block';
-                    }
-                };
-
-                // توليد بطاقات الأعضاء
-                members.forEach(member => {
-                    let currentParts = member.parts > 30 ? 30 : (member.parts < 0 ? 0 : member.parts);
-                    let percentage = Math.round((currentParts / 30) * 100);
-                    let barColor = currentParts === 30 ? '#2ecc71' : 'var(--gold)';
-
-                    document.write(`
-                        <div class="team-member">
-                            <div class="points-badge">🏆 ${member.points} نقطة</div>
-                            <h3>${member.name}</h3>
-                            <p>${member.role}</p>
-                            <div class="progress-container">
-                                <div class="progress-header">
-                                    <span>إنجاز الختمة</span>
-                                    <span>${currentParts} / 30 جزء</span>
-                                </div>
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: ${percentage}%; background-color: ${barColor};"></div>
-                                </div>
-                                <div class="progress-percent">اكتمل: %${percentage}</div>
-                            </div>
-                        </div>
-                    `);
-                });
-            </script>
+            <h2 class="section-title">🏆 لوحة الشرف وإنجاز الختمة</h2>
+            <div id="leaderboard-container"></div>
         </div>
 
         <div id="rules" class="tab-content">
@@ -299,7 +240,7 @@
             <span class="nav-icon">📿</span>الأذكار
         </div>
         <div class="nav-item" onclick="switchTab('team', this)">
-            <span class="nav-icon">👥</span>النقاط
+            <span class="nav-icon">🏆</span>لوحة الشرف
         </div>
         <div class="nav-item" onclick="switchTab('rules', this)">
             <span class="nav-icon">📌</span>التعليمات
@@ -316,6 +257,87 @@
     </div>
 
     <script>
+        // =============================================================
+        // ⚙️ منطقة التعديل الخاصة بصاحب الرابط (مدير الاعتكاف) ⚙️
+        // =============================================================
+
+        // 1. شريط الإعلانات
+        const alertMessage = "";
+
+        // 2. تحديث النقاط والأجزاء
+        // التطبيق سيرتبهم تلقائياً من الأعلى للأسفل، لا تتعب نفسك في ترتيبهم هنا في الكود!
+        const membersConfig = [
+            { name: 'صالح الزهراني', role: 'مدير الاعتكاف', parts: 0, points: 15 },
+            { name: 'عبدالرحمن زعل', role: 'مسؤول مواقيت الصلاة والأذكار', parts: 2, points: 25 },
+            { name: 'عبدالله غزواني', role: 'مسؤول الدروس العلمية والحلقات', parts: 1, points: 10 },
+            { name: 'مطاعن جبيع', role: 'مسؤول جلسات التدبر', parts: 0, points: 8 },
+            { name: 'عبدالرحمن عسيري', role: 'معلم الحلقة الرمضانية', parts: 0, points: 20 },
+            { name: 'عبدالرحمن العنزي', role: 'مسؤول التنظيف', parts: 0, points: 5 },
+            { name: 'بتال القبيسي', role: 'مسؤول الترتيب', parts: 0, points: 3 },
+            { name: 'محمد جبيع', role: 'الاحتياجات العامة', parts: 0, points: 0 }
+        ];
+
+        // =============================================================
+        // ⛔️ لا تقم بتعديل الكود أسفل هذا السطر ⛔️
+        // =============================================================
+
+        function renderApp() {
+            // معالجة الإعلان
+            const alertBar = document.getElementById('announcement');
+            if (alertMessage.trim() !== "") {
+                alertBar.innerText = alertMessage;
+                alertBar.style.display = 'block';
+            }
+
+            // ترتيب الأعضاء تنازلياً حسب النقاط
+            let sortedMembers = [...membersConfig].sort((a, b) => b.points - a.points);
+            
+            // بناء لوحة الشرف
+            let leaderboardHTML = "";
+            sortedMembers.forEach((member, index) => {
+                let currentParts = member.parts > 30 ? 30 : (member.parts < 0 ? 0 : member.parts);
+                let percentage = Math.round((currentParts / 30) * 100);
+                let barColor = currentParts === 30 ? '#2ecc71' : 'var(--gold)';
+                
+                // تحديد شكل المركز
+                let rankClass = "";
+                let medalIcon = "";
+                if (index === 0) { rankClass = "rank-1"; medalIcon = "<div class='medal-icon'>🥇</div>"; }
+                else if (index === 1) { rankClass = "rank-2"; medalIcon = "<div class='medal-icon'>🥈</div>"; }
+                else if (index === 2) { rankClass = "rank-3"; medalIcon = "<div class='medal-icon'>🥉</div>"; }
+
+                leaderboardHTML += `
+                    <div class="team-member ${rankClass}">
+                        <div class="rank-badge">${index + 1}</div>
+                        <div class="points-display">
+                            ${medalIcon}
+                            <span class="points-number">${member.points}</span>
+                            <span class="points-text">نقطة</span>
+                        </div>
+                        
+                        <h3>${member.name}</h3>
+                        <p>${member.role}</p>
+                        
+                        <div class="progress-container">
+                            <div class="progress-header">
+                                <span>إنجاز الختمة</span>
+                                <span>${currentParts} / 30 جزء</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: ${percentage}%; background-color: ${barColor};"></div>
+                            </div>
+                            <div class="progress-percent">اكتمل: %${percentage}</div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            document.getElementById('leaderboard-container').innerHTML = leaderboardHTML;
+        }
+
+        // تشغيل التطبيق عند اكتمال تحميل الصفحة
+        window.onload = renderApp;
+
         // التنقل بين الصفحات
         function switchTab(tabId, element) {
             document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
@@ -325,7 +347,7 @@
             window.scrollTo(0, 0);
         }
 
-        // النوافذ المنبثقة المرنة
+        // النوافذ المنبثقة
         function openModal(title, managerText, contentText) {
             document.getElementById('modalTitle').innerText = title;
             document.getElementById('modalManager').innerText = managerText;
