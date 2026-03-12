@@ -4,52 +4,84 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تطبيق برنامج الاعتكاف</title>
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Tajawal:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Tajawal:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --dark-green: #013220;
+            --darker-green: #011f14;
             --gold: #D4AF37;
             --light-gold: #f9f6ef;
             --bg-color: #f4f7f6;
             --white: #ffffff;
             --red-alert: #c0392b;
         }
-        body { font-family: 'Tajawal', sans-serif; background-color: var(--bg-color); margin: 0; padding: 0; padding-bottom: 80px; color: #333; }
+        body { font-family: 'Tajawal', sans-serif; background-color: var(--bg-color); margin: 0; padding: 0; padding-bottom: 80px; color: #333; overflow-x: hidden;}
         
-        /* شاشة التحميل (الدخولية) */
+        /* =========================================
+           شاشة التحميل العصرية (Splash Screen) 
+           ========================================= */
         #splash-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: var(--dark-green); z-index: 9999;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            color: var(--gold); transition: opacity 0.6s ease-out;
+            background: radial-gradient(circle at center, var(--dark-green) 0%, var(--darker-green) 100%);
+            z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            color: var(--gold);
+            transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
         }
-        .splash-logo { font-size: 60px; margin-bottom: 10px; animation: pulse 1.5s infinite; }
-        .splash-title { font-family: 'Amiri', serif; font-size: 32px; margin: 0; }
-        .loader {
-            margin-top: 20px; width: 40px; height: 40px;
-            border: 4px solid rgba(212, 175, 55, 0.3); border-top: 4px solid var(--gold);
-            border-radius: 50%; animation: spin 1s linear infinite;
+        .splash-content {
+            display: flex; flex-direction: column; align-items: center;
+            animation: slideUpFade 1.2s cubic-bezier(0.25, 1, 0.5, 1);
         }
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .logo-container {
+            width: 90px; height: 90px; margin-bottom: 25px;
+            filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.4));
+            animation: float 3s ease-in-out infinite;
+        }
+        /* شعار الهلال والنجمة (SVG عالي الدقة) */
+        .modern-logo { width: 100%; height: 100%; fill: var(--gold); }
+        .splash-title { font-family: 'Amiri', serif; font-size: 38px; margin: 0; letter-spacing: 1px; text-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        .splash-subtitle { font-size: 16px; opacity: 0.8; margin-top: 8px; font-weight: 300; letter-spacing: 0.5px;}
+        
+        /* شريط التحميل العصري */
+        .modern-loader {
+            width: 180px; height: 3px; background: rgba(255, 255, 255, 0.1);
+            margin-top: 40px; border-radius: 5px; overflow: hidden; position: relative;
+        }
+        .loader-bar {
+            position: absolute; top: 0; right: 0; height: 100%; width: 50%;
+            background: var(--gold); border-radius: 5px;
+            box-shadow: 0 0 10px var(--gold);
+            animation: loadingBar 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+        }
 
-        /* شريط الإعلانات العاجلة */
+        /* حركات الانيميشن لشاشة التحميل */
+        @keyframes slideUpFade {
+            0% { opacity: 0; transform: translateY(40px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+        @keyframes loadingBar {
+            0% { width: 10%; transform: translateX(200%); }
+            100% { width: 100%; transform: translateX(0); }
+        }
+
+        /* =========================================
+           باقي تصميم التطبيق 
+           ========================================= */
         .announcement-bar { background-color: var(--red-alert); color: var(--white); text-align: center; padding: 10px; font-weight: bold; font-size: 14px; display: none; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-
-        /* الترويسة */
         .header { background-color: var(--dark-green); color: var(--gold); text-align: center; padding: 20px 10px; border-bottom: 4px solid var(--gold); border-radius: 0 0 20px 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         .header h1 { font-family: 'Amiri', serif; margin: 0; font-size: 28px; }
         .header p { margin: 5px 0 0; font-size: 14px; color: var(--white); }
         
         .container { padding: 20px; max-width: 600px; margin: 0 auto; }
-        .tab-content { display: none; animation: fadeIn 0.3s; }
+        .tab-content { display: none; animation: fadeIn 0.4s ease-out; }
         .tab-content.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* الأقسام العامة */
         .section-title { color: var(--dark-green); border-bottom: 2px solid var(--gold); padding-bottom: 5px; margin-bottom: 15px; font-family: 'Amiri', serif; }
         
-        /* بطاقات الجدول */
         .card { background: var(--white); border-radius: 12px; padding: 15px; margin-bottom: 12px; border-right: 5px solid var(--gold); box-shadow: 0 2px 8px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: 0.2s; }
         .card:active { transform: scale(0.98); }
         .card-info { flex-grow: 1; margin-right: 15px; }
@@ -57,7 +89,6 @@
         .card-title { font-size: 16px; font-weight: bold; color: var(--dark-green); }
         .card-icon { font-size: 24px; background: var(--light-gold); width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%; min-width: 40px;}
 
-        /* بطاقات لوحة الشرف */
         .team-member { background: var(--white); padding: 20px 15px 15px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border: 1px solid #eee; position: relative; margin-top: 15px;}
         .team-member h3 { margin: 0 0 5px; color: var(--dark-green); font-size: 18px; padding-right: 10px;}
         .team-member p { margin: 0 0 10px; color: #666; font-size: 14px; padding-right: 10px;}
@@ -70,16 +101,14 @@
         .rank-2 { border: 2px solid #C0C0C0; background: linear-gradient(to right, #ffffff, #f8f9fa); }
         .rank-3 { border: 2px solid #CD7F32; background: linear-gradient(to right, #ffffff, #fff5ee); }
 
-        /* شريط الختمة */
         .progress-container { background: var(--light-gold); padding: 12px; border-radius: 8px; margin-top: 15px; border: 1px dashed var(--gold);}
         .progress-header { display: flex; justify-content: space-between; font-weight: bold; color: var(--dark-green); font-size: 14px; margin-bottom: 8px; }
         .progress-bar { background: #e0e0e0; border-radius: 10px; height: 12px; width: 100%; overflow: hidden; }
         .progress-fill { background: var(--gold); height: 100%; width: 0%; transition: width 0.8s ease; }
         .progress-percent { font-size: 12px; color: #555; text-align: left; margin-top: 5px; font-weight: bold;}
 
-        /* بطاقات الفوائد والمقاطع */
         .video-card { background: var(--white); border-radius: 12px; overflow: hidden; margin-bottom: 20px; box-shadow: 0 3px 10px rgba(0,0,0,0.1); border: 1px solid #ddd;}
-        .video-wrapper { position: relative; padding-bottom: 56.25%; /* 16:9 ratio */ height: 0; }
+        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; }
         .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;}
         .video-content { padding: 15px; }
         .video-title { font-size: 16px; font-weight: bold; color: var(--dark-green); margin-bottom: 5px; }
@@ -87,12 +116,10 @@
         .quiz-btn { background: var(--dark-green); color: var(--gold); width: 100%; border: none; padding: 12px; border-radius: 8px; font-family: 'Tajawal', sans-serif; font-size: 15px; font-weight: bold; cursor: pointer; transition: 0.3s; }
         .quiz-btn:hover { background: #024a30; }
 
-        /* أزرار الخيارات للأسئلة */
         .option-btn { background: var(--light-gold); border: 1px solid var(--gold); width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 8px; font-family: 'Tajawal', sans-serif; font-size: 15px; color: var(--dark-green); cursor: pointer; transition: 0.2s; text-align: right;}
         .option-btn:hover { background: var(--gold); color: var(--white); }
         .quiz-success { display: none; background: #d4edda; color: #155724; padding: 15px; border-radius: 8px; margin-top: 15px; border: 1px solid #c3e6cb; }
 
-        /* جداول النقاط */
         .points-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 14px; background: var(--white); box-shadow: 0 2px 5px rgba(0,0,0,0.05);}
         .points-table th, .points-table td { border: 1px solid #ddd; padding: 10px; text-align: center; }
         .points-table th { background-color: var(--dark-green); color: var(--gold); font-family: 'Amiri', serif;}
@@ -100,24 +127,33 @@
         .positive { color: green; font-weight: bold; }
         .negative { color: red; font-weight: bold; }
 
-        /* الشريط السفلي المتجاوب (5 أزرار) */
         .bottom-nav { position: fixed; bottom: 0; width: 100%; background-color: var(--white); display: flex; justify-content: space-between; padding: 10px 5px; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); border-top: 1px solid #ddd; z-index: 100; box-sizing: border-box;}
         .nav-item { text-align: center; color: #888; font-size: 11px; cursor: pointer; flex: 1; transition: 0.3s; padding: 0 2px;}
         .nav-item.active { color: var(--dark-green); font-weight: bold; }
         .nav-icon { font-size: 20px; display: block; margin-bottom: 3px; }
 
-        /* النوافذ المنبثقة */
-        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); align-items: center; justify-content: center; }
-        .modal-content { background-color: var(--white); padding: 25px; border-radius: 15px; width: 85%; max-width: 400px; text-align: center; border: 3px solid var(--gold); position: relative; max-height: 80vh; overflow-y: auto;}
-        .close-btn { position: absolute; top: 10px; left: 15px; font-size: 24px; font-weight: bold; color: #aaa; cursor: pointer; }
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); align-items: center; justify-content: center; backdrop-filter: blur(3px); }
+        .modal-content { background-color: var(--white); padding: 25px; border-radius: 15px; width: 85%; max-width: 400px; text-align: center; border: 3px solid var(--gold); position: relative; max-height: 80vh; overflow-y: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.5);}
+        .close-btn { position: absolute; top: 10px; left: 15px; font-size: 24px; font-weight: bold; color: #aaa; cursor: pointer; transition: 0.2s;}
+        .close-btn:hover { color: var(--red-alert); }
     </style>
 </head>
 <body>
 
     <div id="splash-screen">
-        <div class="splash-logo">🕌</div>
-        <h1 class="splash-title">برنامج الاعتكاف</h1>
-        <div class="loader"></div>
+        <div class="splash-content">
+            <div class="logo-container">
+                <svg viewBox="0 0 24 24" class="modern-logo" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M14 6l1 2.5L17.5 9l-2 2 .5 2.5-2.2-1.2L11.5 13.5l.5-2.5-2-2L12.5 8.5 14 6z" stroke="var(--gold)" stroke-width="1" stroke-linejoin="round"/>
+                </svg>
+            </div>
+            <h1 class="splash-title">برنامج الاعتكاف</h1>
+            <p class="splash-subtitle">نسأل الله القبول والتوفيق</p>
+            <div class="modern-loader">
+                <div class="loader-bar"></div>
+            </div>
+        </div>
     </div>
 
     <div id="announcement" class="announcement-bar"></div>
@@ -137,11 +173,32 @@
             <div class="card" onclick="openInfoModal('درس بعد الفجر', 'المسؤول: عبدالله غزواني', '﴿يَرْفَعِ اللَّهُ الَّذِينَ آمَنُوا مِنكُمْ وَالَّذِينَ أُوتُوا الْعِلْمَ دَرَجَاتٍ﴾')">
                 <div class="card-icon">📚</div><div class="card-info"><div class="card-title">درس بعد الفجر</div><div class="card-time">6:05 – 6:35 ص</div></div>
             </div>
-            <div class="card" onclick="openInfoModal('وقت مفتوح للعبادة', 'الجميع', 'وقت مخصص لتلاوة القرآن والراحة الشخصية')">
+             <div class="card" onclick="openInfoModal('وقت مفتوح للعبادة', 'الجميع', 'وقت مخصص لتلاوة القرآن والراحة الشخصية')">
                 <div class="card-icon">🌿</div><div class="card-info"><div class="card-title">وقت مفتوح</div><div class="card-time">8:00 – 12:15 م</div></div>
             </div>
              <div class="card" onclick="openInfoModal('صلاة الظهر', 'المسؤول: عبدالرحمن زعل', '﴿حَافِظُوا عَلَى الصَّلَوَاتِ وَالصَّلَاةِ الْوُسْطَىٰ﴾')">
                 <div class="card-icon">🕌</div><div class="card-info"><div class="card-title">صلاة الظهر</div><div class="card-time">12:15 – 12:30 م</div></div>
+            </div>
+            <div class="card" onclick="openInfoModal('تدبر آيات مختارة', 'المسؤول: مطاعن جبيع', '﴿أَفَلَا يَتَدَبَّرُونَ الْقُرْآنَ أَمْ عَلَىٰ قُلُوبٍ أَقْفَالُهَا﴾')">
+                <div class="card-icon">💭</div><div class="card-info"><div class="card-title">تدبر آيات مختارة</div><div class="card-time">1:10 – 1:40 م</div></div>
+            </div>
+            <div class="card" onclick="openInfoModal('صلاة العصر', 'المسؤول: عبدالرحمن زعل', 'من حافظ على العصرين دخل الجنة')">
+                <div class="card-icon">🕌</div><div class="card-info"><div class="card-title">صلاة العصر</div><div class="card-time">4:00 – 4:15 م</div></div>
+            </div>
+            <div class="card" onclick="openInfoModal('صلاة المغرب', 'المسؤول: عبدالرحمن زعل', '﴿فَسُبْحَانَ اللَّهِ حِينَ تُمْسُونَ وَحِينَ تُصْبِحُونَ﴾')">
+                <div class="card-icon">🕌</div><div class="card-info"><div class="card-title">صلاة المغرب</div><div class="card-time">7:00 – 7:15 م</div></div>
+            </div>
+            <div class="card" onclick="openInfoModal('صلاة العشاء', 'المسؤول: عبدالرحمن زعل', '﴿إِنَّ الصَّلَاةَ كَانَتْ عَلَى الْمُؤْمِنِينَ كِتَابًا مَّوْقُوتًا﴾')">
+                <div class="card-icon">🕌</div><div class="card-info"><div class="card-title">صلاة العشاء</div><div class="card-time">8:00 – 8:15 م</div></div>
+            </div>
+            <div class="card" onclick="openInfoModal('حلقة قرآنية', 'المسؤول: عبدالله غزواني', 'تلاوة وتسميع ومراجعة')">
+                <div class="card-icon">📖</div><div class="card-info"><div class="card-title">حلقة قرآنية</div><div class="card-time">8:15 – 9:30 م</div></div>
+            </div>
+            <div class="card" onclick="openInfoModal('تصحيح تلاوة وتجويد', 'الملقي: ش.قارئ', 'وصف الدرس: لقاء مبارك مخصص لتصحيح التلاوة للمعتكفين، وضبط مخارج الحروف وأحكام التجويد العملية.')">
+                <div class="card-icon">🎙️</div><div class="card-info"><div class="card-title">تصحيح تلاوة وتجويد</div><div class="card-time">9:30 – 11:30 م</div></div>
+            </div>
+            <div class="card" onclick="openInfoModal('السحور', 'المسؤول: صالح الزهراني', 'تسحروا فإن في السحور بركة')">
+                <div class="card-icon">🌙</div><div class="card-info"><div class="card-title">السحور</div><div class="card-time">2:30 – 3:00 ص</div></div>
             </div>
         </div>
 
@@ -162,11 +219,60 @@
                 <h3>أذكار الصباح والمساء</h3>
                 <p>احرص على أذكار الصباح بعد صلاة الفجر، وأذكار المساء بعد صلاة العصر.</p>
             </div>
+            <div class="team-member">
+                <h3>ورد القرآن الكريم</h3>
+                <p>الهدف المقترح: قراءة 3 أجزاء يومياً لختم القرآن خلال فترة الاعتكاف. استغل الأوقات المفتوحة لإنجاز وردك.</p>
+            </div>
         </div>
 
         <div id="rules" class="tab-content">
             <h2 class="section-title">نظام نقاط برنامج الاعتكاف</h2>
-            <p>نظام النقاط يعتمد على الحضور والمبادرات والأخلاق...</p>
+            <p style="font-size: 14px; color: #555; text-align: justify;">تم تصميم هذا النظام لتعزيز التنافس على الطاعات والمبادرات الإيجابية بين المعتكفين.</p>
+            
+            <h3 style="color: var(--dark-green); font-size: 16px;">الالتزام والصلوات</h3>
+            <table class="points-table">
+                <tr><th>البند</th><th>النقاط</th></tr>
+                <tr><td>الحضور المبكر لصلاة الفجر قبل الإقامة</td><td class="positive">+6</td></tr>
+                <tr><td>الصلاة في الصف الأول</td><td class="positive">+5</td></tr>
+                <tr><td>التبكير لبقية الصلوات</td><td class="positive">+4</td></tr>
+                <tr><td>الحضور بعد الإقامة مباشرة</td><td class="positive">+1</td></tr>
+                <tr><td>الصلاة مع جماعة ثانية</td><td class="negative">-4</td></tr>
+                <tr><td>الغياب عن صلاة الجماعة بدون عذر</td><td class="negative">-8</td></tr>
+            </table>
+
+            <h3 style="color: var(--dark-green); font-size: 16px;">البرامج والدروس</h3>
+            <table class="points-table">
+                <tr><th>البند</th><th>النقاط</th></tr>
+                <tr><td>الالتزام بحضور الدروس</td><td class="positive">+5</td></tr>
+                <tr><td>الالتزام بحضور الحلقة القرآنية</td><td class="positive">+5</td></tr>
+                <tr><td>تسميع ممتاز في الحلقة</td><td class="positive">+4</td></tr>
+                <tr><td>قراءة الجزء المقرر</td><td class="positive">+3</td></tr>
+                <tr><td>الالتزام بجدول الاعتكاف</td><td class="positive">+5</td></tr>
+            </table>
+
+            <h3 style="color: var(--dark-green); font-size: 16px;">السلوك والمبادرات</h3>
+            <table class="points-table">
+                <tr><th>البند</th><th>النقاط</th></tr>
+                <tr><td>قلة الخروج من المسجد</td><td class="positive">+4</td></tr>
+                <tr><td>كثرة الخروج بدون حاجة</td><td class="negative">-4</td></tr>
+                <tr><td>حسن الأدب واحترام المعتكفين</td><td class="positive">+4</td></tr>
+                <tr><td>التعاون مع المشرفين وإنجاز المهام</td><td class="positive">+5</td></tr>
+                <tr><td>مبادرة في خدمة المعتكفين / مساعدة زميل</td><td class="positive">+5</td></tr>
+                <tr><td>ترتيب المسجد أو تنظيفه بدون طلب</td><td class="positive">+4</td></tr>
+                <tr><td>استغلال الوقت بعبادة ملحوظة</td><td class="positive">+3</td></tr>
+                <tr><td>اقتراح فكرة نافعة أو التطوع لنشاط</td><td class="positive">+4</td></tr>
+            </table>
+            
+            <div style="background: var(--light-gold); padding: 10px; border-radius: 8px; border: 1px dashed var(--gold); text-align: center;">
+                <strong>💡 نقاط خاصة:</strong> يمكن للمشرف إضافة (+1 إلى +5) نقاط لأي عمل مميز يراه غير مذكور أعلاه.
+            </div>
+
+            <h2 class="section-title" style="margin-top: 25px;">تعليمات عامة</h2>
+            <ul style="line-height: 2; color: #444; font-size: 15px;">
+                <li><strong>إخلاص النية:</strong> استشعار عظمة المكان والزمان واحتساب الأجر.</li>
+                <li><strong>الهدوء:</strong> تقليل الكلام إلا في خير لعدم إزعاج المصلين والمعتكفين.</li>
+                <li><strong>الجوال:</strong> يُمنع استخدام الجوال إلا للضرورة القصوى.</li>
+            </ul>
         </div>
 
     </div>
@@ -223,11 +329,11 @@
             {
                 title: "فضل الاعتكاف وأحكامه",
                 desc: "مقطع قصير يشرح أهمية الاعتكاف وكيف كان النبي ﷺ يعتكف العشر الأواخر.",
-                youtubeId: "J8_d7q_Q4H0", // ضع هنا كود اليوتيوب الذي يأتي بعد v=
+                youtubeId: "J8_d7q_Q4H0", 
                 points: 5,
                 question: "في أي وقت كان النبي ﷺ يكثر من الاعتكاف؟",
                 options: ["في العشر الأوائل من رمضان", "في العشر الأواخر من رمضان", "في شهر شعبان"],
-                correctIndex: 1 // الإجابة الصحيحة هي رقم 1 (الترتيب يبدأ من 0، 1، 2)
+                correctIndex: 1 
             },
             {
                 title: "كيف تتدبر القرآن؟",
@@ -244,13 +350,14 @@
         // ⛔️ لا تقم بتعديل الكود أسفل هذا السطر ⛔️
         // =============================================================
 
-        // إخفاء شاشة التحميل بعد ثانيتين
+        // إخفاء شاشة التحميل بعد 2.5 ثانية بحركة سينمائية
         window.addEventListener('load', () => {
             setTimeout(() => {
                 const splash = document.getElementById('splash-screen');
+                splash.style.transform = 'scale(1.1)'; // تكبير بسيط قبل الاختفاء
                 splash.style.opacity = '0';
-                setTimeout(() => { splash.style.display = 'none'; }, 600);
-            }, 2000);
+                setTimeout(() => { splash.style.display = 'none'; }, 800); // إخفاء كلي بعد انتهاء الحركة
+            }, 2500);
             renderApp();
         });
 
@@ -343,7 +450,7 @@
                 feedbackBox.style.color = '#155724';
                 feedbackBox.style.borderColor = '#c3e6cb';
                 feedbackBox.innerHTML = `<strong>إجابة صحيحة! 🎉</strong><br>لقد ربحت ${vid.points} نقاط.<br><br>📸 <b>صور هذه الشاشة</b> وأرسلها لمدير الاعتكاف (صالح الزهراني) ليقوم بإضافة النقاط لرصيدك فوراً.`;
-                document.getElementById('quizOptions').innerHTML = ""; // إخفاء الخيارات بعد الإجابة الصحيحة
+                document.getElementById('quizOptions').innerHTML = ""; 
             } else {
                 feedbackBox.style.display = 'block';
                 feedbackBox.style.backgroundColor = '#f8d7da';
@@ -355,7 +462,7 @@
 
         function closeModal(modalId) { document.getElementById(modalId).style.display = 'none'; }
         window.onclick = function(event) {
-            if (event.target.className === 'modal') { event.target.style.display = "none"; }
+            if (event.target.className.includes('modal')) { event.target.style.display = "none"; }
         }
     </script>
 
