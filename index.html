@@ -16,11 +16,10 @@
             --red-alert: #c0392b;
         }
         
-        /* إضافة الخلفية المزخرفة هنا */
+        /* الخلفية المزخرفة */
         body { 
             font-family: 'Tajawal', sans-serif; 
             background-color: var(--bg-color); 
-            /* نقش إسلامي هندسي خفيف جداً في الخلفية */
             background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23D4AF37' fill-opacity='0.08'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
             margin: 0; 
             padding: 0; 
@@ -99,9 +98,11 @@
         .option-btn { background: var(--light-gold); border: 1px solid var(--gold); width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 8px; font-family: 'Tajawal', sans-serif; font-size: 15px; color: var(--dark-green); cursor: pointer; transition: 0.2s; text-align: right;}
         .quiz-success { display: none; background: #d4edda; color: #155724; padding: 15px; border-radius: 8px; margin-top: 15px; border: 1px solid #c3e6cb; }
 
-        .points-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 14px; background: var(--white); box-shadow: 0 2px 5px rgba(0,0,0,0.05);}
+        /* جداول النقاط */
+        .points-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 14px; background: rgba(255, 255, 255, 0.95); box-shadow: 0 4px 10px rgba(0,0,0,0.05); border-radius: 8px; overflow: hidden;}
         .points-table th, .points-table td { border: 1px solid #ddd; padding: 10px; text-align: center; }
-        .points-table th { background-color: var(--dark-green); color: var(--gold); font-family: 'Amiri', serif;}
+        .points-table th { background-color: var(--dark-green); color: var(--gold); font-family: 'Amiri', serif; font-size: 16px;}
+        .points-table tr:nth-child(even) { background-color: var(--light-gold); }
         .positive { color: green; font-weight: bold; direction: ltr; display: inline-block;}
         .negative { color: red; font-weight: bold; direction: ltr; display: inline-block;}
 
@@ -142,14 +143,45 @@
         
         <div id="schedule" class="tab-content active">
             <h2 class="section-title">الجدول اليومي (اضغط للتفاصيل)</h2>
-            <div class="card" onclick="openInfoModal('صلاة الفجر والأذكار', 'المسؤول: عبدالله غزواني', '﴿إِنَّ الصَّلَاةَ كَانَتْ عَلَى الْمُؤْمِنِينَ كِتَابًا مَّوْقُوتًا﴾')">
+            
+            <div class="card" onclick="openInfoModal('صلاة الفجر والأذكار', 'المسؤول: عبدالرحمن زعل', '﴿إِنَّ الصَّلَاةَ كَانَتْ عَلَى الْمُؤْمِنِينَ كِتَابًا مَّوْقُوتًا﴾')">
                 <div class="card-icon">🕌</div><div class="card-info"><div class="card-title">صلاة الفجر والأذكار</div><div class="card-time">5:29 – 6:05 ص</div></div>
             </div>
             <div class="card" onclick="openInfoModal('درس بعد الفجر', 'المسؤول: عبدالرحمن عسيري', '﴿يَرْفَعِ اللَّهُ الَّذِينَ آمَنُوا مِنكُمْ وَالَّذِينَ أُوتُوا الْعِلْمَ دَرَجَاتٍ﴾')">
                 <div class="card-icon">📚</div><div class="card-info"><div class="card-title">درس بعد الفجر</div><div class="card-time">6:05 – 6:35 ص</div></div>
             </div>
-            <div class="card" onclick="openInfoModal('حلقة قرآنية', 'المسؤول: مطاعن جبيع', 'تلاوة وتسميع ومراجعة')">
+            <div class="card" onclick="openInfoModal('صلاة الضحى', 'المسؤول: عبدالرحمن زعل', 'صلاة الأوابين حين ترمض الفصال')">
+                <div class="card-icon">🕌</div><div class="card-info"><div class="card-title">صلاة الضحى</div><div class="card-time">6:49 – 7:05 ص</div></div>
+            </div>
+            <div class="card" onclick="openInfoModal('وقت مفتوح للعبادة', 'الجميع', 'وقت مخصص لتلاوة القرآن والراحة الشخصية')">
+                <div class="card-icon">🌿</div><div class="card-info"><div class="card-title">وقت مفتوح</div><div class="card-time">8:00 – 12:15 م</div></div>
+            </div>
+            <div class="card" onclick="openInfoModal('صلاة الظهر', 'المسؤول: عبدالرحمن زعل', '﴿حَافِظُوا عَلَى الصَّلَوَاتِ وَالصَّلَاةِ الْوُسْطَىٰ﴾')">
+                <div class="card-icon">🕌</div><div class="card-info"><div class="card-title">صلاة الظهر</div><div class="card-time">12:15 – 12:30 م</div></div>
+            </div>
+            <div class="card" onclick="openInfoModal('تدبر آيات مختارة', 'المسؤول: مطاعن جبيع', '﴿أَفَلَا يَتَدَبَّرُونَ الْقُرْآنَ أَمْ عَلَىٰ قُلُوبٍ أَقْفَالُهَا﴾')">
+                <div class="card-icon">💭</div><div class="card-info"><div class="card-title">تدبر آيات مختارة</div><div class="card-time">1:10 – 1:40 م</div></div>
+            </div>
+            <div class="card" onclick="openInfoModal('وقت مفتوح', 'الجميع', 'قراءة قرآن وراحة')">
+                <div class="card-icon">🌿</div><div class="card-info"><div class="card-title">وقت مفتوح</div><div class="card-time">2:00 – 3:30 م</div></div>
+            </div>
+            <div class="card" onclick="openInfoModal('صلاة العصر', 'المسؤول: عبدالرحمن زعل', 'من حافظ على العصرين دخل الجنة')">
+                <div class="card-icon">🕌</div><div class="card-info"><div class="card-title">صلاة العصر</div><div class="card-time">4:00 – 4:15 م</div></div>
+            </div>
+            <div class="card" onclick="openInfoModal('صلاة المغرب', 'المسؤول: عبدالرحمن زعل', '﴿فَسُبْحَانَ اللَّهِ حِينَ تُمْسُونَ وَحِينَ تُصْبِحُونَ﴾')">
+                <div class="card-icon">🕌</div><div class="card-info"><div class="card-title">صلاة المغرب</div><div class="card-time">7:00 – 7:15 م</div></div>
+            </div>
+            <div class="card" onclick="openInfoModal('صلاة العشاء', 'المسؤول: عبدالرحمن زعل', '﴿إِنَّ الصَّلَاةَ كَانَتْ عَلَى الْمُؤْمِنِينَ كِتَابًا مَّوْقُوتًا﴾')">
+                <div class="card-icon">🕌</div><div class="card-info"><div class="card-title">صلاة العشاء</div><div class="card-time">8:00 – 8:15 م</div></div>
+            </div>
+            <div class="card" onclick="openInfoModal('حلقة قرآنية', 'المسؤول: عبدالله غزواني', 'تلاوة وتسميع ومراجعة')">
                 <div class="card-icon">📖</div><div class="card-info"><div class="card-title">حلقة قرآنية</div><div class="card-time">8:15 – 9:30 م</div></div>
+            </div>
+            <div class="card" onclick="openInfoModal('تصحيح تلاوة وتجويد', 'الملقي: ش.قارئ', 'وصف الدرس: لقاء مبارك مخصص لتصحيح التلاوة للمعتكفين، وضبط مخارج الحروف وأحكام التجويد العملية.')">
+                <div class="card-icon">🎙️</div><div class="card-info"><div class="card-title">تصحيح تلاوة وتجويد</div><div class="card-time">9:30 – 11:30 م</div></div>
+            </div>
+            <div class="card" onclick="openInfoModal('السحور', 'المسؤول: صالح الزهراني', 'تسحروا فإن في السحور بركة')">
+                <div class="card-icon">🌙</div><div class="card-info"><div class="card-title">السحور</div><div class="card-time">2:30 – 3:00 ص</div></div>
             </div>
         </div>
 
@@ -165,12 +197,69 @@
 
         <div id="adhkar" class="tab-content">
             <h2 class="section-title">الأذكار والوِرد اليومي</h2>
-            <div class="team-member" style="margin-top:0;"><h3>أذكار الصباح والمساء</h3><p>احرص على أذكار الصباح والمساء.</p></div>
+            
+            <div class="team-member" style="margin-top:0;">
+                <h3>أذكار الصباح والمساء</h3>
+                <p>احرص على أذكار الصباح بعد صلاة الفجر، وأذكار المساء بعد صلاة العصر. حصن نفسك واجعل لسانك رطباً بذكر الله.</p>
+            </div>
+            <div class="team-member">
+                <h3>ورد القرآن الكريم</h3>
+                <p>الهدف المقترح: قراءة 3 أجزاء يومياً لختم القرآن خلال فترة الاعتكاف. استغل الأوقات المفتوحة لإنجاز وردك.</p>
+            </div>
+            <div class="team-member">
+                <h3>الدعاء في أوقات الإجابة</h3>
+                <p>تحرَّ أوقات الإجابة: بين الأذان والإقامة، في السجود، وفي الثلث الأخير من الليل.</p>
+            </div>
         </div>
 
         <div id="rules" class="tab-content">
-            <h2 class="section-title">نظام النقاط</h2>
-            <p style="font-size: 14px; color: #555; background: rgba(255,255,255,0.8); padding: 10px; border-radius: 8px;">يتم حساب النقاط بشفافية تامة من خلال سجل خاص بكل معتكف.</p>
+            <h2 class="section-title">نظام نقاط برنامج الاعتكاف</h2>
+            <p style="font-size: 14px; color: #555; background: rgba(255,255,255,0.8); padding: 10px; border-radius: 8px; margin-bottom: 20px;">يتم حساب النقاط بشفافية تامة من خلال سجل خاص بكل معتكف. هذا النظام مصمم لتعزيز التنافس على الطاعات والمبادرات الإيجابية.</p>
+            
+            <h3 style="color: var(--dark-green); font-size: 16px;">الالتزام والصلوات</h3>
+            <table class="points-table">
+                <tr><th>البند</th><th>النقاط</th></tr>
+                <tr><td>الحضور المبكر لصلاة الفجر قبل الإقامة</td><td class="positive">+6</td></tr>
+                <tr><td>الصلاة في الصف الأول</td><td class="positive">+5</td></tr>
+                <tr><td>التبكير لبقية الصلوات</td><td class="positive">+4</td></tr>
+                <tr><td>الحضور بعد الإقامة مباشرة</td><td class="positive">+1</td></tr>
+                <tr><td>الصلاة مع جماعة ثانية</td><td class="negative">-4</td></tr>
+                <tr><td>الغياب عن صلاة الجماعة بدون عذر</td><td class="negative">-8</td></tr>
+            </table>
+
+            <h3 style="color: var(--dark-green); font-size: 16px;">البرامج والدروس</h3>
+            <table class="points-table">
+                <tr><th>البند</th><th>النقاط</th></tr>
+                <tr><td>الالتزام بحضور الدروس</td><td class="positive">+5</td></tr>
+                <tr><td>الالتزام بحضور الحلقة القرآنية</td><td class="positive">+5</td></tr>
+                <tr><td>تسميع ممتاز في الحلقة</td><td class="positive">+4</td></tr>
+                <tr><td>قراءة الجزء المقرر</td><td class="positive">+3</td></tr>
+                <tr><td>الالتزام بجدول الاعتكاف</td><td class="positive">+5</td></tr>
+            </table>
+
+            <h3 style="color: var(--dark-green); font-size: 16px;">السلوك والمبادرات</h3>
+            <table class="points-table">
+                <tr><th>البند</th><th>النقاط</th></tr>
+                <tr><td>قلة الخروج من المسجد</td><td class="positive">+4</td></tr>
+                <tr><td>كثرة الخروج بدون حاجة</td><td class="negative">-4</td></tr>
+                <tr><td>حسن الأدب واحترام المعتكفين</td><td class="positive">+4</td></tr>
+                <tr><td>التعاون مع المشرفين وإنجاز المهام</td><td class="positive">+5</td></tr>
+                <tr><td>مبادرة في خدمة المعتكفين / مساعدة زميل</td><td class="positive">+5</td></tr>
+                <tr><td>ترتيب المسجد أو تنظيفه بدون طلب</td><td class="positive">+4</td></tr>
+                <tr><td>استغلال الوقت بعبادة ملحوظة</td><td class="positive">+3</td></tr>
+                <tr><td>اقتراح فكرة نافعة أو التطوع لنشاط</td><td class="positive">+4</td></tr>
+            </table>
+            
+            <div style="background: rgba(249, 246, 239, 0.9); padding: 10px; border-radius: 8px; border: 1px dashed var(--gold); text-align: center;">
+                <strong>💡 نقاط خاصة:</strong> يمكن للمدير إضافة (+1 إلى +5) نقاط لأي عمل مميز يراه غير مذكور أعلاه.
+            </div>
+
+            <h2 class="section-title" style="margin-top: 25px;">تعليمات عامة</h2>
+            <ul style="line-height: 2; color: #444; font-size: 15px;">
+                <li><strong>إخلاص النية:</strong> استشعار عظمة المكان والزمان واحتساب الأجر.</li>
+                <li><strong>الهدوء:</strong> تقليل الكلام إلا في خير لعدم إزعاج المصلين والمعتكفين.</li>
+                <li><strong>الجوال:</strong> يُمنع استخدام الجوال إلا للضرورة القصوى.</li>
+            </ul>
         </div>
 
     </div>
@@ -193,7 +282,7 @@
             <div style="font-size: 20px; color: var(--dark-green); font-weight: bold; margin-bottom:5px;">📜 سجل النقاط</div>
             <div id="historyUserName" style="color: var(--gold); margin-bottom: 15px; font-weight: bold; font-size: 16px;"></div>
             
-            <table class="points-table">
+            <table class="points-table" style="box-shadow: none;">
                 <thead><tr><th>السبب أو البند</th><th>النقاط</th></tr></thead>
                 <tbody id="historyTableBody"></tbody>
             </table>
@@ -209,11 +298,10 @@
         // ⚙️ منطقة التعديل الخاصة بصاحب الرابط (مدير الاعتكاف) ⚙️
         // =============================================================
 
-        // 1. شريط الإعلانات
+        // 1. شريط الإعلانات العاجلة
         const alertMessage = "";
 
         // 2. تحديث النقاط بالأسماء الجديدة والبيانات الحالية (نظام السجل)
-        // أضفت نقاطهم الحالية كـ "رصيد افتتاحي" لتتمكن من الإضافة عليه مستقبلاً.
         const membersConfig = [
             { 
                 name: 'صالح الزهراني', role: 'مدير الاعتكاف', parts: 4, 
@@ -281,6 +369,10 @@
         });
 
         function renderApp() {
+            // الإعلان
+            const alertBar = document.getElementById('announcement');
+            if (alertMessage.trim() !== "") { alertBar.innerText = alertMessage; alertBar.style.display = 'block'; }
+
             // حساب الإجمالي لكل شخص من خلال السجل الخاص به وترتيبهم تنازلياً
             let membersWithTotals = membersConfig.map((m, originalIndex) => {
                 let total = m.history.reduce((sum, record) => sum + record.amount, 0);
@@ -319,14 +411,11 @@
             document.getElementById('videos-container').innerHTML = videosHTML;
         }
 
-        // فتح سجل النقاط
         function openHistory(index) {
             const member = membersConfig[index];
             document.getElementById('historyUserName').innerText = "الاسم: " + member.name;
-            
             let tbodyHTML = "";
             let total = 0;
-            
             if(member.history.length === 0) {
                 tbodyHTML = "<tr><td colspan='2'>لا يوجد سجل نقاط حتى الآن.</td></tr>";
             } else {
@@ -338,7 +427,6 @@
                     total += record.amount;
                 });
             }
-
             document.getElementById('historyTableBody').innerHTML = tbodyHTML;
             document.getElementById('historyTotal').innerText = total;
             document.getElementById('historyModal').style.display = 'flex';
@@ -356,7 +444,21 @@
         
         let currentQuizIndex = -1;
         function openQuiz(i) { currentQuizIndex = i; const vid = videosConfig[i]; document.getElementById('quizQuestion').innerText = vid.question; document.getElementById('quizFeedback').style.display='none'; let optionsHTML=""; vid.options.forEach((opt,j)=>{ optionsHTML+=`<button class="option-btn" onclick="checkAnswer(${j})">${opt}</button>`; }); document.getElementById('quizOptions').innerHTML=optionsHTML; document.getElementById('quizModal').style.display='flex'; }
-        function checkAnswer(sIndex) { const vid=videosConfig[currentQuizIndex]; const fb=document.getElementById('quizFeedback'); fb.style.display='block'; if(sIndex===vid.correctIndex){ fb.style.backgroundColor='#d4edda'; fb.style.color='#155724'; fb.style.borderColor='#c3e6cb'; fb.innerHTML=`<strong>إجابة صحيحة! 🎉</strong><br>ربحت ${vid.points} نقاط.<br>📸 صور الشاشة وأرسلها لمدير الاعتكاف.`; document.getElementById('quizOptions').innerHTML=""; }else{ fb.style.backgroundColor='#f8d7da'; fb.style.color='#721c24'; fb.style.borderColor='#f5c6cb'; fb.innerHTML="إجابة خاطئة، حاول مرة أخرى ⏳"; } }
+        
+        function checkAnswer(sIndex) { 
+            const vid = videosConfig[currentQuizIndex]; 
+            const fb = document.getElementById('quizFeedback'); 
+            fb.style.display='block'; 
+            if(sIndex === vid.correctIndex){ 
+                fb.style.backgroundColor='#d4edda'; fb.style.color='#155724'; fb.style.borderColor='#c3e6cb'; 
+                fb.innerHTML=`<strong>إجابة صحيحة! 🎉</strong><br>ربحت ${vid.points} نقاط.<br>📸 صور الشاشة وأرسلها لمدير الاعتكاف.`; 
+                document.getElementById('quizOptions').innerHTML=""; 
+            } else { 
+                fb.style.backgroundColor='#f8d7da'; fb.style.color='#721c24'; fb.style.borderColor='#f5c6cb'; 
+                fb.innerHTML="إجابة خاطئة، حاول مرة أخرى ⏳"; 
+            } 
+        }
+        
         function closeModal(id) { document.getElementById(id).style.display='none'; }
         window.onclick = function(e) { if(e.target.className.includes('modal')) e.target.style.display="none"; }
     </script>
