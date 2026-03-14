@@ -96,7 +96,7 @@
         .qadr-card .card-time { color: var(--qadr-glow); }
         .qadr-card .card-icon { background: rgba(243, 156, 18, 0.15); }
 
-        /* لوحة الشرف */
+        /* لوحة الشرف والمهام */
         .team-member { background: rgba(255, 255, 255, 0.95); padding: 20px 15px 15px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.06); border: 1px solid #eee; position: relative; margin-top: 15px; backdrop-filter: blur(5px);}
         .team-member h3 { margin: 0 0 5px; color: var(--dark-blue); font-size: 18px; padding-right: 10px;}
         .team-member p { margin: 0 0 10px; color: #666; font-size: 14px; padding-right: 10px;}
@@ -135,8 +135,8 @@
         .positive { color: green; font-weight: bold; direction: ltr; display: inline-block;}
         .negative { color: red; font-weight: bold; direction: ltr; display: inline-block;}
 
-        .bottom-nav { position: fixed; bottom: 0; width: 100%; background-color: rgba(255, 255, 255, 0.98); display: flex; justify-content: space-between; padding: 10px 5px; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); border-top: 1px solid #ddd; z-index: 100; box-sizing: border-box;}
-        .nav-item { text-align: center; color: #888; font-size: 11px; cursor: pointer; flex: 1; transition: 0.3s; padding: 0 2px;}
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background-color: rgba(255, 255, 255, 0.98); display: flex; justify-content: space-between; padding: 10px 2px; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); border-top: 1px solid #ddd; z-index: 100; box-sizing: border-box;}
+        .nav-item { text-align: center; color: #888; font-size: 11px; cursor: pointer; flex: 1; transition: 0.3s; padding: 0 1px;}
         .nav-item.active { color: var(--dark-blue); font-weight: bold; }
         .nav-icon { font-size: 20px; display: block; margin-bottom: 3px; }
 
@@ -192,20 +192,26 @@
             <div class="card" onclick="openInfoModal('صلاة الضحى', 'المسؤول: عبدالرحمن زعل', 'صلاة الأوابين حين ترمض الفصال')">
                 <div class="card-icon">🕌</div><div class="card-info"><div class="card-title">صلاة الضحى</div><div class="card-time">6:49 – 7:05 ص</div></div>
             </div>
+            <div class="card" onclick="openInfoModal('قراءة الجزء المقرر', 'المسؤول: مطاعن جبيع', 'تلاوة جزء من القرآن الكريم')">
+                <div class="card-icon">📖</div><div class="card-info"><div class="card-title">قراءة الجزء المقرر</div><div class="card-time">7:05 – 8:05 ص</div></div>
+            </div>
             <div class="card" onclick="openInfoModal('وقت مفتوح للعبادة', 'الجميع', 'وقت مخصص لتلاوة القرآن والراحة الشخصية')">
-                <div class="card-icon">🌿</div><div class="card-info"><div class="card-title">وقت مفتوح</div><div class="card-time">8:00 – 12:15 م</div></div>
+                <div class="card-icon">🌿</div><div class="card-info"><div class="card-title">وقت مفتوح</div><div class="card-time">8:05 – 12:15 م</div></div>
             </div>
             <div class="card" onclick="openInfoModal('صلاة الظهر', 'المسؤول: عبدالرحمن زعل', '﴿حَافِظُوا عَلَى الصَّلَوَاتِ وَالصَّلَاةِ الْوُسْطَىٰ﴾')">
                 <div class="card-icon">🕌</div><div class="card-info"><div class="card-title">صلاة الظهر</div><div class="card-time">12:15 – 12:30 م</div></div>
             </div>
-            <div class="card" onclick="openInfoModal('تدبر آيات مختارة', 'المسؤول: مطاعن جبيع', '﴿أَفَلَا يَتَدَبَّرُونَ الْقُرْآنَ أَمْ عَلَىٰ قُلُوبٍ أَقْفَالُهَا﴾')">
-                <div class="card-icon">💭</div><div class="card-info"><div class="card-title">تدبر آيات مختارة</div><div class="card-time">1:10 – 1:40 م</div></div>
+            <div class="card" onclick="openInfoModal('قراءة الجزء المقرر', 'المسؤول: مطاعن جبيع', '﴿أَفَلَا يَتَدَبَّرُونَ الْقُرْآنَ أَمْ عَلَىٰ قُلُوبٍ أَقْفَالُهَا﴾')">
+                <div class="card-icon">📖</div><div class="card-info"><div class="card-title">قراءة الجزء المقرر</div><div class="card-time">1:10 – 2:10 م</div></div>
             </div>
             <div class="card" onclick="openInfoModal('وقت مفتوح', 'الجميع', 'قراءة قرآن وراحة')">
-                <div class="card-icon">🌿</div><div class="card-info"><div class="card-title">وقت مفتوح</div><div class="card-time">2:00 – 3:30 م</div></div>
+                <div class="card-icon">🌿</div><div class="card-info"><div class="card-title">وقت مفتوح</div><div class="card-time">2:10 – 4:00 م</div></div>
             </div>
             <div class="card" onclick="openInfoModal('صلاة العصر', 'المسؤول: عبدالرحمن زعل', 'من حافظ على العصرين دخل الجنة')">
                 <div class="card-icon">🕌</div><div class="card-info"><div class="card-title">صلاة العصر</div><div class="card-time">4:00 – 4:15 م</div></div>
+            </div>
+            <div class="card" onclick="openInfoModal('قراءة الجزء المقرر', 'المسؤول: مطاعن جبيع', 'تلاوة جزء من القرآن الكريم')">
+                <div class="card-icon">📖</div><div class="card-info"><div class="card-title">قراءة الجزء المقرر</div><div class="card-time">4:15 – 5:15 م</div></div>
             </div>
             <div class="card" onclick="openInfoModal('صلاة المغرب', 'المسؤول: عبدالرحمن زعل', '﴿فَسُبْحَانَ اللَّهِ حِينَ تُمْسُونَ وَحِينَ تُصْبِحُونَ﴾')">
                 <div class="card-icon">🕌</div><div class="card-info"><div class="card-title">صلاة المغرب</div><div class="card-time">7:00 – 7:15 م</div></div>
@@ -213,14 +219,42 @@
             <div class="card" onclick="openInfoModal('صلاة العشاء والقيام', 'المسؤول: عبدالرحمن زعل', '﴿إِنَّ الصَّلَاةَ كَانَتْ عَلَى الْمُؤْمِنِينَ كِتَابًا مَّوْقُوتًا﴾')">
                 <div class="card-icon">🕌</div><div class="card-info"><div class="card-title">صلاة العشاء والقيام</div><div class="card-time">8:00 – 8:15 م</div></div>
             </div>
-            <div class="card" onclick="openInfoModal('حلقة قرآنية', 'المسؤول: عبدالله غزواني', 'تلاوة وتسميع ومراجعة')">
-                <div class="card-icon">📖</div><div class="card-info"><div class="card-title">حلقة قرآنية</div><div class="card-time">8:15 – 9:30 م</div></div>
-            </div>
             <div class="card" onclick="openInfoModal('تصحيح تلاوة وتجويد', 'الملقي: ش.قارئ', 'لقاء مبارك مخصص لتصحيح التلاوة للمعتكفين، وضبط مخارج الحروف وأحكام التجويد العملية.')">
                 <div class="card-icon">🎙️</div><div class="card-info"><div class="card-title">تصحيح تلاوة وتجويد</div><div class="card-time">9:30 – 11:30 م</div></div>
             </div>
+            <div class="card" onclick="openInfoModal('حلقة قرآنية', 'المسؤول: عبدالله غزواني', 'تلاوة وتسميع ومراجعة')">
+                <div class="card-icon">📖</div><div class="card-info"><div class="card-title">حلقة قرآنية</div><div class="card-time">12:00 – 1:00 ص</div></div>
+            </div>
             <div class="card" onclick="openInfoModal('السحور', 'المسؤول: صالح الزهراني', 'تسحروا فإن في السحور بركة')">
                 <div class="card-icon">🌙</div><div class="card-info"><div class="card-title">السحور</div><div class="card-time">2:30 – 3:00 ص</div></div>
+            </div>
+        </div>
+
+        <div id="duties" class="tab-content">
+            <h2 class="section-title">🧹 جدول النظافة والضيافة</h2>
+            <p style="font-size: 14px; color: #555; background: rgba(255,255,255,0.8); padding: 10px; border-radius: 8px; margin-bottom: 20px;">
+                تعاونكم يخفف التعب، والأجر في خدمة المعتكفين عظيم. تم تقسيم المهام بالتساوي على الجميع.
+            </p>
+            
+            <div class="team-member" style="border: 1px solid var(--qadr-glow);">
+                <h3 style="color: var(--qadr-glow);">اليوم الأول (اليوم)</h3>
+                <p style="font-weight: bold; font-size: 16px; color: var(--dark-blue);">مطاعن جبيع & صالح الزهراني</p>
+            </div>
+            <div class="team-member">
+                <h3>اليوم الثاني</h3>
+                <p style="font-weight: bold; font-size: 16px; color: var(--dark-blue);">عبدالرحمن زعل & عبدالله غزواني</p>
+            </div>
+            <div class="team-member">
+                <h3>اليوم الثالث</h3>
+                <p style="font-weight: bold; font-size: 16px; color: var(--dark-blue);">عبدالرحمن عسيري & بتال القبيسي</p>
+            </div>
+            <div class="team-member">
+                <h3>اليوم الرابع</h3>
+                <p style="font-weight: bold; font-size: 16px; color: var(--dark-blue);">يزن الامير & ريان عري</p>
+            </div>
+            <div class="team-member">
+                <h3>اليوم الخامس</h3>
+                <p style="font-weight: bold; font-size: 16px; color: var(--dark-blue);">محمد جبيع & (متطوع من المجموعة)</p>
             </div>
         </div>
 
@@ -315,6 +349,7 @@
 
     <div class="bottom-nav">
         <div class="nav-item active" onclick="switchTab('schedule', this)"><span class="nav-icon">📅</span>الجدول</div>
+        <div class="nav-item" onclick="switchTab('duties', this)"><span class="nav-icon">🧹</span>المهام</div>
         <div class="nav-item" onclick="switchTab('team', this)"><span class="nav-icon">🏆</span>الشرف</div>
         <div class="nav-item" onclick="switchTab('benefits', this)"><span class="nav-icon">🎥</span>فوائد</div>
         <div class="nav-item" onclick="switchTab('adhkar', this)"><span class="nav-icon">📿</span>الأذكار</div>
@@ -376,7 +411,7 @@
                 splash.style.transform = 'scale(1.1)'; 
                 splash.style.opacity = '0';
                 setTimeout(() => { splash.style.display = 'none'; }, 800);
-            }, 3000); // زدنا الوقت قليلاً ليتمكن المستخدم من قراءة الآية
+            }, 3000); 
             renderApp();
         });
 
