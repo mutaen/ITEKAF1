@@ -15,7 +15,6 @@
             --white: #ffffff;
             --red-alert: #c0392b;
             --qadr-glow: #F39C12; 
-            --qadr-accent: #8E44AD; 
         }
         
         body { 
@@ -29,7 +28,6 @@
             overflow-x: hidden;
         }
 
-        /* شريط عداد الصلاة القادمة */
         #prayer-countdown-container {
             background: linear-gradient(to right, var(--qadr-glow), #f1c40f);
             color: var(--dark-blue); text-align: center; padding: 8px; font-weight: bold; font-size: 14px;
@@ -46,9 +44,10 @@
         .logo-container { width: 90px; height: 90px; margin-bottom: 25px; filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.4)); animation: float 3s ease-in-out infinite; }
         .modern-logo { width: 100%; height: 100%; fill: var(--gold); }
         .splash-title { font-family: 'Amiri', serif; font-size: 38px; margin: 0; letter-spacing: 1px; text-shadow: 0 4px 10px rgba(0,0,0,0.3); }
-        .splash-subtitle { font-size: 16px; opacity: 0.8; margin-top: 8px; font-weight: 300; letter-spacing: 0.5px; margin-bottom: 15px; color: white;}
+        .splash-subtitle { font-size: 16px; opacity: 0.8; margin-top: 8px; font-weight: 300; margin-bottom: 15px; color: white;}
         .modern-loader { width: 180px; height: 3px; background: rgba(255, 255, 255, 0.1); margin-top: 30px; border-radius: 5px; overflow: hidden; position: relative; }
         .loader-bar { position: absolute; top: 0; right: 0; height: 100%; width: 50%; background: var(--gold); border-radius: 5px; box-shadow: 0 0 10px var(--gold); animation: loadingBar 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate; }
+        @keyframes loadingBar { 0% { right: 0; width: 30%; } 100% { right: 70%; width: 30%; } }
 
         .quran-verse { font-family: 'Amiri', serif; font-size: 15px; color: var(--gold); line-height: 1.8; margin: 10px 0; text-shadow: 0 2px 5px rgba(0,0,0,0.2); }
         .header .quran-verse { color: var(--light-gold); font-size: 14px; opacity: 0.95; margin-top: 15px; border-top: 1px dashed rgba(212, 175, 55, 0.3); padding-top: 10px; }
@@ -73,8 +72,9 @@
         .card-title { font-size: 16px; font-weight: bold; color: var(--dark-blue); }
         .card-icon { font-size: 24px; background: var(--light-gold); width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%; min-width: 40px;}
         
-        .current-event { border-right: 6px solid #2ecc71; background: linear-gradient(to left, rgba(46, 204, 113, 0.1), rgba(255,255,255,0.95)); box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3); transform: scale(1.02); }
-        .current-event::after { content: 'الآن'; position: absolute; top: -10px; left: 15px; background: #2ecc71; color: white; padding: 2px 12px; border-radius: 10px; font-size: 12px; font-weight: bold; animation: pulseNow 1.5s infinite; }
+        /* تأثير الحدث الحالي (الآن) الذي يعمل تلقائياً */
+        .current-event { border-right: 6px solid #2ecc71 !important; background: linear-gradient(to left, rgba(46, 204, 113, 0.1), rgba(255,255,255,0.95)) !important; box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3) !important; transform: scale(1.02); z-index: 10; border-radius: 12px;}
+        .current-event::after { content: 'الآن'; position: absolute; top: -12px; left: 15px; background: #2ecc71; color: white; padding: 3px 15px; border-radius: 12px; font-size: 12px; font-weight: bold; animation: pulseNow 1.5s infinite; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
         @keyframes pulseNow { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7); } 70% { transform: scale(1.05); box-shadow: 0 0 0 6px rgba(46, 204, 113, 0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(46, 204, 113, 0); } }
 
         .qadr-card { border-right: 5px solid var(--qadr-glow); background: linear-gradient(to left, rgba(243, 156, 18, 0.08), rgba(255,255,255,0.95)); animation: softPulse 2s infinite alternate; }
@@ -85,6 +85,11 @@
         .team-member { background: rgba(255, 255, 255, 0.95); padding: 20px 15px 15px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.06); border: 1px solid #eee; position: relative; margin-top: 15px; backdrop-filter: blur(5px);}
         .team-member h3 { margin: 0 0 5px; color: var(--dark-blue); font-size: 18px; padding-right: 10px;}
         .team-member p { margin: 0 0 10px; color: #666; font-size: 14px; padding-right: 10px;}
+        
+        /* تمييز يوم النظافة الحالي (بدون كلمة الآن الخاصة بالجدول) */
+        .active-duty { border: 2px solid var(--qadr-glow); background: linear-gradient(to left, rgba(243, 156, 18, 0.05), rgba(255,255,255,0.95)); box-shadow: 0 4px 15px rgba(243, 156, 18, 0.2); }
+        .active-duty::after { content: 'مهام اليوم'; position: absolute; top: -12px; left: 15px; background: var(--qadr-glow); color: var(--dark-blue); padding: 3px 12px; border-radius: 10px; font-size: 12px; font-weight: bold; }
+
         .rank-badge { position: absolute; right: -10px; top: -10px; width: 35px; height: 35px; background: var(--dark-blue); color: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 18px; border: 2px solid var(--gold); box-shadow: 0 2px 5px rgba(0,0,0,0.2); font-family: 'Amiri', serif;}
         .points-display { position: absolute; left: 15px; top: 15px; text-align: center; background: var(--light-gold); padding: 5px 15px; border-radius: 8px; border: 1px solid var(--gold); min-width: 50px;}
         .points-number { font-size: 20px; font-weight: bold; color: var(--dark-blue); display: block; line-height: 1.2; }
@@ -239,7 +244,7 @@
                 <h3>اليوم الأول</h3>
                 <p style="font-weight: bold; font-size: 16px; color: var(--dark-blue);">مطاعن جبيع & صالح الزهراني</p>
             </div>
-            <div class="team-member current-event" style="border: 1px solid var(--qadr-glow);">
+            <div class="team-member active-duty">
                 <h3 style="color: var(--dark-blue);">اليوم الثاني (اليوم)</h3>
                 <p style="font-weight: bold; font-size: 16px; color: var(--dark-blue);">عبدالرحمن زعل & محمد جبيع</p>
             </div>
@@ -369,7 +374,6 @@
         // ⚙️ منطقة التعديل الخاصة بصاحب الرابط (مدير الاعتكاف) ⚙️
         // =============================================================
 
-        // إعلان يظهر للجميع ويمكن إرسال إشعار به
         const alertMessage = "تذكير: لقاء تصحيح التلاوة الليلة مع الشيخ قارئ بعد التراويح.";
 
         const membersConfig = [
@@ -393,17 +397,12 @@
         // ⛔️ أكواد التشغيل، العدادات، والعمل بدون إنترنت ⛔️
         // =============================================================
 
-        // 1️⃣ دعم العمل بدون إنترنت (PWA/Offline Mode)
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 const swCode = `
                     const CACHE_NAME = 'itekaf-v2';
-                    self.addEventListener('install', e => {
-                        e.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll([location.href])));
-                    });
-                    self.addEventListener('fetch', e => {
-                        e.respondWith(caches.match(e.request).then(res => res || fetch(e.request)));
-                    });
+                    self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll([location.href]))); });
+                    self.addEventListener('fetch', e => { e.respondWith(caches.match(e.request).then(res => res || fetch(e.request))); });
                 `;
                 const blob = new Blob([swCode], { type: 'application/javascript' });
                 navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(()=>{});
@@ -411,33 +410,61 @@
         }
 
         window.addEventListener('load', () => {
-            // 4️⃣ شاشة تحميل احترافية بعداد مئوي
             let perc = 0;
             const percText = document.getElementById('splash-percentage');
             let percInterval = setInterval(() => {
-                perc += 4;
-                if(perc > 100) perc = 100;
-                percText.innerText = perc + '%';
+                perc += 4; if(perc > 100) perc = 100; percText.innerText = perc + '%';
                 if(perc >= 100) clearInterval(percInterval);
             }, 80);
 
             setTimeout(() => {
                 const splash = document.getElementById('splash-screen');
-                splash.style.transform = 'scale(1.1)'; 
-                splash.style.opacity = '0';
+                splash.style.transform = 'scale(1.1)'; splash.style.opacity = '0';
                 setTimeout(() => { splash.style.display = 'none'; }, 800);
             }, 2500); 
             
             renderApp();
-            highlightCurrentEvent();
+            highlightCurrentEvent(); // تفعيل تحديد الحدث الحالي (الآن)
             loadChecklist();
-            checkAnnouncements(); // نظام الإشعارات
+            checkAnnouncements(); 
             
-            setInterval(highlightCurrentEvent, 60000);
-            setInterval(updatePrayerCountdown, 1000); // 3️⃣ تحديث عداد الصلاة كل ثانية
+            setInterval(highlightCurrentEvent, 60000); // تحديث الحدث الحالي كل دقيقة
+            setInterval(updatePrayerCountdown, 1000);
         });
 
-        // 3️⃣ نظام عداد الصلاة القادمة
+        // 🌟 دالة تمييز الحدث الحالي (الآن) بدقة 🌟
+        function highlightCurrentEvent() {
+            const now = new Date();
+            const currentHour = now.getHours();
+            const currentMinute = now.getMinutes();
+            const currentTimeStr = currentHour + (currentMinute / 60);
+
+            document.querySelectorAll('.event-card').forEach(card => {
+                card.classList.remove('current-event'); 
+                let startStr = card.getAttribute('data-start');
+                let endStr = card.getAttribute('data-end');
+                
+                if(startStr && endStr) {
+                    let [sh, sm] = startStr.split(':').map(Number);
+                    let [eh, em] = endStr.split(':').map(Number);
+                    let startTime = sh + (sm / 60);
+                    let endTime = eh + (em / 60);
+                    
+                    if (endTime < startTime) {
+                        // للأحداث التي تتجاوز منتصف الليل (مثل 23:30 إلى 01:00)
+                        if (currentTimeStr >= startTime || currentTimeStr < endTime) {
+                            card.classList.add('current-event');
+                        }
+                    } else {
+                        // للأحداث العادية خلال اليوم
+                        if (currentTimeStr >= startTime && currentTimeStr < endTime) {
+                            card.classList.add('current-event');
+                        }
+                    }
+                }
+            });
+        }
+
         const prayerTimes = [
             { name: "الفجر", time: "05:29" },
             { name: "الظهر", time: "12:15" },
@@ -447,47 +474,27 @@
         ];
 
         function updatePrayerCountdown() {
-            const now = new Date();
-            let nextPrayer = null;
-            let prayerDate = new Date();
-
+            const now = new Date(); let nextPrayer = null; let prayerDate = new Date();
             for (let prayer of prayerTimes) {
-                const [h, m] = prayer.time.split(':');
-                prayerDate.setHours(h, m, 0, 0);
-                if (prayerDate > now) {
-                    nextPrayer = { name: prayer.name, date: prayerDate };
-                    break;
-                }
+                const [h, m] = prayer.time.split(':'); prayerDate.setHours(h, m, 0, 0);
+                if (prayerDate > now) { nextPrayer = { name: prayer.name, date: prayerDate }; break; }
             }
-
             if (!nextPrayer) {
-                const [h, m] = prayerTimes[0].time.split(':');
-                prayerDate.setDate(prayerDate.getDate() + 1);
-                prayerDate.setHours(h, m, 0, 0);
-                nextPrayer = { name: prayerTimes[0].name, date: prayerDate };
+                const [h, m] = prayerTimes[0].time.split(':'); prayerDate.setDate(prayerDate.getDate() + 1);
+                prayerDate.setHours(h, m, 0, 0); nextPrayer = { name: prayerTimes[0].name, date: prayerDate };
             }
-
             const diff = nextPrayer.date - now;
             const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
             document.getElementById('prayer-countdown').innerText = `باقي على صلاة ${nextPrayer.name}: ${hours}:${minutes < 10 ? '0'+minutes : minutes}:${seconds < 10 ? '0'+seconds : seconds}`;
         }
 
-        // 1️⃣ نظام الإشعارات للإعلان الجديد
         function checkAnnouncements() {
             const lastAnn = localStorage.getItem('lastAnnouncement');
             if (alertMessage && alertMessage.trim() !== "" && alertMessage !== lastAnn) {
-                if (Notification.permission === "granted") {
-                    new Notification("إعلان جديد - الاعتكاف", { body: alertMessage, icon: "🕌" });
-                } else if (Notification.permission !== "denied") {
-                    Notification.requestPermission().then(permission => {
-                        if (permission === "granted") {
-                            new Notification("إعلان جديد - الاعتكاف", { body: alertMessage, icon: "🕌" });
-                        }
-                    });
-                }
+                if (Notification.permission === "granted") { new Notification("إعلان جديد - الاعتكاف", { body: alertMessage, icon: "🕌" }); }
+                else if (Notification.permission !== "denied") { Notification.requestPermission().then(permission => { if (permission === "granted") { new Notification("إعلان جديد - الاعتكاف", { body: alertMessage, icon: "🕌" }); } }); }
                 localStorage.setItem('lastAnnouncement', alertMessage);
             }
         }
@@ -495,10 +502,7 @@
         function renderApp() {
             const alertBar = document.getElementById('announcement');
             const alertText = document.getElementById('ann-text');
-            if (alertMessage.trim() !== "") { 
-                alertText.innerText = alertMessage; 
-                alertBar.style.display = 'block'; 
-            }
+            if (alertMessage.trim() !== "") { alertText.innerText = alertMessage; alertBar.style.display = 'block'; }
 
             let membersWithTotals = membersConfig.map((m, originalIndex) => {
                 let total = m.history.reduce((sum, record) => sum + record.amount, 0);
@@ -524,9 +528,7 @@
                         <div class="rank-badge">${index + 1}</div>
                         <div class="points-display">${medalIcon}<span class="points-number">${member.totalPoints}</span><span class="points-text">نقطة</span></div>
                         <h3>${member.name}${extraBadges}</h3><p>${member.role}</p>
-                        
                         <button class="history-btn" onclick="openHistory(${member.originalIndex})">📜 عرض سجل النقاط</button>
-
                         <div class="progress-container">
                             <div class="progress-header"><span>إنجاز الختمة</span><span>${currentParts} / 30 جزء</span></div>
                             <div class="progress-bar"><div class="progress-fill" style="width: ${percentage}%; background-color: ${barColor};"></div></div>
@@ -542,93 +544,34 @@
             document.getElementById('videos-container').innerHTML = videosHTML;
         }
 
-        function highlightCurrentEvent() {
-            const now = new Date();
-            const currentHour = now.getHours();
-            const currentMinute = now.getMinutes();
-            const currentTimeStr = currentHour + (currentMinute / 60);
-
-            document.querySelectorAll('.event-card').forEach(card => {
-                card.classList.remove('current-event'); 
-                let startStr = card.getAttribute('data-start');
-                let endStr = card.getAttribute('data-end');
-                
-                if(startStr && endStr) {
-                    let [sh, sm] = startStr.split(':').map(Number);
-                    let [eh, em] = endStr.split(':').map(Number);
-                    let startTime = sh + (sm / 60);
-                    let endTime = eh + (em / 60);
-                    
-                    if (endTime < startTime) {
-                        if (currentTimeStr >= startTime || currentTimeStr < endTime) {
-                            card.classList.add('current-event');
-                        }
-                    } else {
-                        if (currentTimeStr >= startTime && currentTimeStr < endTime) {
-                            card.classList.add('current-event');
-                        }
-                    }
-                }
-            });
-        }
-
         function toggleTask(checkbox) {
-            const item = checkbox.parentElement;
-            const todayDate = new Date().toDateString(); 
-            
-            if(checkbox.checked) {
-                item.classList.add('done');
-                localStorage.setItem(checkbox.id + "_" + todayDate, 'true');
-            } else {
-                item.classList.remove('done');
-                localStorage.removeItem(checkbox.id + "_" + todayDate);
-            }
+            const item = checkbox.parentElement; const todayDate = new Date().toDateString(); 
+            if(checkbox.checked) { item.classList.add('done'); localStorage.setItem(checkbox.id + "_" + todayDate, 'true'); } 
+            else { item.classList.remove('done'); localStorage.removeItem(checkbox.id + "_" + todayDate); }
         }
 
         function loadChecklist() {
             const todayDate = new Date().toDateString();
             document.querySelectorAll('.check-item input[type="checkbox"]').forEach(chk => {
                 for (let i = 0; i < localStorage.length; i++) {
-                    let key = localStorage.key(i);
-                    if (key.startsWith(chk.id + "_") && key !== chk.id + "_" + todayDate) {
-                        localStorage.removeItem(key);
-                    }
+                    let key = localStorage.key(i); if (key.startsWith(chk.id + "_") && key !== chk.id + "_" + todayDate) { localStorage.removeItem(key); }
                 }
-                
-                if(localStorage.getItem(chk.id + "_" + todayDate) === 'true') {
-                    chk.checked = true;
-                    chk.parentElement.classList.add('done');
-                }
+                if(localStorage.getItem(chk.id + "_" + todayDate) === 'true') { chk.checked = true; chk.parentElement.classList.add('done'); }
             });
         }
 
         function openHistory(index) {
-            const member = membersConfig[index];
-            document.getElementById('historyUserName').innerText = "الاسم: " + member.name;
-            let tbodyHTML = "";
-            let total = 0;
-            if(member.history.length === 0) {
-                tbodyHTML = "<tr><td colspan='2'>لا يوجد سجل نقاط حتى الآن.</td></tr>";
-            } else {
-                member.history.forEach(record => {
-                    let isPositive = record.amount > 0;
-                    let sign = isPositive ? "+" : "";
-                    let colorClass = isPositive ? "positive" : "negative";
-                    tbodyHTML += `<tr><td style="text-align:right;">${record.reason}</td><td class="${colorClass}" dir="ltr">${sign}${record.amount}</td></tr>`;
-                    total += record.amount;
-                });
-            }
-            document.getElementById('historyTableBody').innerHTML = tbodyHTML;
-            document.getElementById('historyTotal').innerText = total;
-            document.getElementById('historyModal').style.display = 'flex';
+            const member = membersConfig[index]; document.getElementById('historyUserName').innerText = "الاسم: " + member.name;
+            let tbodyHTML = ""; let total = 0;
+            if(member.history.length === 0) { tbodyHTML = "<tr><td colspan='2'>لا يوجد سجل نقاط حتى الآن.</td></tr>"; } 
+            else { member.history.forEach(record => { let isPositive = record.amount > 0; let sign = isPositive ? "+" : ""; let colorClass = isPositive ? "positive" : "negative"; tbodyHTML += `<tr><td style="text-align:right;">${record.reason}</td><td class="${colorClass}" dir="ltr">${sign}${record.amount}</td></tr>`; total += record.amount; }); }
+            document.getElementById('historyTableBody').innerHTML = tbodyHTML; document.getElementById('historyTotal').innerText = total; document.getElementById('historyModal').style.display = 'flex';
         }
 
         function switchTab(tabId, element) {
             document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
-            element.classList.add('active');
-            window.scrollTo(0, 0);
+            document.getElementById(tabId).classList.add('active'); element.classList.add('active'); window.scrollTo(0, 0);
         }
 
         function openInfoModal(t, m, c) { document.getElementById('infoTitle').innerText = t; document.getElementById('infoManager').innerText = m; document.getElementById('infoAyah').innerText = c; document.getElementById('infoModal').style.display = 'flex'; }
@@ -637,17 +580,9 @@
         function openQuiz(i) { currentQuizIndex = i; const vid = videosConfig[i]; document.getElementById('quizQuestion').innerText = vid.question; document.getElementById('quizFeedback').style.display='none'; let optionsHTML=""; vid.options.forEach((opt,j)=>{ optionsHTML+=`<button class="option-btn" onclick="checkAnswer(${j})">${opt}</button>`; }); document.getElementById('quizOptions').innerHTML=optionsHTML; document.getElementById('quizModal').style.display='flex'; }
         
         function checkAnswer(sIndex) { 
-            const vid = videosConfig[currentQuizIndex]; 
-            const fb = document.getElementById('quizFeedback'); 
-            fb.style.display='block'; 
-            if(sIndex === vid.correctIndex){ 
-                fb.style.backgroundColor='#d4edda'; fb.style.color='#155724'; fb.style.borderColor='#c3e6cb'; 
-                fb.innerHTML=`<strong>إجابة صحيحة! 🎉</strong><br>ربحت ${vid.points} نقاط.<br>📸 صور الشاشة وأرسلها لمدير الاعتكاف.`; 
-                document.getElementById('quizOptions').innerHTML=""; 
-            } else { 
-                fb.style.backgroundColor='#f8d7da'; fb.style.color='#721c24'; fb.style.borderColor='#f5c6cb'; 
-                fb.innerHTML="إجابة خاطئة، حاول مرة أخرى ⏳"; 
-            } 
+            const vid = videosConfig[currentQuizIndex]; const fb = document.getElementById('quizFeedback'); fb.style.display='block'; 
+            if(sIndex === vid.correctIndex){ fb.style.backgroundColor='#d4edda'; fb.style.color='#155724'; fb.style.borderColor='#c3e6cb'; fb.innerHTML=`<strong>إجابة صحيحة! 🎉</strong><br>ربحت ${vid.points} نقاط.<br>📸 صور الشاشة وأرسلها لمدير الاعتكاف.`; document.getElementById('quizOptions').innerHTML=""; } 
+            else { fb.style.backgroundColor='#f8d7da'; fb.style.color='#721c24'; fb.style.borderColor='#f5c6cb'; fb.innerHTML="إجابة خاطئة، حاول مرة أخرى ⏳"; } 
         }
         
         function closeModal(id) { document.getElementById(id).style.display='none'; }
