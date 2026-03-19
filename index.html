@@ -7,6 +7,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#0A1931">
     <title>تطبيق برنامج الاعتكاف - العشر الأواخر</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -204,6 +205,25 @@
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); align-items: center; justify-content: center; backdrop-filter: blur(5px);}
         .modal-content { background-color: var(--card-bg); padding: 25px; border-radius: 15px; width: 85%; max-width: 400px; text-align: center; border: 3px solid var(--gold); position: relative; max-height: 80vh; overflow-y: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.5); animation: fadeInSlide 0.3s ease-out;}
         .close-btn { position: absolute; top: 10px; left: 15px; font-size: 24px; font-weight: bold; color: var(--text-muted); cursor: pointer; transition: 0.2s;}
+    /* إصلاح كلمة الآن */
+.current-event { margin-top: 25px !important; margin-bottom: 25px !important; overflow: visible !important; }
+.current-event::after { content: 'الآن'; position: absolute; top: -16px; right: 15px; left: auto; background: #2ecc71; color: white; padding: 4px 15px; border-radius: 12px; font-size: 13px; font-weight: bold; animation: pulseNow 1.5s infinite; box-shadow: 0 2px 5px rgba(0,0,0,0.2); z-index: 20;}
+
+/* تصميم الضيوف */
+.guest-card { background: var(--card-bg); padding: 15px; border-radius: 12px; margin-bottom: 10px; position: relative; border-right: 5px solid #bdc3c7;}
+.guest-card.vip { border: 2px solid gold; border-right: 6px solid gold;}
+.guest-card h3 { margin: 0 0 5px 0; color: var(--dark-blue); font-size: 18px;}
+.guest-card p { margin: 0; color: var(--text-muted); font-size: 14px;}
+.vip-badge { position: absolute; top: -10px; left: 15px; background: gold; color: #000; font-size: 11px; padding: 2px 10px; border-radius: 10px; font-weight: bold;}
+
+/* تصميم الأوسمة */
+.achievements-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 25px; }
+.achievement-card { background: var(--card-bg); border-radius: 12px; padding: 15px 5px; text-align: center; border: 1px solid rgba(212, 175, 55, 0.3); }
+.ach-title { font-weight: bold; color: var(--dark-blue); font-size: 13px; margin-bottom: 5px;}
+.ach-winner { font-size: 14px; color: var(--qadr-glow); font-weight: bold; background: rgba(243, 156, 18, 0.1); padding: 4px; border-radius: 6px;}
+
+/* زر التثبيت */
+.install-btn { background: #2ecc71; color: white; border: none; padding: 15px; border-radius: 12px; font-size: 16px; font-weight: bold; width: 100%; margin-top: 15px; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -287,11 +307,16 @@
                 <div class="card-icon">🕌</div><div class="card-info"><div class="card-title">صلاة القيام</div><div class="card-time">1:30 – 2:00 ص</div></div>
             </div>
             <div class="card event-card ripple-btn" data-start="02:30" data-end="03:00" onclick="vibrate(); openInfoModal('السحور', 'المسؤول: صالح الزهراني', 'تسحروا فإن في السحور بركة')">
-                <div class="card-icon">🌙</div><div class="card-info"><div class="card-title">السحور</div><div class="card-time">2:30 – 3:00 ص</div></div>
             </div>
         </div>
-
+<div class="nav-item ripple-btn" onclick="switchTab('guests', this)"><span class="nav-icon">🌟</span>الضيوف</div>
         <div id="duties" class="tab-content">
+            <div id="guests" class="tab-content">
+    <h2 class="section-title">🌟 ضيوف الاعتكاف</h2>
+    <div class="guest-card vip"><div class="vip-badge">ضيف مميز</div><h3>الشيخ يونس قرموش</h3><p>زائر فقط</p></div>
+    <div class="guest-card vip"><div class="vip-badge">ضيف مميز</div><h3>الشيخ ايوب العطوي</h3><p>زائر فقط</p></div>
+    <div class="guest-card vip"><div class="vip-badge">ضيف مميز</div><h3>الشيخ علي غزواني</h3><p>زائر فقط</p></div>
+</div>
             <h2 class="section-title">🧹 جدول النظافة والضيافة</h2>
             <div class="team-member">
                 <h3>اليوم الأول</h3>
@@ -316,6 +341,13 @@
                 <h2>⭐ المعتَكِف المتميز (بالأجزاء)</h2>
                 <h3 id="featuredName">جاري الحساب...</h3>
             </div>
+            <h2 class="section-title">🎖️ أوسمة الإنجاز</h2>
+<div class="achievements-grid">
+    <div class="achievement-card"><div class="ach-icon">🏅</div><div class="ach-title">بطل الفجر</div><div class="ach-winner" id="ach-fajr">جاري الحساب...</div></div>
+    <div class="achievement-card"><div class="ach-icon">⏳</div><div class="ach-title">حافظ الوقت</div><div class="ach-winner" id="ach-time">جاري الحساب...</div></div>
+    <div class="achievement-card"><div class="ach-icon">💡</div><div class="ach-title">المُبادر</div><div class="ach-winner" id="ach-init">جاري الحساب...</div></div>
+    <div class="achievement-card" style="grid-column: 1 / -1;"><div class="ach-icon">⭐</div><div class="ach-title">المعتكف المتميز</div><div class="ach-winner" id="ach-quran">جاري الحساب...</div></div>
+</div>
             <h2 class="section-title">🏆 الترتيب العام</h2>
             <div id="leaderboard-container"></div>
         </div>
