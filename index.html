@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
+            /* الألوان الأساسية */
             --dark-blue: #0A1931;
             --darker-blue: #050C18;
             --gold: #D4AF37;
@@ -23,6 +24,7 @@
             --bottom-nav-bg: rgba(255, 255, 255, 0.98);
         }
 
+        /* الوضع الليلي */
         body.dark-mode {
             --dark-blue: #1A2639;
             --darker-blue: #0A1118;
@@ -46,30 +48,40 @@
             -webkit-tap-highlight-color: transparent;
         }
 
+        /* التأثيرات الحركية والضغط */
         .ripple-btn { position: relative; overflow: hidden; transform: scale(1); transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer;}
         .ripple-btn:active { transform: scale(0.96); opacity: 0.9;}
 
+        /* شاشة الدخول (Splash Screen) */
         #splash-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: radial-gradient(circle at center, #0A1931 0%, #050C18 100%);
             z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center;
-            color: #D4AF37; transition: opacity 0.5s ease-in-out;
+            color: #D4AF37; transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
         }
         .splash-content { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 0 20px;}
         .logo-container { width: 90px; height: 90px; margin-bottom: 25px; filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.4)); animation: float 3s ease-in-out infinite; }
         .modern-logo { width: 100%; height: 100%; fill: #D4AF37; }
         .splash-title { font-family: 'Amiri', serif; font-size: 38px; margin: 0; letter-spacing: 1px; text-shadow: 0 4px 10px rgba(0,0,0,0.3); }
         .splash-subtitle { font-size: 16px; opacity: 0.8; margin-top: 8px; font-weight: 300; margin-bottom: 15px; color: white;}
-        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
 
+        /* الهيدر العلوي */
         .header { background-color: var(--darker-blue); color: var(--gold); text-align: center; padding: 20px 15px; border-bottom: 4px solid var(--gold); border-radius: 0 0 20px 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); position: relative; z-index: 10;}
         .header h1 { font-family: 'Amiri', serif; margin: 0; font-size: 28px; }
         .header p { margin: 5px 0 0; font-size: 14px; color: #fff; }
         .quran-verse { font-family: 'Amiri', serif; font-size: 15px; color: var(--gold); line-height: 1.8; margin: 10px 0; }
 
-        #prayer-countdown-container { background: linear-gradient(to right, var(--qadr-glow), #f1c40f); color: #0A1931; text-align: center; padding: 8px; font-weight: bold; font-size: 14px; position: sticky; top: 0; z-index: 50; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        /* عداد الصلاة */
+        #prayer-countdown-container {
+            background: linear-gradient(to right, var(--qadr-glow), #f1c40f);
+            color: #0A1931; text-align: center; padding: 8px; font-weight: bold; font-size: 14px;
+            position: sticky; top: 0; z-index: 50; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
         .container { padding: 15px; max-width: 600px; margin: 0 auto; position: relative; z-index: 5;}
         
+        /* الانتقال بين الصفحات */
         .tab-content { display: none; }
         .tab-content.active { display: block; animation: fadeInSlide 0.4s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
         @keyframes fadeInSlide { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
@@ -77,75 +89,80 @@
         .section-title { color: var(--dark-blue); border-bottom: 2px solid var(--gold); padding-bottom: 5px; margin-bottom: 15px; font-family: 'Amiri', serif; background: var(--card-bg); display: inline-block; padding: 5px 15px; border-radius: 8px;}
         body.dark-mode .section-title { color: var(--gold); }
 
-        /* البطاقات وإصلاح قص كلمة الآن */
-        .card { background: var(--card-bg); border-radius: 12px; padding: 15px; margin-bottom: 12px; border-right: 5px solid var(--gold); box-shadow: 0 4px 10px rgba(0,0,0,0.06); display: flex; justify-content: space-between; align-items: center; position: relative; overflow: visible !important;}
+        /* بطاقات الجدول */
+        .card { background: var(--card-bg); border-radius: 12px; padding: 15px; margin-bottom: 12px; border-right: 5px solid var(--gold); box-shadow: 0 4px 10px rgba(0,0,0,0.06); display: flex; justify-content: space-between; align-items: center; position: relative;}
         .card-info { flex-grow: 1; margin-right: 15px; }
         .card-time { color: var(--gold); font-weight: bold; font-size: 14px; margin-bottom: 5px; direction: ltr; text-align: right;}
         .card-title { font-size: 16px; font-weight: bold; color: var(--text-main); }
         .card-icon { font-size: 24px; background: var(--light-gold); width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%; min-width: 40px;}
 
-        .current-event { margin-top: 30px !important; margin-bottom: 30px !important; border-right: 6px solid #2ecc71 !important; background: linear-gradient(to left, rgba(46, 204, 113, 0.1), var(--card-bg)) !important; box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3) !important; transform: scale(1.02); z-index: 10;}
-        .current-event::after { content: 'الآن'; position: absolute; top: -14px; right: 15px; background: #2ecc71; color: white; padding: 4px 15px; border-radius: 12px; font-size: 13px; font-weight: bold; animation: pulseNow 1.5s infinite; box-shadow: 0 2px 5px rgba(0,0,0,0.2); z-index: 99;}
-        @keyframes pulseNow { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+        /* بطاقة الحدث الحالي (الآن) - تم التعديل لحل مشكلة القص */
+        .current-event { margin-top: 25px !important; border-right: 6px solid #2ecc71 !important; background: linear-gradient(to left, rgba(46, 204, 113, 0.1), var(--card-bg)) !important; box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3) !important; transform: scale(1.02); z-index: 10; border-radius: 12px;}
+        .current-event::after { content: 'الآن'; position: absolute; top: -16px; left: 15px; background: #2ecc71; color: white; padding: 4px 15px; border-radius: 12px; font-size: 13px; font-weight: bold; animation: pulseNow 1.5s infinite; box-shadow: 0 2px 5px rgba(0,0,0,0.2); z-index: 20;}
+        @keyframes pulseNow { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7); } 70% { transform: scale(1.05); box-shadow: 0 0 0 6px rgba(46, 204, 113, 0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(46, 204, 113, 0); } }
 
         .qadr-card { border-right: 5px solid var(--qadr-glow); background: linear-gradient(to left, rgba(243, 156, 18, 0.08), var(--card-bg)); animation: softPulse 2s infinite alternate; }
         @keyframes softPulse { from { box-shadow: 0 4px 10px rgba(0,0,0,0.05); } to { box-shadow: 0 4px 20px rgba(243, 156, 18, 0.4); } }
+        .qadr-card .card-time { color: var(--qadr-glow); }
+        .qadr-card .card-icon { background: rgba(243, 156, 18, 0.15); }
 
-        /* ضيوف الاعتكاف */
-        .guest-card { background: var(--card-bg); padding: 15px; border-radius: 12px; margin-bottom: 15px; border-right: 5px solid #bdc3c7; display: flex; flex-direction: column; box-shadow: 0 4px 10px rgba(0,0,0,0.06); position: relative; overflow: visible !important;}
-        .guest-card.vip { border: 2px solid var(--gold); border-right: 6px solid var(--gold); background: linear-gradient(to left, rgba(212, 175, 55, 0.08), var(--card-bg)); margin-top: 25px;}
-        .guest-info h3 { margin: 0 0 5px 0; color: var(--text-main); font-size: 18px; font-weight: bold;}
-        .guest-info p { margin: 0; color: var(--text-muted); font-size: 14px; }
-        .vip-badge { position: absolute; top: -14px; right: 15px; font-size: 11px; background: var(--gold); color: var(--dark-blue); font-weight: bold; padding: 4px 12px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-
-        /* لوحة الشرف والإنجازات */
-        .achievements-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 25px; }
-        .achievement-card { background: var(--card-bg); border-radius: 12px; padding: 15px 10px; text-align: center; border: 1px solid rgba(212, 175, 55, 0.3); box-shadow: 0 4px 8px rgba(0,0,0,0.05); }
-        .ach-icon { font-size: 30px; display: block; margin-bottom: 5px; }
-        .ach-title { font-weight: bold; color: var(--dark-blue); font-size: 14px; margin-bottom: 5px; font-family: 'Amiri', serif;}
-        body.dark-mode .ach-title { color: var(--gold); }
-        .ach-winner { font-size: 14px; color: var(--qadr-glow); font-weight: bold; background: rgba(243, 156, 18, 0.1); padding: 4px; border-radius: 6px; display: block;}
-
-        .student-card { background: var(--card-bg); padding: 20px 15px 15px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.06); border: 1px solid rgba(0,0,0,0.05); position: relative; margin-top: 15px;}
+        /* لوحة الشرف والبطاقات */
+        .student-card { background: var(--card-bg); padding: 20px 15px 15px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.06); border: 1px solid rgba(0,0,0,0.05); position: relative; margin-top: 15px; backdrop-filter: blur(5px);}
         .student-card h3 { margin: 0 0 5px; color: var(--text-main); font-size: 18px; padding-right: 10px;}
         .student-card p { margin: 0 0 10px; color: var(--text-muted); font-size: 14px; padding-right: 10px;}
+        
         .rank-badge { position: absolute; right: -10px; top: -10px; width: 35px; height: 35px; background: var(--dark-blue); color: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 18px; border: 2px solid var(--gold); box-shadow: 0 2px 5px rgba(0,0,0,0.2); font-family: 'Amiri', serif;}
         .points-display { position: absolute; left: 15px; top: 15px; text-align: center; background: var(--light-gold); padding: 5px 15px; border-radius: 8px; border: 1px solid var(--gold); min-width: 50px;}
         .points-number { font-size: 20px; font-weight: bold; color: var(--dark-blue); display: block; line-height: 1.2; }
         .points-text { font-size: 11px; color: var(--text-muted); }
         
+        /* تلوين المراكز */
         .rank-1 { border: 2px solid #FFD700; background: linear-gradient(to right, var(--card-bg), rgba(255, 215, 0, 0.05)); box-shadow: 0 4px 15px rgba(255, 215, 0, 0.2); transform: scale(1.02); z-index: 10;}
-        .rank-2 { border: 2px solid #C0C0C0; }
-        .rank-3 { border: 2px solid #CD7F32; }
+        .rank-2 { border: 2px solid #C0C0C0; background: linear-gradient(to right, var(--card-bg), rgba(192, 192, 192, 0.05)); }
+        .rank-3 { border: 2px solid #CD7F32; background: linear-gradient(to right, var(--card-bg), rgba(205, 127, 50, 0.05)); }
         .excused-card { opacity: 0.6; filter: grayscale(100%); }
 
-        .history-btn { display: inline-block; background: transparent; border: 1px solid var(--gold); color: var(--text-main); padding: 5px 10px; border-radius: 5px; font-size: 12px; font-weight: bold; font-family: 'Tajawal', sans-serif; cursor: pointer; margin-right: 10px; margin-bottom: 10px;}
+        /* بطاقة المعتكف المتميز */
+        .featured-card { background: linear-gradient(135deg, #8e44ad, #9b59b6); color: white; padding: 20px; border-radius: 12px; text-align: center; margin-bottom: 25px; box-shadow: 0 4px 15px rgba(142, 68, 173, 0.4); animation: pulseCard 2s infinite alternate;}
+        .featured-card h2 { margin: 0 0 5px 0; font-size: 18px; font-family: 'Amiri', serif;}
+        .featured-card h3 { margin: 0; font-size: 24px; color: #f1c40f; text-shadow: 0 2px 4px rgba(0,0,0,0.3);}
+        @keyframes pulseCard { 0% { transform: scale(1); } 100% { transform: scale(1.02); } }
+
+        /* الأزرار وشريط التقدم */
+        .history-btn { display: inline-block; background: transparent; border: 1px solid var(--gold); color: var(--text-main); padding: 5px 10px; border-radius: 5px; font-size: 12px; font-family: 'Tajawal', sans-serif; cursor: pointer; margin-right: 10px; margin-bottom: 10px; font-weight: bold;}
+        
         .progress-container { background: rgba(0,0,0,0.03); padding: 12px; border-radius: 8px; margin-top: 10px; border: 1px dashed var(--gold);}
         .progress-header { display: flex; justify-content: space-between; font-weight: bold; color: var(--text-main); font-size: 14px; margin-bottom: 8px; }
         .progress-bar { background: rgba(0,0,0,0.1); border-radius: 10px; height: 12px; width: 100%; overflow: hidden; }
         .progress-fill { background: var(--gold); height: 100%; width: 0%; transition: width 1.5s cubic-bezier(0.25, 1, 0.5, 1); }
 
-        /* الإحصائيات الفاخرة */
+        /* الإحصائيات الفاخرة 📊 */
         .stats-poster { background: linear-gradient(135deg, var(--dark-blue), var(--darker-blue)); border: 2px solid var(--gold); border-radius: 15px; padding: 30px 20px; text-align: center; color: white; position: relative; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
-        .stats-poster::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, transparent 60%); pointer-events: none;}
+        .stats-poster::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, transparent 60%); animation: rotateGlow 15s linear infinite; pointer-events: none;}
+        @keyframes rotateGlow { 100% { transform: rotate(360deg); } }
+        
         .stats-title { font-family: 'Amiri', serif; font-size: 26px; color: var(--gold); margin-bottom: 5px; margin-top: 0; text-shadow: 0 2px 5px rgba(0,0,0,0.5);}
         .stats-subtitle { font-size: 14px; color: #ccc; margin-bottom: 25px; }
+
         .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; position: relative; z-index: 1; }
-        .stat-box { background: rgba(255,255,255,0.06); border: 1px solid rgba(212, 175, 55, 0.3); padding: 15px 10px; border-radius: 12px;}
+        .stat-box { background: rgba(255,255,255,0.06); border: 1px solid rgba(212, 175, 55, 0.3); padding: 15px 10px; border-radius: 12px; backdrop-filter: blur(5px); transition: transform 0.3s;}
+        .stat-box:hover { transform: translateY(-3px); border-color: var(--gold); background: rgba(212, 175, 55, 0.15);}
         .stat-box.full-width { grid-column: 1 / -1; background: linear-gradient(to right, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.05)); border-color: var(--gold);}
+        
         .stat-icon { font-size: 32px; margin-bottom: 8px; display: block; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));}
         .stat-number { font-size: 28px; font-weight: bold; color: var(--gold); font-family: 'Amiri', serif; display: block; margin-bottom: 5px;}
         .stat-text { font-size: 14px; color: #eee; font-weight: 500;}
 
-        /* أزرار الإجراءات */
-        .action-btn { margin-top: 30px; background: linear-gradient(to bottom, #F1C40F, #D4AF37); color: var(--darker-blue); border: none; padding: 15px 25px; font-size: 16px; font-weight: bold; border-radius: 30px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; font-family: 'Tajawal', sans-serif; box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4); width: 80%; margin-left:auto; margin-right:auto; text-decoration: none;}
-        .install-btn { background: linear-gradient(to right, #2ecc71, #27ae60); color: white; box-shadow: 0 6px 20px rgba(46, 204, 113, 0.4); margin-top: 20px;}
+        .share-btn { margin-top: 30px; background: linear-gradient(to bottom, #F1C40F, #D4AF37); color: var(--darker-blue); border: none; padding: 15px 30px; font-size: 16px; font-weight: bold; border-radius: 30px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 10px; font-family: 'Tajawal', sans-serif; box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4); position: relative; z-index: 1; transition: 0.2s; width: 80%;}
+        .share-btn:active { transform: scale(0.95); box-shadow: 0 2px 10px rgba(212, 175, 55, 0.4);}
+        .share-btn svg { width: 20px; height: 20px; fill: currentColor; }
 
-        /* المهام والضيافة والجداول */
+        /* المهام والضيافة */
         .team-member { background: var(--card-bg); padding: 20px 15px; border-radius: 12px; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.06); border: 1px solid rgba(0,0,0,0.05); }
-        .active-duty { border: 2px solid var(--qadr-glow); background: linear-gradient(to left, rgba(243, 156, 18, 0.05), var(--card-bg)); position: relative;}
+        .active-duty { border: 2px solid var(--qadr-glow); background: linear-gradient(to left, rgba(243, 156, 18, 0.05), var(--card-bg)); box-shadow: 0 4px 15px rgba(243, 156, 18, 0.2); position: relative;}
         .active-duty::after { content: 'مهام اليوم'; position: absolute; top: -12px; left: 15px; background: var(--qadr-glow); color: #fff; padding: 3px 12px; border-radius: 10px; font-size: 12px; font-weight: bold; }
 
+        /* القائمة اليومية */
         .checklist { display: flex; flex-direction: column; gap: 10px; padding-right: 15px; margin-top: 10px;}
         .check-item { display: flex; align-items: center; background: var(--card-bg); padding: 12px; border-radius: 8px; border: 1px solid rgba(0,0,0,0.1); }
         .check-item input[type="checkbox"] { margin-left: 12px; width: 22px; height: 22px; accent-color: var(--gold); cursor: pointer;}
@@ -153,9 +170,11 @@
         .check-item.done { background: rgba(46, 204, 113, 0.1); opacity: 0.8;}
         .check-item.done label { text-decoration: line-through; color: var(--text-muted); }
 
+        /* التأثيرات المتطايرة */
         .floating-point { position: fixed; color: #2ecc71; font-weight: bold; font-size: 22px; pointer-events: none; animation: floatUpPoints 1s ease-out forwards; z-index: 9999; text-shadow: 1px 1px 3px rgba(0,0,0,0.2); }
         @keyframes floatUpPoints { 0% { opacity: 1; transform: translateY(0) scale(1); } 100% { opacity: 0; transform: translateY(-50px) scale(1.5); } }
 
+        /* الجداول (القوانين) */
         .points-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 14px; background: var(--card-bg); border-radius: 8px; overflow: hidden;}
         .points-table th, .points-table td { border: 1px solid rgba(0,0,0,0.1); padding: 10px; text-align: center; color: var(--text-main);}
         .points-table th { background-color: var(--dark-blue); color: var(--gold); font-family: 'Amiri', serif; font-size: 16px;}
@@ -163,6 +182,7 @@
         .positive { color: #2ecc71; font-weight: bold; direction: ltr;}
         .negative { color: #e74c3c; font-weight: bold; direction: ltr;}
 
+        /* الإعدادات */
         .setting-item { display: flex; justify-content: space-between; align-items: center; background: var(--card-bg); padding: 15px 20px; border-radius: 12px; margin-bottom: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
         .setting-item span { font-size: 16px; font-weight: bold; color: var(--text-main); }
         .toggle-switch { position: relative; width: 50px; height: 26px; }
@@ -172,17 +192,18 @@
         input:checked + .slider { background-color: var(--gold); }
         input:checked + .slider:before { transform: translateX(24px); }
 
-        .bottom-nav { position: fixed; bottom: 0; width: 100%; background-color: var(--bottom-nav-bg); display: flex; justify-content: flex-start; padding: 10px 5px 15px 5px; box-shadow: 0 -5px 20px rgba(0,0,0,0.1); border-top: 1px solid rgba(0,0,0,0.05); z-index: 100; backdrop-filter: blur(10px); overflow-x: auto; white-space: nowrap; scrollbar-width: none;}
-        .bottom-nav::-webkit-scrollbar { display: none; }
-        .nav-item { text-align: center; color: var(--text-muted); font-size: 10px; cursor: pointer; flex: 0 0 auto; min-width: 60px; transition: 0.3s; position: relative; padding: 0 5px;}
+        /* الشريط السفلي التفاعلي */
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background-color: var(--bottom-nav-bg); display: flex; justify-content: space-around; padding: 10px 0 15px 0; box-shadow: 0 -5px 20px rgba(0,0,0,0.1); border-top: 1px solid rgba(0,0,0,0.05); z-index: 100; overflow-x: auto; white-space: nowrap;}
+        .nav-item { text-align: center; color: var(--text-muted); font-size: 10px; cursor: pointer; flex: 1; min-width: 55px; transition: 0.3s; position: relative; }
         .nav-icon { font-size: 20px; display: block; margin-bottom: 4px; transition: transform 0.3s;}
         .nav-item.active { color: var(--gold); font-weight: bold; }
         .nav-item.active .nav-icon { transform: scale(1.3) translateY(-3px); color: var(--gold); }
         .nav-item.active::after { content: ''; position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; background: var(--gold); border-radius: 50%; }
 
-        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); align-items: center; justify-content: center; backdrop-filter: blur(4px); }
-        .modal-content { background-color: var(--card-bg); padding: 25px; border-radius: 15px; width: 85%; max-width: 400px; text-align: center; border: 3px solid var(--gold); position: relative; max-height: 80vh; overflow-y: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.5);}
-        .close-btn { position: absolute; top: 10px; left: 15px; font-size: 24px; font-weight: bold; color: var(--text-muted); cursor: pointer; }
+        /* النوافذ المنبثقة Modal */
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); align-items: center; justify-content: center; backdrop-filter: blur(5px);}
+        .modal-content { background-color: var(--card-bg); padding: 25px; border-radius: 15px; width: 85%; max-width: 400px; text-align: center; border: 3px solid var(--gold); position: relative; max-height: 80vh; overflow-y: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.5); animation: fadeInSlide 0.3s ease-out;}
+        .close-btn { position: absolute; top: 10px; left: 15px; font-size: 24px; font-weight: bold; color: var(--text-muted); cursor: pointer; transition: 0.2s;}
     </style>
 </head>
 <body>
@@ -196,17 +217,10 @@
                 </svg>
             </div>
             <h1 class="splash-title">برنامج الاعتكاف</h1>
-            <p class="splash-subtitle">نسأل الله أن يبلغنا وإياكم ليلة القدر</p>
+            <p class="splash-subtitle">تبقى القليل.. نسأل الله أن يبلغنا وإياكم ليلة القدر</p>
+            <p style="font-size: 12px; color: #aaa; margin-top: 20px;">(اضغط للبدء)</p>
         </div>
     </div>
-    
-    <script>
-        function hideSplash() {
-            let s = document.getElementById('splash-screen');
-            if(s) { s.style.opacity = '0'; setTimeout(()=> s.style.display = 'none', 500); }
-        }
-        setTimeout(hideSplash, 1500);
-    </script>
 
     <div id="prayer-countdown-container" class="ripple-btn" onclick="vibrate()">
         ⏳ <span id="prayer-countdown">جاري حساب موعد الصلاة القادمة...</span>
@@ -277,79 +291,31 @@
             </div>
         </div>
 
-        <div id="guests" class="tab-content">
-            <h2 class="section-title">🌟 ضيوف الاعتكاف</h2>
-            
-            <div class="guest-card vip">
-                <div class="vip-badge">ضيف مميز</div>
-                <div class="guest-info">
-                    <h3>الشيخ يونس قرموش</h3>
-                    <p>زائر</p>
-                </div>
-            </div>
-
-            <div class="guest-card vip">
-                <div class="vip-badge">ضيف مميز</div>
-                <div class="guest-info">
-                    <h3>الشيخ ايوب العطوي</h3>
-                    <p>زائر</p>
-                </div>
-            </div>
-
-            <div class="guest-card vip">
-                <div class="vip-badge">ضيف مميز</div>
-                <div class="guest-info">
-                    <h3>الشيخ علي غزواني</h3>
-                    <p>زائر</p>
-                </div>
-            </div>
-        </div>
-
         <div id="duties" class="tab-content">
             <h2 class="section-title">🧹 جدول النظافة والضيافة</h2>
             <div class="team-member">
                 <h3>اليوم الأول</h3>
-                <p style="font-weight: bold; font-size: 16px; color: var(--dark-blue);">مطاعن جبيع & صالح الزهراني</p>
+                <p style="font-weight: bold; color: var(--dark-blue);">مطاعن جبيع & صالح الزهراني</p>
             </div>
             <div class="team-member">
                 <h3>اليوم الثاني</h3>
-                <p style="font-weight: bold; font-size: 16px; color: var(--dark-blue);">ريان عري & بتال القبيسي</p>
+                <p style="font-weight: bold; color: var(--dark-blue);">ريان عري & بتال القبيسي</p>
             </div>
             <div class="team-member">
                 <h3>اليوم الثالث</h3>
-                <p style="font-weight: bold; font-size: 16px; color: var(--dark-blue);">محمد جبيع & عبدالرحمن زعل</p>
+                <p style="font-weight: bold; color: var(--dark-blue);">محمد جبيع & عبدالرحمن زعل</p>
             </div>
-            <div class="team-member active-duty">
+            <div class="team-member active-duty" style="border: 2px solid var(--qadr-glow);">
                 <h3 style="color: var(--dark-blue);">اليوم الرابع (اليوم)</h3>
-                <p style="font-weight: bold; font-size: 16px; color: var(--dark-blue);">الجميع</p>
+                <p style="font-weight: bold; font-size: 16px; color: #e67e22;">الجميع</p>
             </div>
         </div>
 
         <div id="team" class="tab-content">
-            <h2 class="section-title">🎖️ أوسمة الإنجاز</h2>
-            <div class="achievements-grid">
-                <div class="achievement-card">
-                    <span class="ach-icon">🕌</span>
-                    <div class="ach-title">بطل الفجر</div>
-                    <div class="ach-winner" id="ach-fajr">جاري الحساب...</div>
-                </div>
-                <div class="achievement-card">
-                    <span class="ach-icon">⏳</span>
-                    <div class="ach-title">حافظ الوقت</div>
-                    <div class="ach-winner" id="ach-time">جاري الحساب...</div>
-                </div>
-                <div class="achievement-card">
-                    <span class="ach-icon">🤝</span>
-                    <div class="ach-title">المُبادر</div>
-                    <div class="ach-winner" id="ach-init">جاري الحساب...</div>
-                </div>
-                <div class="achievement-card" style="grid-column: 1 / -1; border-color: var(--gold); background: linear-gradient(to right, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.05));">
-                    <span class="ach-icon">⭐</span>
-                    <div class="ach-title" style="font-size: 18px;">المعتكف المتميز</div>
-                    <div class="ach-winner" id="ach-quran" style="font-size: 18px;">جاري الحساب...</div>
-                </div>
+            <div class="featured-card" id="featuredCard">
+                <h2>⭐ المعتَكِف المتميز (بالأجزاء)</h2>
+                <h3 id="featuredName">جاري الحساب...</h3>
             </div>
-
             <h2 class="section-title">🏆 الترتيب العام</h2>
             <div id="leaderboard-container"></div>
         </div>
@@ -357,7 +323,7 @@
         <div id="stats" class="tab-content">
             <h2 class="section-title">📊 إحصائيات الاعتكاف</h2>
             
-            <div class="stats-poster" id="captureStatsArea">
+            <div class="stats-poster">
                 <h2 class="stats-title">إنجازات برنامج الاعتكاف</h2>
                 <div class="stats-subtitle">نسأل الله القبول ومضاعفة الأجر</div>
                 
@@ -367,56 +333,57 @@
                         <span class="stat-number counter-target" data-target="9600">0</span>
                         <span class="stat-text">صفحة مقروءة من القرآن الكريم</span>
                     </div>
+                    
                     <div class="stat-box">
                         <span class="stat-icon">✨</span>
                         <span class="stat-number counter-target" data-target="480">0</span>
                         <span class="stat-text">جزء تم إنجازه</span>
                     </div>
+                    
                     <div class="stat-box">
                         <span class="stat-icon">🎙️</span>
                         <span class="stat-number counter-target" data-target="8">0</span>
                         <span class="stat-text">دروس وتصحيح تلاوة</span>
                     </div>
+                    
                     <div class="stat-box">
                         <span class="stat-icon">👥</span>
                         <span class="stat-number counter-target" data-target="10">0</span>
                         <span class="stat-text">عدد المعتكفين</span>
                     </div>
+                    
                     <div class="stat-box">
                         <span class="stat-icon">⏳</span>
                         <span class="stat-number counter-target" data-target="10">0</span>
                         <span class="stat-text">أيام الاعتكاف</span>
                     </div>
                 </div>
-            </div>
 
-            <button class="action-btn" id="shareBtnObj" onclick="downloadStatsImage()">
-                مشاركة كصورة 📤
-            </button>
+                <button class="share-btn" onclick="shareStats()">
+                    مشاركة الإحصائيات 
+                    <svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
+                </button>
+            </div>
         </div>
 
         <div id="adhkar" class="tab-content">
             <h2 class="section-title">قائمة الإنجاز والورد اليومي</h2>
-            
-            <div class="team-member" style="margin-top:0; border: 1px solid var(--gold);">
-                <h3>✅ المهام اليومية (تتحدث يومياً)</h3>
-                <p style="font-size: 13px; color: var(--text-muted);">يتم حفظ تقدمك تلقائياً في جهازك.</p>
+            <div class="team-member" style="border: 1px solid var(--gold);">
+                <h3>✅ المهام اليومية (تُحفظ تلقائياً)</h3>
                 <div class="checklist">
-                    <div class="check-item ripple-btn"><input type="checkbox" id="task1" onchange="vibrate(); toggleTask(this)"><label for="task1">أذكار الصباح (بعد صلاة الفجر)</label></div>
-                    <div class="check-item ripple-btn"><input type="checkbox" id="task2" onchange="vibrate(); toggleTask(this)"><label for="task2">صلاة الضحى (ركعتان على الأقل)</label></div>
-                    <div class="check-item ripple-btn"><input type="checkbox" id="task3" onchange="vibrate(); toggleTask(this)"><label for="task3">قراءة الجزء الأول المقرر</label></div>
-                    <div class="check-item ripple-btn"><input type="checkbox" id="task4" onchange="vibrate(); toggleTask(this)"><label for="task4">أذكار المساء (بعد صلاة العصر)</label></div>
-                    <div class="check-item ripple-btn"><input type="checkbox" id="task5" onchange="vibrate(); toggleTask(this)"><label for="task5">قراءة الجزء الثاني المقرر</label></div>
-                    <div class="check-item ripple-btn"><input type="checkbox" id="task6" onchange="vibrate(); toggleTask(this)"><label for="task6">الدعاء المأثور (اللهم إنك عفو...)</label></div>
-                    <div class="check-item ripple-btn"><input type="checkbox" id="task7" onchange="vibrate(); toggleTask(this)"><label for="task7">التنظيف مع المسؤولين للتنظيف 🧹</label></div>
+                    <div class="check-item ripple-btn"><input type="checkbox" id="task1" onchange="toggleTask(this)"><label for="task1">أذكار الصباح (بعد صلاة الفجر)</label></div>
+                    <div class="check-item ripple-btn"><input type="checkbox" id="task2" onchange="toggleTask(this)"><label for="task2">صلاة الضحى (ركعتان على الأقل)</label></div>
+                    <div class="check-item ripple-btn"><input type="checkbox" id="task3" onchange="toggleTask(this)"><label for="task3">قراءة الجزء الأول المقرر</label></div>
+                    <div class="check-item ripple-btn"><input type="checkbox" id="task4" onchange="toggleTask(this)"><label for="task4">أذكار المساء (بعد صلاة العصر)</label></div>
+                    <div class="check-item ripple-btn"><input type="checkbox" id="task5" onchange="toggleTask(this)"><label for="task5">قراءة الجزء الثاني المقرر</label></div>
+                    <div class="check-item ripple-btn"><input type="checkbox" id="task6" onchange="toggleTask(this)"><label for="task6">الدعاء المأثور (اللهم إنك عفو...)</label></div>
+                    <div class="check-item ripple-btn"><input type="checkbox" id="task7" onchange="toggleTask(this)"><label for="task7">التنظيف مع المسؤولين للتنظيف 🧹</label></div>
                 </div>
             </div>
         </div>
 
         <div id="rules" class="tab-content">
             <h2 class="section-title">نظام نقاط برنامج الاعتكاف</h2>
-            <p style="font-size: 14px; color: var(--text-muted); background: var(--card-bg); padding: 10px; border-radius: 8px; margin-bottom: 20px;">يتم حساب النقاط بشفافية تامة من خلال سجل خاص بكل معتكف.</p>
-            
             <h3 style="color: var(--dark-blue); font-size: 16px;">الالتزام والصلوات</h3>
             <table class="points-table">
                 <tr><th>البند</th><th>النقاط</th></tr>
@@ -445,9 +412,8 @@
                 <tr><td>كثرة الخروج بدون حاجة</td><td class="negative">-4</td></tr>
                 <tr><td>حسن الأدب واحترام المعتكفين</td><td class="positive">+4</td></tr>
                 <tr><td>التعاون مع المشرفين وإنجاز المهام</td><td class="positive">+5</td></tr>
-                <tr><td>مبادرة في خدمة المعتكفين / مساعدة زميل</td><td class="positive">+5</td></tr>
+                <tr><td>مبادرة في خدمة المعتكفين</td><td class="positive">+5</td></tr>
                 <tr><td>ترتيب المسجد أو تنظيفه بدون طلب</td><td class="positive">+4</td></tr>
-                <tr><td>استغلال الوقت بعبادة ملحوظة</td><td class="positive">+3</td></tr>
             </table>
         </div>
 
@@ -457,19 +423,16 @@
                 <span>🌙 الوضع الليلي</span>
                 <label class="toggle-switch"><input type="checkbox" id="darkModeToggle" onchange="toggleDarkMode()"><span class="slider"></span></label>
             </div>
-            
-            <button class="action-btn install-btn ripple-btn" id="installBtn" onclick="installAppPrompt()">
-                📲 تثبيت التطبيق على جوالك
-            </button>
+            <div class="setting-item ripple-btn" onclick="vibrate(); requestNotificationPermission()" style="cursor: pointer;">
+                <span>🔔 تفعيل الإشعارات الذكية</span><span style="font-size: 20px;">📱</span>
+            </div>
         </div>
-
     </div>
 
     <div class="bottom-nav">
         <div class="nav-item active ripple-btn" onclick="switchTab('schedule', this)"><span class="nav-icon">📅</span>الجدول</div>
-        <div class="nav-item ripple-btn" onclick="switchTab('guests', this)"><span class="nav-icon">🌟</span>الضيوف</div>
-        <div class="nav-item ripple-btn" onclick="switchTab('team', this)"><span class="nav-icon">🏆</span>الشرف</div>
         <div class="nav-item ripple-btn" onclick="switchTab('duties', this)"><span class="nav-icon">🧹</span>المهام</div>
+        <div class="nav-item ripple-btn" onclick="switchTab('team', this)"><span class="nav-icon">🏆</span>الشرف</div>
         <div class="nav-item ripple-btn" onclick="switchTab('stats', this)"><span class="nav-icon">📊</span>إحصاء</div>
         <div class="nav-item ripple-btn" onclick="switchTab('adhkar', this)"><span class="nav-icon">✔️</span>إنجازي</div>
         <div class="nav-item ripple-btn" onclick="switchTab('rules', this)"><span class="nav-icon">📌</span>نظامنا</div>
@@ -496,8 +459,16 @@
     </div>
 
     <script>
+        // إخفاء شاشة البداية
+        function hideSplash() {
+            document.getElementById('splash-screen').style.opacity = '0';
+            setTimeout(() => { document.getElementById('splash-screen').style.display = 'none'; }, 800);
+        }
+
+        // الاهتزاز
         function vibrate() { if (navigator.vibrate) navigator.vibrate(40); }
 
+        // الوضع الليلي
         function toggleDarkMode() {
             vibrate();
             const isDark = document.getElementById('darkModeToggle').checked;
@@ -505,26 +476,49 @@
             else { document.body.classList.remove('dark-mode'); localStorage.setItem('theme', 'light'); }
         }
 
-        function animateValue(obj, start, end, duration) {
-            let startTimestamp = null;
-            const step = (timestamp) => {
-                if (!startTimestamp) startTimestamp = timestamp;
-                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-                obj.innerHTML = Math.floor(progress * (end - start) + start);
-                if (progress < 1) window.requestAnimationFrame(step);
-                else obj.innerHTML = end; 
-            };
-            window.requestAnimationFrame(step);
+        // التنقل بين الصفحات
+        function switchTab(tabId, element) {
+            vibrate();
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active'); element.classList.add('active'); window.scrollTo(0, 0);
+            
+            // تشغيل العدادات عند فتح صفحة الشرف أو الإحصائيات
+            if(tabId === 'team' || tabId === 'stats') {
+                setTimeout(() => {
+                    document.getElementById(tabId).querySelectorAll('.counter-target').forEach(el => {
+                        let target = parseInt(el.getAttribute('data-target'));
+                        if(el.innerHTML === "0") animateValue(el, 0, target, 1500); 
+                    });
+                }, 100);
+            }
         }
 
-        // =========================================================
-        // ⚙️ ضع بياناتك الخاصة بالمعتكفين هنا (الـ 900 سطر)
-        // =========================================================
+        // حفظ المهام اليومية
+        function toggleTask(checkbox) {
+            vibrate();
+            const item = checkbox.parentElement; const todayDate = new Date().toDateString(); 
+            if(checkbox.checked) { 
+                item.classList.add('done'); 
+                localStorage.setItem(checkbox.id + "_" + todayDate, 'true'); 
+            } else { 
+                item.classList.remove('done'); 
+                localStorage.removeItem(checkbox.id + "_" + todayDate); 
+            }
+        }
+
+        function loadChecklist() {
+            const todayDate = new Date().toDateString();
+            document.querySelectorAll('.check-item input[type="checkbox"]').forEach(chk => {
+                for (let i = 0; i < localStorage.length; i++) {
+                    let key = localStorage.key(i); if (key.startsWith(chk.id + "_") && key !== chk.id + "_" + todayDate) { localStorage.removeItem(key); }
+                }
+                if(localStorage.getItem(chk.id + "_" + todayDate) === 'true') { chk.checked = true; chk.parentElement.classList.add('done'); }
+            });
+        }
+
+        // ⚙️ البيانات بعد التحديث الشامل والإضافات
         const membersConfig = [
-            
-            // ⬇️ انسخ جميع بيانات المعتكفين الخاصة بك (من كودك الأصلي ذو الـ 900 سطر) ⬇️
-            // ⬇️ والصقها بالكامل هنا (امسح السطرين اللي تحت والصق بدالهم) ⬇️
-            
             { name: 'صالح الزهراني', role: 'مدير الاعتكاف', parts: 9, status: 'active', history: [ 
                 { reason: 'الرصيد السابق', amount: 41 },
                 { reason: 'الحضور المبكر لصلاة الفجر قبل الإقامة', amount: 6 },
@@ -747,52 +741,44 @@
             ] }
         ];
 
-            // ⬆️ الصق بياناتك فوق هذا السطر ⬆️
-        ];
-        // =========================================================
-
-        // ⚙️ نظام الإنجازات والأوسمة التلقائي
-        function computeAchievements(activeMembersList) {
-            function getWinner(reasonString, tieBreaker = null) {
-                let maxPts = 0; let maxTie = 0; let winnerName = "لا يوجد";
-                activeMembersList.forEach(m => {
-                    if(!m.history) return;
-                    let pts = m.history.filter(h => h.reason.includes(reasonString)).reduce((s, h) => s + h.amount, 0);
-                    let tiePts = tieBreaker ? m.history.filter(h => h.reason.includes(tieBreaker)).reduce((s, h) => s + h.amount, 0) : 0;
-                    if(pts > maxPts) { maxPts = pts; maxTie = tiePts; winnerName = m.name; }
-                    else if (pts === maxPts && pts > 0 && tiePts > maxTie) { maxTie = tiePts; winnerName = m.name; }
-                });
-                return maxPts > 0 ? winnerName : "لا يوجد";
-            }
-            
-            document.getElementById('ach-fajr').innerText = getWinner('الفجر قبل الإقامة', 'الصف الأول');
-            document.getElementById('ach-time').innerText = getWinner('بجدول الاعتكاف');
-            document.getElementById('ach-init').innerText = getWinner('مبادرة');
-            
-            if(activeMembersList.length > 0) {
-                let topQuran = activeMembersList.reduce((prev, curr) => ((prev.parts || 0) > (curr.parts || 0)) ? prev : curr);
-                document.getElementById('ach-quran').innerText = topQuran.name || "لا يوجد";
-            }
+        // عداد الأرقام الحي
+        function animateValue(obj, start, end, duration) {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                obj.innerHTML = Math.floor(progress * (end - start) + start);
+                if (progress < 1) window.requestAnimationFrame(step);
+                else obj.innerHTML = end; 
+            };
+            window.requestAnimationFrame(step);
         }
 
-        // بناء التطبيق والترتيب
+        // بناء التطبيق
         function renderApp() {
             let membersWithTotals = membersConfig.map((m, originalIndex) => {
-                let total = m.history ? m.history.reduce((sum, record) => sum + record.amount, 0) : 0;
+                let total = m.history.reduce((sum, record) => sum + record.amount, 0);
                 return { ...m, totalPoints: total, originalIndex: originalIndex };
             });
 
-            let activeMembers = membersWithTotals.filter(m => m.status !== 'excused').sort((a, b) => b.totalPoints - a.totalPoints);
+            // فصل المعتذرين
+            let activeMembers = membersWithTotals.filter(m => m.status === 'active').sort((a, b) => b.totalPoints - a.totalPoints);
             let excusedMembers = membersWithTotals.filter(m => m.status === 'excused');
 
-            computeAchievements(activeMembers);
+            // حساب المتميز
+            if(activeMembers.length > 0) {
+                let topMutakif = activeMembers.reduce((prev, current) => (prev.parts > current.parts) ? prev : current);
+                document.getElementById('featuredName').innerText = topMutakif.name;
+            }
 
             let leaderboardHTML = "";
+            
+            // رسم النشطين
             activeMembers.forEach((member, index) => {
-                let currentParts = member.parts > 30 ? 30 : (member.parts || 0);
+                let currentParts = member.parts > 30 ? 30 : member.parts;
                 let percentage = Math.round((currentParts / 30) * 100);
                 let rankClass = index === 0 ? "rank-1" : index === 1 ? "rank-2" : index === 2 ? "rank-3" : "";
-
+                
                 leaderboardHTML += `
                     <div class="student-card ${rankClass}">
                         <div class="rank-badge">${index + 1}</div>
@@ -800,7 +786,7 @@
                             <span class="points-number counter-target" data-target="${member.totalPoints}">0</span>
                             <span class="points-text">نقطة</span>
                         </div>
-                        <h3>${member.name}</h3><p>${member.role || 'معتكف'}</p>
+                        <h3>${member.name}</h3><p>${member.role}</p>
                         <button class="history-btn ripple-btn" onclick="vibrate(); openHistory(${member.originalIndex})">📜 عرض السجل</button>
                         <div class="progress-container">
                             <div class="progress-header"><span>إنجاز الختمة</span><span>${currentParts} / 30 جزء</span></div>
@@ -809,6 +795,7 @@
                     </div>`;
             });
 
+            // رسم المعتذرين في النهاية
             excusedMembers.forEach((member) => {
                 leaderboardHTML += `
                     <div class="student-card excused-card">
@@ -816,11 +803,27 @@
                             <h3 class="name" style="margin:0; color:#555;">${member.name}</h3>
                             <span style="font-size:12px; color:#e74c3c;">(معتذر)</span>
                         </div>
-                        <button class="history-btn ripple-btn" onclick="vibrate(); openHistory(${member.originalIndex})" style="margin-top:10px;">📜 عرض السجل</button>
+                        <button class="history-btn ripple-btn" onclick="vibrate(); openHistory(${member.originalIndex})">📜 عرض السجل</button>
                     </div>`;
             });
 
             document.getElementById('leaderboard-container').innerHTML = leaderboardHTML;
+        }
+
+        // مشاركة الإحصائيات
+        function shareStats() {
+            vibrate();
+            const shareText = `🌟 إحصائيات برنامج الاعتكاف - العشر الأواخر 🌟\n\n📖 9600 صفحة مقروءة من القرآن\n✨ 480 جزءاً تم إنجازه\n🎙️ 8 دروس وتصحيح تلاوة\n👥 10 معتكفين\n⏳ 10 أيام من العبادة والذكر\n\nنسأل الله القبول ومضاعفة الأجر 🤲`;
+
+            if (navigator.share) {
+                navigator.share({
+                    title: 'إحصائيات الاعتكاف',
+                    text: shareText
+                }).catch(err => console.log('مشاركة تم إلغاؤها أو غير مدعومة.', err));
+            } else {
+                navigator.clipboard.writeText(shareText);
+                alert("تم نسخ الإحصائيات! يمكنك الآن لصقها في الواتساب أو تويتر.");
+            }
         }
 
         // فتح سجل النقاط
@@ -828,7 +831,7 @@
             const member = membersConfig[index]; 
             document.getElementById('historyUserName').innerText = "الاسم: " + member.name + (member.status === 'excused' ? ' (معتذر)' : '');
             let tbodyHTML = ""; let total = 0;
-            if(!member.history || member.history.length === 0) { tbodyHTML = "<tr><td colspan='2'>لا يوجد سجل نقاط.</td></tr>"; } 
+            if(member.history.length === 0) { tbodyHTML = "<tr><td colspan='2'>لا يوجد سجل نقاط.</td></tr>"; } 
             else { 
                 member.history.forEach(record => { 
                     let isPositive = record.amount > 0; let sign = isPositive ? "+" : ""; 
@@ -842,105 +845,7 @@
             document.getElementById('historyModal').style.display = 'flex';
         }
 
-        // مشاركة الإحصائيات كصورة ببرمجة تمنع تعليق الموقع
-        function downloadStatsImage() {
-            vibrate();
-            const statsElement = document.getElementById('captureStatsArea');
-            const btn = document.getElementById('shareBtnObj');
-            const originalBg = statsElement.style.background;
-            
-            btn.style.display = 'none'; 
-            statsElement.style.background = "#0A1931"; 
-
-            if(typeof html2canvas === 'undefined') {
-                const script = document.createElement('script');
-                script.src = "https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js";
-                script.onload = () => capture(statsElement, originalBg, btn);
-                script.onerror = () => { alert("يجب توفر اتصال جيد بالإنترنت لالتقاط الصورة."); btn.style.display = 'inline-flex'; statsElement.style.background = originalBg; }
-                document.body.appendChild(script);
-            } else {
-                capture(statsElement, originalBg, btn);
-            }
-        }
-
-        function capture(element, originalBg, btn) {
-            html2canvas(element, { scale: 2, useCORS: true }).then(canvas => {
-                element.style.background = originalBg; 
-                btn.style.display = 'inline-flex';
-                
-                canvas.toBlob(function(blob) {
-                    const file = new File([blob], 'Stats.png', { type: 'image/png' });
-                    if (navigator.canShare && navigator.canShare({ files: [file] })) {
-                        navigator.share({ files: [file], title: 'إحصائيات الاعتكاف', text: '🌟 إنجازات برنامج الاعتكاف 🌟' }).catch(e => console.log(e));
-                    } else {
-                        const url = URL.createObjectURL(blob);
-                        const a = document.createElement('a');
-                        a.href = url; a.download = 'Stats.png';
-                        document.body.appendChild(a); a.click(); document.body.removeChild(a);
-                        URL.revokeObjectURL(url);
-                        alert("تم حفظ الصورة! يمكنك الآن إرسالها.");
-                    }
-                });
-            }).catch(err => {
-                btn.style.display = 'inline-flex'; element.style.background = originalBg;
-            });
-        }
-
-        // تثبيت التطبيق PWA
-        let deferredPrompt;
-        window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; });
-        function installAppPrompt() {
-            vibrate();
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
-            } else {
-                alert("لتثبيت التطبيق:\n\n📱 آيفون (Safari): اضغط على زر المشاركة بالأسفل، ثم اختر 'إضافة إلى الصفحة الرئيسية'.\n\n📱 أندرويد (Chrome): اضغط على القائمة (ثلاث نقاط)، ثم 'الإضافة إلى الشاشة الرئيسية'.");
-            }
-        }
-
-        // التبديل بين التبويبات
-        function switchTab(tabId, element) {
-            vibrate();
-            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active'); element.classList.add('active'); window.scrollTo(0, 0);
-            
-            if(tabId === 'team' || tabId === 'stats') {
-                setTimeout(() => {
-                    document.getElementById(tabId).querySelectorAll('.counter-target').forEach(el => {
-                        let target = parseInt(el.getAttribute('data-target'));
-                        if(el.innerHTML === "0") animateValue(el, 0, target, 1500); 
-                    });
-                }, 100);
-            }
-        }
-
-        // حفظ المهام اليومية
-        function toggleTask(checkbox) {
-            vibrate();
-            const item = checkbox.parentElement; const todayDate = new Date().toDateString(); 
-            if(checkbox.checked) { 
-                item.classList.add('done'); localStorage.setItem(checkbox.id + "_" + todayDate, 'true'); 
-                const rect = item.getBoundingClientRect();
-                const point = document.createElement('div'); point.className = 'floating-point'; point.innerText = '✨ ممتاز';
-                point.style.left = (rect.left + rect.width / 2) + 'px'; point.style.top = rect.top + 'px';
-                document.body.appendChild(point); setTimeout(() => point.remove(), 1000);
-            } else { 
-                item.classList.remove('done'); localStorage.removeItem(checkbox.id + "_" + todayDate); 
-            }
-        }
-
-        function loadChecklist() {
-            const todayDate = new Date().toDateString();
-            document.querySelectorAll('.check-item input[type="checkbox"]').forEach(chk => {
-                for (let i = 0; i < localStorage.length; i++) {
-                    let key = localStorage.key(i); if (key.startsWith(chk.id + "_") && key !== chk.id + "_" + todayDate) localStorage.removeItem(key);
-                }
-                if(localStorage.getItem(chk.id + "_" + todayDate) === 'true') { chk.checked = true; chk.parentElement.classList.add('done'); }
-            });
-        }
-
+        // النوافذ المنبثقة
         function openInfoModal(t, m, c) { 
             document.getElementById('infoTitle').innerText = t; 
             document.getElementById('infoManager').innerText = m; 
@@ -950,15 +855,22 @@
         function closeModal(id) { document.getElementById(id).style.display='none'; }
         window.onclick = function(e) { if(e.target.className.includes('modal')) e.target.style.display="none"; }
 
-        // تمييز الحدث الحالي
+        // تمييز الحدث الحالي (الآن)
         function highlightCurrentEvent() {
-            const now = new Date(); const currentTimeStr = now.getHours() + (now.getMinutes() / 60);
+            const now = new Date();
+            const currentTimeStr = now.getHours() + (now.getMinutes() / 60);
+
             document.querySelectorAll('.event-card').forEach(card => {
                 card.classList.remove('current-event'); 
-                let startStr = card.getAttribute('data-start'); let endStr = card.getAttribute('data-end');
+                let startStr = card.getAttribute('data-start');
+                let endStr = card.getAttribute('data-end');
+                
                 if(startStr && endStr) {
-                    let [sh, sm] = startStr.split(':').map(Number); let [eh, em] = endStr.split(':').map(Number);
-                    let startTime = sh + (sm / 60); let endTime = eh + (em / 60);
+                    let [sh, sm] = startStr.split(':').map(Number);
+                    let [eh, em] = endStr.split(':').map(Number);
+                    let startTime = sh + (sm / 60);
+                    let endTime = eh + (em / 60);
+                    
                     if (endTime < startTime) {
                         if (currentTimeStr >= startTime || currentTimeStr < endTime) card.classList.add('current-event');
                     } else {
@@ -971,25 +883,46 @@
         // عداد الصلاة
         const prayerTimes = [{ name: "الفجر", h: 5, m: 29 }, { name: "الظهر", h: 12, m: 15 }, { name: "العصر", h: 16, m: 0 }, { name: "المغرب", h: 19, m: 0 }, { name: "العشاء", h: 20, m: 0 }];
         function updatePrayerCountdown() {
-            const now = new Date(); const currentTotalSecs = (now.getHours() * 3600) + (now.getMinutes() * 60) + now.getSeconds();
+            const now = new Date();
+            const currentTotalSecs = (now.getHours() * 3600) + (now.getMinutes() * 60) + now.getSeconds();
             let nextPrayer = null; let nextPrayerTotalSecs = 0;
+
             for (let prayer of prayerTimes) {
                 let prayerSecs = (prayer.h * 3600) + (prayer.m * 60);
                 if (prayerSecs > currentTotalSecs) { nextPrayer = prayer; nextPrayerTotalSecs = prayerSecs; break; }
             }
+
             if (!nextPrayer) { nextPrayer = prayerTimes[0]; nextPrayerTotalSecs = (24 * 3600) + (nextPrayer.h * 3600) + (nextPrayer.m * 60); }
+
             let diffSecs = nextPrayerTotalSecs - currentTotalSecs;
-            let hours = Math.floor(diffSecs / 3600); diffSecs %= 3600; let minutes = Math.floor(diffSecs / 60); let seconds = diffSecs % 60;
+            let hours = Math.floor(diffSecs / 3600); diffSecs %= 3600;
+            let minutes = Math.floor(diffSecs / 60); let seconds = diffSecs % 60;
             document.getElementById('prayer-countdown').innerText = `باقي على صلاة ${nextPrayer.name}: ${hours}:${minutes < 10 ? '0'+minutes : minutes}:${seconds < 10 ? '0'+seconds : seconds}`;
         }
 
+        function requestNotificationPermission() {
+            if (!("Notification" in window)) alert("متصفحك لا يدعم الإشعارات.");
+            else if (Notification.permission === "granted") alert("الإشعارات مفعلة مسبقاً! ✔️");
+            else if (Notification.permission !== "denied") {
+                Notification.requestPermission().then(permission => {
+                    if (permission === "granted") new Notification("تم التفعيل", { body: "ستصلك الإشعارات الآن.", icon: "🕌" });
+                });
+            }
+        }
+
+        // التشغيل عند فتح الصفحة
         window.addEventListener('load', () => {
             if(localStorage.getItem('theme') === 'dark') {
-                document.getElementById('darkModeToggle').checked = true; document.body.classList.add('dark-mode');
+                document.getElementById('darkModeToggle').checked = true;
+                document.body.classList.add('dark-mode');
             }
+
+            setTimeout(hideSplash, 3000); 
+            
             renderApp();
             highlightCurrentEvent(); 
             loadChecklist();
+            
             setInterval(highlightCurrentEvent, 60000); 
             setInterval(updatePrayerCountdown, 1000);
         });
