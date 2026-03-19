@@ -8,9 +8,9 @@
     <meta name="theme-color" content="#0A1931">
     <title>تطبيق برنامج الاعتكاف - العشر الأواخر</title>
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@300;500;700&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         :root {
+            /* الألوان الأساسية */
             --dark-blue: #0A1931;
             --darker-blue: #050C18;
             --gold: #D4AF37;
@@ -24,6 +24,7 @@
             --bottom-nav-bg: rgba(255, 255, 255, 0.98);
         }
 
+        /* الوضع الليلي */
         body.dark-mode {
             --dark-blue: #1A2639;
             --darker-blue: #0A1118;
@@ -47,9 +48,11 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        .ripple-btn { position: relative; overflow: hidden; transform: scale(1); transition: transform 0.1s; cursor: pointer;}
+        /* التأثيرات الحركية والضغط */
+        .ripple-btn { position: relative; overflow: hidden; transform: scale(1); transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer;}
         .ripple-btn:active { transform: scale(0.96); opacity: 0.9;}
 
+        /* شاشة الدخول (Splash Screen) */
         #splash-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: radial-gradient(circle at center, #0A1931 0%, #050C18 100%);
@@ -59,101 +62,107 @@
         .splash-content { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 0 20px;}
         .logo-container { width: 90px; height: 90px; margin-bottom: 25px; filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.4)); animation: float 3s ease-in-out infinite; }
         .modern-logo { width: 100%; height: 100%; fill: #D4AF37; }
-        .splash-title { font-family: 'Amiri', serif; font-size: 38px; margin: 0; text-shadow: 0 4px 10px rgba(0,0,0,0.3); }
-        .splash-subtitle { font-size: 16px; opacity: 0.8; margin-top: 8px; color: white;}
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .splash-title { font-family: 'Amiri', serif; font-size: 38px; margin: 0; letter-spacing: 1px; text-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        .splash-subtitle { font-size: 16px; opacity: 0.8; margin-top: 8px; font-weight: 300; margin-bottom: 15px; color: white;}
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
 
+        /* الهيدر العلوي */
         .header { background-color: var(--darker-blue); color: var(--gold); text-align: center; padding: 20px 15px; border-bottom: 4px solid var(--gold); border-radius: 0 0 20px 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); position: relative; z-index: 10;}
         .header h1 { font-family: 'Amiri', serif; margin: 0; font-size: 28px; }
         .header p { margin: 5px 0 0; font-size: 14px; color: #fff; }
         .quran-verse { font-family: 'Amiri', serif; font-size: 15px; color: var(--gold); line-height: 1.8; margin: 10px 0; }
 
+        /* عداد الصلاة */
         #prayer-countdown-container {
             background: linear-gradient(to right, var(--qadr-glow), #f1c40f);
             color: #0A1931; text-align: center; padding: 8px; font-weight: bold; font-size: 14px;
             position: sticky; top: 0; z-index: 50; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
-        .container { padding: 25px 15px 15px 15px; max-width: 600px; margin: 0 auto; position: relative; z-index: 5;}
+        .container { padding: 15px; max-width: 600px; margin: 0 auto; position: relative; z-index: 5;}
         
-        .tab-content { display: none; padding-top: 5px; }
-        .tab-content.active { display: block; animation: fadeInSlide 0.4s forwards; }
+        /* الانتقال بين الصفحات */
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeInSlide 0.4s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
         @keyframes fadeInSlide { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
         .section-title { color: var(--dark-blue); border-bottom: 2px solid var(--gold); padding-bottom: 5px; margin-bottom: 15px; font-family: 'Amiri', serif; background: var(--card-bg); display: inline-block; padding: 5px 15px; border-radius: 8px;}
         body.dark-mode .section-title { color: var(--gold); }
 
+        /* بطاقات الجدول */
         .card { background: var(--card-bg); border-radius: 12px; padding: 15px; margin-bottom: 12px; border-right: 5px solid var(--gold); box-shadow: 0 4px 10px rgba(0,0,0,0.06); display: flex; justify-content: space-between; align-items: center; position: relative;}
         .card-info { flex-grow: 1; margin-right: 15px; }
         .card-time { color: var(--gold); font-weight: bold; font-size: 14px; margin-bottom: 5px; direction: ltr; text-align: right;}
         .card-title { font-size: 16px; font-weight: bold; color: var(--text-main); }
         .card-icon { font-size: 24px; background: var(--light-gold); width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%; min-width: 40px;}
 
-        /* تم إصلاح ظهور بطاقة (الآن) */
-        .current-event { margin-top: 25px !important; margin-bottom: 25px !important; border-right: 6px solid #2ecc71 !important; background: linear-gradient(to left, rgba(46, 204, 113, 0.1), var(--card-bg)) !important; box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3) !important; transform: scale(1.02); z-index: 10; border-radius: 12px;}
-        .current-event::after { content: 'الآن'; position: absolute; top: -14px; right: 15px; background: #2ecc71; color: white; padding: 4px 15px; border-radius: 12px; font-size: 13px; font-weight: bold; animation: pulseNow 1.5s infinite; box-shadow: 0 2px 5px rgba(0,0,0,0.2); z-index: 20;}
-        @keyframes pulseNow { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+        /* بطاقة الحدث الحالي (الآن) - تم التعديل لحل مشكلة القص */
+        .current-event { margin-top: 25px !important; border-right: 6px solid #2ecc71 !important; background: linear-gradient(to left, rgba(46, 204, 113, 0.1), var(--card-bg)) !important; box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3) !important; transform: scale(1.02); z-index: 10; border-radius: 12px;}
+        .current-event::after { content: 'الآن'; position: absolute; top: -16px; left: 15px; background: #2ecc71; color: white; padding: 4px 15px; border-radius: 12px; font-size: 13px; font-weight: bold; animation: pulseNow 1.5s infinite; box-shadow: 0 2px 5px rgba(0,0,0,0.2); z-index: 20;}
+        @keyframes pulseNow { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7); } 70% { transform: scale(1.05); box-shadow: 0 0 0 6px rgba(46, 204, 113, 0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(46, 204, 113, 0); } }
 
         .qadr-card { border-right: 5px solid var(--qadr-glow); background: linear-gradient(to left, rgba(243, 156, 18, 0.08), var(--card-bg)); animation: softPulse 2s infinite alternate; }
         @keyframes softPulse { from { box-shadow: 0 4px 10px rgba(0,0,0,0.05); } to { box-shadow: 0 4px 20px rgba(243, 156, 18, 0.4); } }
         .qadr-card .card-time { color: var(--qadr-glow); }
+        .qadr-card .card-icon { background: rgba(243, 156, 18, 0.15); }
 
-        /* ضيوف الاعتكاف */
-        .guest-card { background: var(--card-bg); padding: 15px; border-radius: 12px; margin-bottom: 15px; border-right: 5px solid #bdc3c7; display: flex; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.06); position: relative;}
-        .guest-card.vip { border: 2px solid var(--gold); border-right: 6px solid var(--gold); background: linear-gradient(to left, rgba(212, 175, 55, 0.08), var(--card-bg)); }
-        .guest-icon { font-size: 35px; margin-left: 15px; background: var(--light-gold); border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;}
-        .guest-card.vip .guest-icon { background: rgba(212, 175, 55, 0.2); }
-        .guest-info h3 { margin: 0 0 5px 0; color: var(--text-main); font-size: 18px; }
-        .guest-info p { margin: 0; color: var(--text-muted); font-size: 13px; }
-        .vip-badge { position: absolute; top: -10px; left: 15px; font-size: 12px; background: var(--gold); color: var(--dark-blue); font-weight: bold; padding: 4px 12px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 4px;}
-
-        /* أوسمة الإنجازات */
-        .achievements-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 25px; }
-        .achievement-card { background: var(--card-bg); border-radius: 12px; padding: 15px 10px; text-align: center; border: 1px solid rgba(212, 175, 55, 0.3); box-shadow: 0 4px 8px rgba(0,0,0,0.05); }
-        .ach-icon { font-size: 30px; display: block; margin-bottom: 5px; }
-        .ach-title { font-weight: bold; color: var(--dark-blue); font-size: 14px; margin-bottom: 5px; font-family: 'Amiri', serif;}
-        body.dark-mode .ach-title { color: var(--gold); }
-        .ach-winner { font-size: 15px; color: var(--qadr-glow); font-weight: bold; background: rgba(243, 156, 18, 0.1); padding: 4px; border-radius: 6px; display: inline-block; width: 100%; box-sizing: border-box;}
-
-        .student-card { background: var(--card-bg); padding: 20px 15px 15px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.06); border: 1px solid rgba(0,0,0,0.05); position: relative; margin-top: 15px;}
+        /* لوحة الشرف والبطاقات */
+        .student-card { background: var(--card-bg); padding: 20px 15px 15px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.06); border: 1px solid rgba(0,0,0,0.05); position: relative; margin-top: 15px; backdrop-filter: blur(5px);}
         .student-card h3 { margin: 0 0 5px; color: var(--text-main); font-size: 18px; padding-right: 10px;}
         .student-card p { margin: 0 0 10px; color: var(--text-muted); font-size: 14px; padding-right: 10px;}
-        .rank-badge { position: absolute; right: -10px; top: -10px; width: 35px; height: 35px; background: var(--dark-blue); color: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 18px; border: 2px solid var(--gold); }
+        
+        .rank-badge { position: absolute; right: -10px; top: -10px; width: 35px; height: 35px; background: var(--dark-blue); color: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 18px; border: 2px solid var(--gold); box-shadow: 0 2px 5px rgba(0,0,0,0.2); font-family: 'Amiri', serif;}
         .points-display { position: absolute; left: 15px; top: 15px; text-align: center; background: var(--light-gold); padding: 5px 15px; border-radius: 8px; border: 1px solid var(--gold); min-width: 50px;}
         .points-number { font-size: 20px; font-weight: bold; color: var(--dark-blue); display: block; line-height: 1.2; }
         .points-text { font-size: 11px; color: var(--text-muted); }
         
-        .rank-1 { border: 2px solid #FFD700; background: linear-gradient(to right, var(--card-bg), rgba(255, 215, 0, 0.05)); transform: scale(1.02); z-index: 10;}
-        .rank-2 { border: 2px solid #C0C0C0; }
-        .rank-3 { border: 2px solid #CD7F32; }
+        /* تلوين المراكز */
+        .rank-1 { border: 2px solid #FFD700; background: linear-gradient(to right, var(--card-bg), rgba(255, 215, 0, 0.05)); box-shadow: 0 4px 15px rgba(255, 215, 0, 0.2); transform: scale(1.02); z-index: 10;}
+        .rank-2 { border: 2px solid #C0C0C0; background: linear-gradient(to right, var(--card-bg), rgba(192, 192, 192, 0.05)); }
+        .rank-3 { border: 2px solid #CD7F32; background: linear-gradient(to right, var(--card-bg), rgba(205, 127, 50, 0.05)); }
         .excused-card { opacity: 0.6; filter: grayscale(100%); }
 
-        .history-btn { display: inline-block; background: transparent; border: 1px solid var(--gold); color: var(--text-main); padding: 5px 10px; border-radius: 5px; font-size: 12px; font-weight: bold; font-family: 'Tajawal', sans-serif; cursor: pointer; margin-right: 10px; margin-bottom: 10px; }
+        /* بطاقة المعتكف المتميز */
+        .featured-card { background: linear-gradient(135deg, #8e44ad, #9b59b6); color: white; padding: 20px; border-radius: 12px; text-align: center; margin-bottom: 25px; box-shadow: 0 4px 15px rgba(142, 68, 173, 0.4); animation: pulseCard 2s infinite alternate;}
+        .featured-card h2 { margin: 0 0 5px 0; font-size: 18px; font-family: 'Amiri', serif;}
+        .featured-card h3 { margin: 0; font-size: 24px; color: #f1c40f; text-shadow: 0 2px 4px rgba(0,0,0,0.3);}
+        @keyframes pulseCard { 0% { transform: scale(1); } 100% { transform: scale(1.02); } }
+
+        /* الأزرار وشريط التقدم */
+        .history-btn { display: inline-block; background: transparent; border: 1px solid var(--gold); color: var(--text-main); padding: 5px 10px; border-radius: 5px; font-size: 12px; font-family: 'Tajawal', sans-serif; cursor: pointer; margin-right: 10px; margin-bottom: 10px; font-weight: bold;}
         
-        /* الإحصائيات 📊 */
+        .progress-container { background: rgba(0,0,0,0.03); padding: 12px; border-radius: 8px; margin-top: 10px; border: 1px dashed var(--gold);}
+        .progress-header { display: flex; justify-content: space-between; font-weight: bold; color: var(--text-main); font-size: 14px; margin-bottom: 8px; }
+        .progress-bar { background: rgba(0,0,0,0.1); border-radius: 10px; height: 12px; width: 100%; overflow: hidden; }
+        .progress-fill { background: var(--gold); height: 100%; width: 0%; transition: width 1.5s cubic-bezier(0.25, 1, 0.5, 1); }
+
+        /* الإحصائيات الفاخرة 📊 */
         .stats-poster { background: linear-gradient(135deg, var(--dark-blue), var(--darker-blue)); border: 2px solid var(--gold); border-radius: 15px; padding: 30px 20px; text-align: center; color: white; position: relative; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
-        .stats-poster::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, transparent 60%); pointer-events: none;}
+        .stats-poster::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, transparent 60%); animation: rotateGlow 15s linear infinite; pointer-events: none;}
+        @keyframes rotateGlow { 100% { transform: rotate(360deg); } }
         
         .stats-title { font-family: 'Amiri', serif; font-size: 26px; color: var(--gold); margin-bottom: 5px; margin-top: 0; text-shadow: 0 2px 5px rgba(0,0,0,0.5);}
         .stats-subtitle { font-size: 14px; color: #ccc; margin-bottom: 25px; }
 
         .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; position: relative; z-index: 1; }
-        .stat-box { background: rgba(255,255,255,0.06); border: 1px solid rgba(212, 175, 55, 0.3); padding: 15px 10px; border-radius: 12px; backdrop-filter: blur(5px);}
+        .stat-box { background: rgba(255,255,255,0.06); border: 1px solid rgba(212, 175, 55, 0.3); padding: 15px 10px; border-radius: 12px; backdrop-filter: blur(5px); transition: transform 0.3s;}
+        .stat-box:hover { transform: translateY(-3px); border-color: var(--gold); background: rgba(212, 175, 55, 0.15);}
         .stat-box.full-width { grid-column: 1 / -1; background: linear-gradient(to right, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.05)); border-color: var(--gold);}
         
         .stat-icon { font-size: 32px; margin-bottom: 8px; display: block; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));}
         .stat-number { font-size: 28px; font-weight: bold; color: var(--gold); font-family: 'Amiri', serif; display: block; margin-bottom: 5px;}
         .stat-text { font-size: 14px; color: #eee; font-weight: 500;}
 
-        /* أزرار الإجراءات */
-        .action-btn { margin-top: 30px; background: linear-gradient(to bottom, #F1C40F, #D4AF37); color: var(--darker-blue); border: none; padding: 15px 25px; font-size: 16px; font-weight: bold; border-radius: 30px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 10px; font-family: 'Tajawal', sans-serif; box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4); width: 80%; margin-left:auto; margin-right:auto; text-decoration: none;}
-        .install-btn { background: linear-gradient(to right, #2ecc71, #27ae60); color: white; box-shadow: 0 6px 20px rgba(46, 204, 113, 0.4); margin-top: 20px;}
+        .share-btn { margin-top: 30px; background: linear-gradient(to bottom, #F1C40F, #D4AF37); color: var(--darker-blue); border: none; padding: 15px 30px; font-size: 16px; font-weight: bold; border-radius: 30px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 10px; font-family: 'Tajawal', sans-serif; box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4); position: relative; z-index: 1; transition: 0.2s; width: 80%;}
+        .share-btn:active { transform: scale(0.95); box-shadow: 0 2px 10px rgba(212, 175, 55, 0.4);}
+        .share-btn svg { width: 20px; height: 20px; fill: currentColor; }
 
         /* المهام والضيافة */
         .team-member { background: var(--card-bg); padding: 20px 15px; border-radius: 12px; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.06); border: 1px solid rgba(0,0,0,0.05); }
         .active-duty { border: 2px solid var(--qadr-glow); background: linear-gradient(to left, rgba(243, 156, 18, 0.05), var(--card-bg)); box-shadow: 0 4px 15px rgba(243, 156, 18, 0.2); position: relative;}
         .active-duty::after { content: 'مهام اليوم'; position: absolute; top: -12px; left: 15px; background: var(--qadr-glow); color: #fff; padding: 3px 12px; border-radius: 10px; font-size: 12px; font-weight: bold; }
 
+        /* القائمة اليومية */
         .checklist { display: flex; flex-direction: column; gap: 10px; padding-right: 15px; margin-top: 10px;}
         .check-item { display: flex; align-items: center; background: var(--card-bg); padding: 12px; border-radius: 8px; border: 1px solid rgba(0,0,0,0.1); }
         .check-item input[type="checkbox"] { margin-left: 12px; width: 22px; height: 22px; accent-color: var(--gold); cursor: pointer;}
@@ -161,12 +170,19 @@
         .check-item.done { background: rgba(46, 204, 113, 0.1); opacity: 0.8;}
         .check-item.done label { text-decoration: line-through; color: var(--text-muted); }
 
+        /* التأثيرات المتطايرة */
+        .floating-point { position: fixed; color: #2ecc71; font-weight: bold; font-size: 22px; pointer-events: none; animation: floatUpPoints 1s ease-out forwards; z-index: 9999; text-shadow: 1px 1px 3px rgba(0,0,0,0.2); }
+        @keyframes floatUpPoints { 0% { opacity: 1; transform: translateY(0) scale(1); } 100% { opacity: 0; transform: translateY(-50px) scale(1.5); } }
+
+        /* الجداول (القوانين) */
         .points-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 14px; background: var(--card-bg); border-radius: 8px; overflow: hidden;}
         .points-table th, .points-table td { border: 1px solid rgba(0,0,0,0.1); padding: 10px; text-align: center; color: var(--text-main);}
         .points-table th { background-color: var(--dark-blue); color: var(--gold); font-family: 'Amiri', serif; font-size: 16px;}
+        .points-table tr:nth-child(even) { background-color: var(--light-gold); }
         .positive { color: #2ecc71; font-weight: bold; direction: ltr;}
         .negative { color: #e74c3c; font-weight: bold; direction: ltr;}
 
+        /* الإعدادات */
         .setting-item { display: flex; justify-content: space-between; align-items: center; background: var(--card-bg); padding: 15px 20px; border-radius: 12px; margin-bottom: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
         .setting-item span { font-size: 16px; font-weight: bold; color: var(--text-main); }
         .toggle-switch { position: relative; width: 50px; height: 26px; }
@@ -176,16 +192,18 @@
         input:checked + .slider { background-color: var(--gold); }
         input:checked + .slider:before { transform: translateX(24px); }
 
-        .bottom-nav { position: fixed; bottom: 0; width: 100%; background-color: var(--bottom-nav-bg); display: flex; justify-content: space-between; padding: 10px 5px 15px 5px; box-shadow: 0 -5px 20px rgba(0,0,0,0.1); border-top: 1px solid rgba(0,0,0,0.05); z-index: 100; overflow-x: auto; white-space: nowrap;}
-        .nav-item { text-align: center; color: var(--text-muted); font-size: 10px; cursor: pointer; flex: 0 0 auto; min-width: 52px; transition: 0.3s; position: relative; padding: 0 5px; }
+        /* الشريط السفلي التفاعلي */
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background-color: var(--bottom-nav-bg); display: flex; justify-content: space-around; padding: 10px 0 15px 0; box-shadow: 0 -5px 20px rgba(0,0,0,0.1); border-top: 1px solid rgba(0,0,0,0.05); z-index: 100; overflow-x: auto; white-space: nowrap;}
+        .nav-item { text-align: center; color: var(--text-muted); font-size: 10px; cursor: pointer; flex: 1; min-width: 55px; transition: 0.3s; position: relative; }
         .nav-icon { font-size: 20px; display: block; margin-bottom: 4px; transition: transform 0.3s;}
         .nav-item.active { color: var(--gold); font-weight: bold; }
         .nav-item.active .nav-icon { transform: scale(1.3) translateY(-3px); color: var(--gold); }
         .nav-item.active::after { content: ''; position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; background: var(--gold); border-radius: 50%; }
 
+        /* النوافذ المنبثقة Modal */
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); align-items: center; justify-content: center; backdrop-filter: blur(5px);}
-        .modal-content { background-color: var(--card-bg); padding: 25px; border-radius: 15px; width: 85%; max-width: 400px; text-align: center; border: 3px solid var(--gold); position: relative; max-height: 80vh; overflow-y: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.5);}
-        .close-btn { position: absolute; top: 10px; left: 15px; font-size: 24px; font-weight: bold; color: var(--text-muted); cursor: pointer; }
+        .modal-content { background-color: var(--card-bg); padding: 25px; border-radius: 15px; width: 85%; max-width: 400px; text-align: center; border: 3px solid var(--gold); position: relative; max-height: 80vh; overflow-y: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.5); animation: fadeInSlide 0.3s ease-out;}
+        .close-btn { position: absolute; top: 10px; left: 15px; font-size: 24px; font-weight: bold; color: var(--text-muted); cursor: pointer; transition: 0.2s;}
     </style>
 </head>
 <body>
@@ -199,7 +217,8 @@
                 </svg>
             </div>
             <h1 class="splash-title">برنامج الاعتكاف</h1>
-            <p class="splash-subtitle">نسأل الله أن يبلغنا وإياكم ليلة القدر</p>
+            <p class="splash-subtitle">تبقى القليل.. نسأل الله أن يبلغنا وإياكم ليلة القدر</p>
+            <p style="font-size: 12px; color: #aaa; margin-top: 20px;">(اضغط للبدء)</p>
         </div>
     </div>
 
@@ -210,18 +229,18 @@
     <div class="header">
         <h1>برنامج الاعتكاف</h1>
         <p>نسأل الله أن يبلغنا وإياكم ليلة القدر</p>
-        <p class="quran-verse">﴿إِنَّا أَنزَلْنَاهُ فِي لَيْلَةِ الْقَدْرِ﴾</p>
+        <p class="quran-verse">﴿إِنَّا أَنزَلْنَاهُ فِي لَيْلَةِ الْقَدْرِ * وَمَا أَدْرَاكَ مَا لَيْلَةُ الْقَدْرِ * لَيْلَةُ الْقَدْرِ خَيْرٌ مِّنْ أَلْفِ شَهْرٍ﴾</p>
     </div>
 
     <div class="container">
         
         <div id="schedule" class="tab-content active">
-            <h2 class="section-title" style="color: var(--qadr-glow); border-bottom-color: var(--qadr-glow);">✨ تحري ليلة القدر</h2>
-            <div class="card qadr-card ripple-btn" onclick="vibrate(); openInfoModal('الدعاء المأثور', 'مهمة فردية', 'اللهم إنك عفو تحب العفو فاعف عني.')">
+            <h2 class="section-title" style="color: var(--qadr-glow); border-bottom-color: var(--qadr-glow);">✨ تحري ليلة القدر (مستمر)</h2>
+            <div class="card qadr-card ripple-btn" onclick="vibrate(); openInfoModal('الدعاء المأثور', 'مهمة فردية', 'عن عائشة رضي الله عنها قالت: قلت يا رسول الله، أرأيت إن علمت أي ليلة ليلة القدر ما أقول فيها؟ قال: قولي: اللهم إنك عفو تحب العفو فاعف عني.')">
                 <div class="card-icon">🤲</div><div class="card-info"><div class="card-title">الدعاء المأثور</div><div class="card-time">طوال الليل</div></div>
             </div>
             
-            <h2 class="section-title" style="margin-top: 25px;">الجدول اليومي</h2>
+            <h2 class="section-title" style="margin-top: 25px;">الجدول اليومي المعتاد</h2>
             <div class="card event-card ripple-btn" data-start="05:29" data-end="06:05" onclick="vibrate(); openInfoModal('صلاة الفجر والأذكار', 'المسؤول: عبدالرحمن زعل', '﴿إِنَّ الصَّلَاةَ كَانَتْ عَلَى الْمُؤْمِنِينَ كِتَابًا مَّوْقُوتًا﴾')">
                 <div class="card-icon">🕌</div><div class="card-info"><div class="card-title">صلاة الفجر والأذكار</div><div class="card-time">5:29 – 6:05 ص</div></div>
             </div>
@@ -272,62 +291,31 @@
             </div>
         </div>
 
-        <div id="guests" class="tab-content">
-            <h2 class="section-title">🌟 ضيوف الاعتكاف</h2>
-            
-            <div class="guest-card vip">
-                <div class="vip-badge">⭐ ضيف مميز</div>
-                <div class="guest-icon">👳‍♂️</div>
-                <div class="guest-info">
-                    <h3>الشيخ يونس قرموش</h3>
-                    <p>زائر للإفادة وتقديم التوجيهات للمعتكفين</p>
-                </div>
+        <div id="duties" class="tab-content">
+            <h2 class="section-title">🧹 جدول النظافة والضيافة</h2>
+            <div class="team-member">
+                <h3>اليوم الأول</h3>
+                <p style="font-weight: bold; color: var(--dark-blue);">مطاعن جبيع & صالح الزهراني</p>
             </div>
-
-            <div class="guest-card vip">
-                <div class="vip-badge">⭐ ضيف مميز</div>
-                <div class="guest-icon">👳‍♂️</div>
-                <div class="guest-info">
-                    <h3>الشيخ أيوب العطوي</h3>
-                    <p>زائر للإفادة وتقديم التوجيهات للمعتكفين</p>
-                </div>
+            <div class="team-member">
+                <h3>اليوم الثاني</h3>
+                <p style="font-weight: bold; color: var(--dark-blue);">ريان عري & بتال القبيسي</p>
             </div>
-
-            <div class="guest-card vip">
-                <div class="vip-badge">⭐ ضيف مميز</div>
-                <div class="guest-icon">👳‍♂️</div>
-                <div class="guest-info">
-                    <h3>الشيخ علي غزواني</h3>
-                    <p>زائر للإفادة وتقديم التوجيهات للمعتكفين</p>
-                </div>
+            <div class="team-member">
+                <h3>اليوم الثالث</h3>
+                <p style="font-weight: bold; color: var(--dark-blue);">محمد جبيع & عبدالرحمن زعل</p>
+            </div>
+            <div class="team-member active-duty" style="border: 2px solid var(--qadr-glow);">
+                <h3 style="color: var(--dark-blue);">اليوم الرابع (اليوم)</h3>
+                <p style="font-weight: bold; font-size: 16px; color: #e67e22;">الجميع</p>
             </div>
         </div>
 
         <div id="team" class="tab-content">
-            <h2 class="section-title">🌟 أوسمة الإنجاز</h2>
-            <div class="achievements-grid">
-                <div class="achievement-card">
-                    <span class="ach-icon">🕌</span>
-                    <div class="ach-title">بطل الفجر</div>
-                    <div class="ach-winner" id="ach-fajr">جاري الحساب...</div>
-                </div>
-                <div class="achievement-card">
-                    <span class="ach-icon">⏳</span>
-                    <div class="ach-title">حافظ الوقت</div>
-                    <div class="ach-winner" id="ach-time">جاري الحساب...</div>
-                </div>
-                <div class="achievement-card">
-                    <span class="ach-icon">🤝</span>
-                    <div class="ach-title">المُبادر</div>
-                    <div class="ach-winner" id="ach-init">جاري الحساب...</div>
-                </div>
-                <div class="achievement-card" style="grid-column: 1 / -1; border-color: var(--gold); background: linear-gradient(to right, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.05));">
-                    <span class="ach-icon">⭐</span>
-                    <div class="ach-title" style="font-size: 18px;">المعتكف المتميز</div>
-                    <div class="ach-winner" id="ach-quran" style="font-size: 18px;">جاري الحساب...</div>
-                </div>
+            <div class="featured-card" id="featuredCard">
+                <h2>⭐ المعتَكِف المتميز (بالأجزاء)</h2>
+                <h3 id="featuredName">جاري الحساب...</h3>
             </div>
-
             <h2 class="section-title">🏆 الترتيب العام</h2>
             <div id="leaderboard-container"></div>
         </div>
@@ -335,7 +323,7 @@
         <div id="stats" class="tab-content">
             <h2 class="section-title">📊 إحصائيات الاعتكاف</h2>
             
-            <div class="stats-poster" id="captureStatsArea">
+            <div class="stats-poster">
                 <h2 class="stats-title">إنجازات برنامج الاعتكاف</h2>
                 <div class="stats-subtitle">نسأل الله القبول ومضاعفة الأجر</div>
                 
@@ -343,34 +331,90 @@
                     <div class="stat-box full-width">
                         <span class="stat-icon">📖</span>
                         <span class="stat-number counter-target" data-target="9600">0</span>
-                        <span class="stat-text">صفحة مقروءة</span>
+                        <span class="stat-text">صفحة مقروءة من القرآن الكريم</span>
                     </div>
+                    
                     <div class="stat-box">
                         <span class="stat-icon">✨</span>
                         <span class="stat-number counter-target" data-target="480">0</span>
-                        <span class="stat-text">جزء منجز</span>
+                        <span class="stat-text">جزء تم إنجازه</span>
                     </div>
+                    
                     <div class="stat-box">
                         <span class="stat-icon">🎙️</span>
                         <span class="stat-number counter-target" data-target="8">0</span>
-                        <span class="stat-text">دروس أقيمت</span>
+                        <span class="stat-text">دروس وتصحيح تلاوة</span>
                     </div>
+                    
                     <div class="stat-box">
                         <span class="stat-icon">👥</span>
                         <span class="stat-number counter-target" data-target="10">0</span>
                         <span class="stat-text">عدد المعتكفين</span>
                     </div>
+                    
                     <div class="stat-box">
                         <span class="stat-icon">⏳</span>
                         <span class="stat-number counter-target" data-target="10">0</span>
-                        <span class="stat-text">أيام اعتكاف</span>
+                        <span class="stat-text">أيام الاعتكاف</span>
                     </div>
                 </div>
-            </div>
 
-            <button class="action-btn" onclick="downloadStatsImage()">
-                📸 تحميل ملصق الإحصائيات
-            </button>
+                <button class="share-btn" onclick="shareStats()">
+                    مشاركة الإحصائيات 
+                    <svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
+                </button>
+            </div>
+        </div>
+
+        <div id="adhkar" class="tab-content">
+            <h2 class="section-title">قائمة الإنجاز والورد اليومي</h2>
+            <div class="team-member" style="border: 1px solid var(--gold);">
+                <h3>✅ المهام اليومية (تُحفظ تلقائياً)</h3>
+                <div class="checklist">
+                    <div class="check-item ripple-btn"><input type="checkbox" id="task1" onchange="toggleTask(this)"><label for="task1">أذكار الصباح (بعد صلاة الفجر)</label></div>
+                    <div class="check-item ripple-btn"><input type="checkbox" id="task2" onchange="toggleTask(this)"><label for="task2">صلاة الضحى (ركعتان على الأقل)</label></div>
+                    <div class="check-item ripple-btn"><input type="checkbox" id="task3" onchange="toggleTask(this)"><label for="task3">قراءة الجزء الأول المقرر</label></div>
+                    <div class="check-item ripple-btn"><input type="checkbox" id="task4" onchange="toggleTask(this)"><label for="task4">أذكار المساء (بعد صلاة العصر)</label></div>
+                    <div class="check-item ripple-btn"><input type="checkbox" id="task5" onchange="toggleTask(this)"><label for="task5">قراءة الجزء الثاني المقرر</label></div>
+                    <div class="check-item ripple-btn"><input type="checkbox" id="task6" onchange="toggleTask(this)"><label for="task6">الدعاء المأثور (اللهم إنك عفو...)</label></div>
+                    <div class="check-item ripple-btn"><input type="checkbox" id="task7" onchange="toggleTask(this)"><label for="task7">التنظيف مع المسؤولين للتنظيف 🧹</label></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="rules" class="tab-content">
+            <h2 class="section-title">نظام نقاط برنامج الاعتكاف</h2>
+            <h3 style="color: var(--dark-blue); font-size: 16px;">الالتزام والصلوات</h3>
+            <table class="points-table">
+                <tr><th>البند</th><th>النقاط</th></tr>
+                <tr><td>الحضور المبكر لصلاة الفجر قبل الإقامة</td><td class="positive">+6</td></tr>
+                <tr><td>الصلاة في الصف الأول</td><td class="positive">+5</td></tr>
+                <tr><td>التبكير لبقية الصلوات</td><td class="positive">+4</td></tr>
+                <tr><td>الحضور بعد الإقامة مباشرة</td><td class="positive">+1</td></tr>
+                <tr><td>الصلاة مع جماعة ثانية</td><td class="negative">-4</td></tr>
+                <tr><td>الغياب عن صلاة الجماعة بدون عذر</td><td class="negative">-8</td></tr>
+            </table>
+
+            <h3 style="color: var(--dark-blue); font-size: 16px;">البرامج والدروس</h3>
+            <table class="points-table">
+                <tr><th>البند</th><th>النقاط</th></tr>
+                <tr><td>الالتزام بحضور الدروس</td><td class="positive">+5</td></tr>
+                <tr><td>الالتزام بحضور الحلقة القرآنية</td><td class="positive">+5</td></tr>
+                <tr><td>تسميع ممتاز في الحلقة</td><td class="positive">+4</td></tr>
+                <tr><td>قراءة الجزء المقرر</td><td class="positive">+3</td></tr>
+                <tr><td>الالتزام بجدول الاعتكاف</td><td class="positive">+5</td></tr>
+            </table>
+
+            <h3 style="color: var(--dark-blue); font-size: 16px;">السلوك والمبادرات</h3>
+            <table class="points-table">
+                <tr><th>البند</th><th>النقاط</th></tr>
+                <tr><td>قلة الخروج من المسجد</td><td class="positive">+4</td></tr>
+                <tr><td>كثرة الخروج بدون حاجة</td><td class="negative">-4</td></tr>
+                <tr><td>حسن الأدب واحترام المعتكفين</td><td class="positive">+4</td></tr>
+                <tr><td>التعاون مع المشرفين وإنجاز المهام</td><td class="positive">+5</td></tr>
+                <tr><td>مبادرة في خدمة المعتكفين</td><td class="positive">+5</td></tr>
+                <tr><td>ترتيب المسجد أو تنظيفه بدون طلب</td><td class="positive">+4</td></tr>
+            </table>
         </div>
 
         <div id="settings" class="tab-content">
@@ -379,51 +423,27 @@
                 <span>🌙 الوضع الليلي</span>
                 <label class="toggle-switch"><input type="checkbox" id="darkModeToggle" onchange="toggleDarkMode()"><span class="slider"></span></label>
             </div>
-            
-            <button class="action-btn install-btn" id="installBtn" onclick="installApp()">
-                📲 تثبيت التطبيق على الجوال
-            </button>
-        </div>
-
-        <div id="duties" class="tab-content">
-            <h2 class="section-title">🧹 جدول النظافة والضيافة</h2>
-            <div class="team-member active-duty"><h3 style="color: var(--dark-blue);">اليوم</h3><p style="font-weight: bold; font-size: 16px; color: #e67e22;">الجميع</p></div>
-        </div>
-
-        <div id="adhkar" class="tab-content">
-            <h2 class="section-title">قائمة الإنجاز والورد اليومي</h2>
-            <div class="team-member" style="border: 1px solid var(--gold);">
-                <div class="checklist">
-                    <div class="check-item ripple-btn"><input type="checkbox" id="task1" onchange="toggleTask(this)"><label for="task1">أذكار الصباح (بعد الفجر)</label></div>
-                    <div class="check-item ripple-btn"><input type="checkbox" id="task2" onchange="toggleTask(this)"><label for="task2">صلاة الضحى (ركعتان)</label></div>
-                    <div class="check-item ripple-btn"><input type="checkbox" id="task3" onchange="toggleTask(this)"><label for="task3">قراءة الجزء الأول المقرر</label></div>
-                    <div class="check-item ripple-btn"><input type="checkbox" id="task4" onchange="toggleTask(this)"><label for="task4">أذكار المساء (بعد العصر)</label></div>
-                    <div class="check-item ripple-btn"><input type="checkbox" id="task5" onchange="toggleTask(this)"><label for="task5">قراءة الجزء الثاني المقرر</label></div>
-                    <div class="check-item ripple-btn"><input type="checkbox" id="task6" onchange="toggleTask(this)"><label for="task6">الدعاء المأثور (اللهم إنك عفو...)</label></div>
-                </div>
+            <div class="setting-item ripple-btn" onclick="vibrate(); requestNotificationPermission()" style="cursor: pointer;">
+                <span>🔔 تفعيل الإشعارات الذكية</span><span style="font-size: 20px;">📱</span>
             </div>
-        </div>
-        
-        <div id="rules" class="tab-content">
-            <h2 class="section-title">نظام نقاط برنامج الاعتكاف</h2>
-            <table class="points-table"><tr><th>البند</th><th>النقاط</th></tr><tr><td>الحضور المبكر لصلاة الفجر</td><td class="positive">+6</td></tr><tr><td>الغياب عن الجماعة بدون عذر</td><td class="negative">-8</td></tr></table>
         </div>
     </div>
 
     <div class="bottom-nav">
         <div class="nav-item active ripple-btn" onclick="switchTab('schedule', this)"><span class="nav-icon">📅</span>الجدول</div>
-        <div class="nav-item ripple-btn" onclick="switchTab('guests', this)"><span class="nav-icon">🌟</span>الضيوف</div>
+        <div class="nav-item ripple-btn" onclick="switchTab('duties', this)"><span class="nav-icon">🧹</span>المهام</div>
         <div class="nav-item ripple-btn" onclick="switchTab('team', this)"><span class="nav-icon">🏆</span>الشرف</div>
         <div class="nav-item ripple-btn" onclick="switchTab('stats', this)"><span class="nav-icon">📊</span>إحصاء</div>
         <div class="nav-item ripple-btn" onclick="switchTab('adhkar', this)"><span class="nav-icon">✔️</span>إنجازي</div>
+        <div class="nav-item ripple-btn" onclick="switchTab('rules', this)"><span class="nav-icon">📌</span>نظامنا</div>
         <div class="nav-item ripple-btn" onclick="switchTab('settings', this)"><span class="nav-icon">⚙️</span>إعدادات</div>
     </div>
 
-    <div id="infoModal" class="modal"><div class="modal-content"><span class="close-btn" onclick="closeModal('infoModal')">&times;</span><div id="infoTitle" style="font-size: 20px; color: var(--dark-blue); font-weight: bold; margin-bottom:10px;"></div><div id="infoManager" style="display: inline-block; background: var(--light-gold); padding: 5px 15px; border-radius: 20px; color: var(--dark-blue); font-size: 14px; margin-bottom: 15px; font-weight: bold; border: 1px solid var(--gold);"></div><div id="infoAyah" style="font-family: 'Amiri', serif; font-size: 18px; color: var(--text-main);"></div></div></div>
+    <div id="infoModal" class="modal"><div class="modal-content"><span class="close-btn" onclick="vibrate(); closeModal('infoModal')">&times;</span><div id="infoTitle" style="font-size: 20px; color: var(--dark-blue); font-weight: bold; margin-bottom:10px;"></div><div id="infoManager" style="display: inline-block; background: var(--light-gold); padding: 5px 15px; border-radius: 20px; color: var(--dark-blue); font-size: 14px; margin-bottom: 15px; font-weight: bold; border: 1px solid var(--gold);"></div><div id="infoAyah" style="font-family: 'Amiri', serif; font-size: 18px; color: var(--text-main);"></div></div></div>
 
     <div id="historyModal" class="modal">
         <div class="modal-content">
-            <span class="close-btn" onclick="closeModal('historyModal')">&times;</span>
+            <span class="close-btn" onclick="vibrate(); closeModal('historyModal')">&times;</span>
             <div style="font-size: 20px; color: var(--dark-blue); font-weight: bold; margin-bottom:5px;">📜 سجل النقاط</div>
             <div id="historyUserName" style="color: var(--gold); margin-bottom: 15px; font-weight: bold; font-size: 16px;"></div>
             <div style="max-height: 250px; overflow-y: auto;">
@@ -439,53 +459,16 @@
     </div>
 
     <script>
-        // إعدادات PWA وتثبيت التطبيق
-        let deferredPrompt;
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-        });
-
-        function installApp() {
-            vibrate();
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
-            } else {
-                alert("لتثبيت التطبيق:\n\n📱 آيفون (Safari): اضغط على زر المشاركة (مربع طالع منه سهم) في أسفل الشاشة، ثم اختر 'إضافة إلى الصفحة الرئيسية'.\n\n📱 أندرويد (Chrome): اضغط على القائمة (ثلاث نقاط) بالأعلى، ثم اختر 'الإضافة إلى الشاشة الرئيسية' أو 'Install App'.");
-            }
-        }
-
-        // تحويل الإحصائيات إلى صورة للتحميل
-        function downloadStatsImage() {
-            vibrate();
-            const statsElement = document.getElementById('captureStatsArea');
-            
-            // إضافة تأثير تحميل بصري مؤقت
-            const originalBg = statsElement.style.background;
-            statsElement.style.background = "#0A1931"; // لون ثابت أثناء التصوير لتجنب مشاكل الشفافية
-
-            html2canvas(statsElement, { scale: 2, useCORS: true }).then(canvas => {
-                statsElement.style.background = originalBg; // إعادة اللون الأصلي
-                
-                let link = document.createElement('a');
-                link.download = 'إحصائيات_الاعتكاف.png';
-                link.href = canvas.toDataURL("image/png");
-                link.click();
-            }).catch(err => {
-                alert("حدث خطأ أثناء حفظ الصورة، تأكد من استخدام متصفح حديث.");
-                statsElement.style.background = originalBg;
-            });
-        }
-
         // إخفاء شاشة البداية
         function hideSplash() {
             document.getElementById('splash-screen').style.opacity = '0';
             setTimeout(() => { document.getElementById('splash-screen').style.display = 'none'; }, 800);
         }
 
+        // الاهتزاز
         function vibrate() { if (navigator.vibrate) navigator.vibrate(40); }
 
+        // الوضع الليلي
         function toggleDarkMode() {
             vibrate();
             const isDark = document.getElementById('darkModeToggle').checked;
@@ -493,12 +476,14 @@
             else { document.body.classList.remove('dark-mode'); localStorage.setItem('theme', 'light'); }
         }
 
+        // التنقل بين الصفحات
         function switchTab(tabId, element) {
             vibrate();
             document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
             document.getElementById(tabId).classList.add('active'); element.classList.add('active'); window.scrollTo(0, 0);
             
+            // تشغيل العدادات عند فتح صفحة الشرف أو الإحصائيات
             if(tabId === 'team' || tabId === 'stats') {
                 setTimeout(() => {
                     document.getElementById(tabId).querySelectorAll('.counter-target').forEach(el => {
@@ -509,36 +494,73 @@
             }
         }
 
+        // حفظ المهام اليومية
         function toggleTask(checkbox) {
             vibrate();
             const item = checkbox.parentElement; const todayDate = new Date().toDateString(); 
-            if(checkbox.checked) { item.classList.add('done'); localStorage.setItem(checkbox.id + "_" + todayDate, 'true'); } 
-            else { item.classList.remove('done'); localStorage.removeItem(checkbox.id + "_" + todayDate); }
+            if(checkbox.checked) { 
+                item.classList.add('done'); 
+                localStorage.setItem(checkbox.id + "_" + todayDate, 'true'); 
+            } else { 
+                item.classList.remove('done'); 
+                localStorage.removeItem(checkbox.id + "_" + todayDate); 
+            }
         }
 
         function loadChecklist() {
             const todayDate = new Date().toDateString();
             document.querySelectorAll('.check-item input[type="checkbox"]').forEach(chk => {
                 for (let i = 0; i < localStorage.length; i++) {
-                    let key = localStorage.key(i); if (key.startsWith(chk.id + "_") && key !== chk.id + "_" + todayDate) localStorage.removeItem(key);
+                    let key = localStorage.key(i); if (key.startsWith(chk.id + "_") && key !== chk.id + "_" + todayDate) { localStorage.removeItem(key); }
                 }
                 if(localStorage.getItem(chk.id + "_" + todayDate) === 'true') { chk.checked = true; chk.parentElement.classList.add('done'); }
             });
         }
 
-        // البيانات مضاف إليها التعديلات الجديدة في التاريخ (history)
+        // ⚙️ البيانات بعد التحديث الشامل والإضافات
         const membersConfig = [
-            { name: 'صالح الزهراني', role: 'مدير الاعتكاف', parts: 9, status: 'active', history: [ { reason: 'رصيد سابق افتراضي', amount: 41 } ] }, // يمكن إضافة نقاطه لاحقاً
-            { name: 'ريان عري', role: 'نائب المدير', parts: 25, status: 'active', history: [ 
+            { name: 'صالح الزهراني', role: 'مدير الاعتكاف', parts: 9, status: 'active', history: [ 
+                { reason: 'الرصيد السابق', amount: 41 },
+                { reason: 'الحضور المبكر لصلاة الفجر قبل الإقامة', amount: 6 },
+                { reason: 'الصلاة في الصف الأول', amount: 5 },
+                { reason: 'الحضور بعد الإقامة مباشرة', amount: 1 },
+                { reason: 'الالتزام بالدرس', amount: 5 },
+                { reason: 'الالتزام بحضور الحلقة القرانية', amount: 5 },
+                { reason: 'تسميع ممتاز في الحلقة', amount: 4 },
+                { reason: 'الالتزام بجدول الاعتكاف', amount: 5 },
+                { reason: 'الحضور المبكر لصلاة الفجر قبل الإقامة', amount: 6 },
+                { reason: 'الحضور بعد الإقامة مباشرة', amount: 1 },
+                { reason: 'الالتزام بجدول الاعتكاف', amount: 5 },
+                { reason: 'التعاون مع المشرفين وإنجاز المهام', amount: 5 },
+                { reason: 'الصلاة مع جماعة ثانية', amount: -4 },
+                { reason: 'الالتزام بحضور الدروس', amount: 5 },
+                { reason: 'الالتزام بحضور الحلقة القرآنية', amount: 5 },
+                { reason: 'تسميع ممتاز في الحلقة', amount: 4 },
+                { reason: 'الالتزام بجدول الاعتكاف', amount: 5 },
+                { reason: 'كثرت الخروج لغير حاجة', amount: -4 }
+            ] },
+            { name: 'عبدالرحمن زعل', role: 'مسؤول التنظيف', parts: 19, status: 'active', history: [ 
                 { reason: 'الرصيد السابق', amount: 71 },
                 { reason: 'الحضور المبكر لصلاة الفجر قبل الإقامة', amount: 6 },
+                { reason: 'الصلاة في الصف الأول', amount: 5 },
+                { reason: 'الحضور بعد الإقامة مباشرة', amount: 1 },
+                { reason: 'الالتزام بالدرس', amount: 5 },
+                { reason: 'الالتزام بحضور الحلقة القرانية', amount: 5 },
+                { reason: 'تسميع ممتاز في الحلقة', amount: 4 },
+                { reason: 'قراءة الجزء المقرر', amount: 3 },
+                { reason: 'الالتزام بجدول الاعتكاف', amount: 5 },
+                { reason: 'الحضور المبكر لصلاة الفجر قبل الإقامة', amount: 6 },
+                { reason: 'الحضور بعد الإقامة مباشرة', amount: 1 },
+                { reason: 'قراءة الجزء المقرر', amount: 3 },
                 { reason: 'الالتزام بجدول الاعتكاف', amount: 5 },
                 { reason: 'التعاون مع المشرفين وإنجاز المهام', amount: 5 },
                 { reason: 'الالتزام بحضور الدروس', amount: 5 },
-                { reason: 'الالتزام بحضور الحلقة القرآنية', amount: 5 }
-            ] },
-            { name: 'عبدالرحمن زعل', role: 'مسؤول التنظيف', parts: 26, status: 'active', history: [ 
-                { reason: 'الرصيد السابق', amount: 71 },
+                { reason: 'الالتزام بحضور الحلقة القرآنية', amount: 5 },
+                { reason: 'تسميع ممتاز في الحلقة', amount: 4 },
+                { reason: 'قراءة الجزء المقرر', amount: 3 },
+                { reason: 'الالتزام بجدول الاعتكاف', amount: 5 },
+                // الإضافات الجديدة
+                { reason: 'الحضور المبكر لصلاة الفجر قبل الإقامة', amount: 6 },
                 { reason: 'قراءة الجزء المقرر', amount: 3 },
                 { reason: 'الالتزام بجدول الاعتكاف', amount: 5 },
                 { reason: 'التعاون مع المشرفين وإنجاز المهام', amount: 5 },
@@ -547,37 +569,40 @@
                 { reason: 'تسميع ممتاز في الحلقة', amount: 4 },
                 { reason: 'الالتزام بجدول الاعتكاف', amount: 5 }
             ] },
-            { name: 'محمد جبيع', role: 'الاحتياجات العامة', parts: 1, status: 'active', history: [ 
-                { reason: 'الرصيد السابق', amount: 38 },
-                { reason: 'الحضور المبكر لصلاة الفجر قبل الإقامة', amount: 6 },
-                { reason: 'الالتزام بجدول الاعتكاف', amount: 5 },
-                { reason: 'التعاون مع المشرفين وإنجاز المهام', amount: 5 },
-                { reason: 'الالتزام بحضور الدروس', amount: 5 },
-                { reason: 'الالتزام بحضور الحلقة القرآنية', amount: 5 },
-                { reason: 'تسميع ممتاز في الحلقة', amount: 4 },
-                { reason: 'الالتزام بجدول الاعتكاف', amount: 5 }
-            ] },
-            { name: 'عبدالرحمن عسيري', role: 'ملقي الدرس الصباحي', parts: 30, status: 'active', history: [ 
-                { reason: 'الرصيد السابق', amount: 45 },
-                { reason: 'الحضور المبكر لصلاة الفجر قبل الإقامة', amount: 6 },
-                { reason: 'الالتزام بحضور الدروس', amount: 5 },
-                { reason: 'الالتزام بحضور الحلقة القرآنية', amount: 5 },
-                { reason: 'تسميع ممتاز في الحلقة', amount: 4 },
-                { reason: 'قراءة الجزء المقرر', amount: 3 },
-                { reason: 'الالتزام بجدول الاعتكاف', amount: 5 }
-            ] },
-            { name: 'بتال القبيسي', role: 'مسؤول الترتيب', parts: 30, status: 'active', history: [ 
-                { reason: 'الرصيد السابق', amount: 74 },
-                { reason: 'الحضور المبكر لصلاة الفجر قبل الإقامة', amount: 6 },
-                { reason: 'حسن الأدب واحترام المعتكفين', amount: 4 },
-                { reason: 'قراءة الجزء المقرر', amount: 3 },
-                { reason: 'الالتزام بجدول الاعتكاف', amount: 5 },
-                { reason: 'التعاون مع المشرفين وإنجاز المهام', amount: 5 },
-                { reason: 'التعاون مع المشرفين وإنجاز المهام', amount: 5 },
-                { reason: 'ترتيب المسجد وتنظيفه بدون طلب', amount: 4 }
-            ] },
-            { name: 'مطاعن جبيع', role: 'مسؤول الجدول والاشراف', parts: 30, status: 'active', history: [ 
+            { name: 'عبدالله غزواني', role: 'مسؤول الصلوات', parts: 15, status: 'excused', history: [ 
                 { reason: 'الرصيد السابق', amount: 75 },
+                { reason: 'الحضور المبكر لصلاة الفجر قبل الإقامة', amount: 6 },
+                { reason: 'الصلاة في الصف الأول', amount: 5 },
+                { reason: 'الحضور بعد الإقامة مباشرة', amount: 1 },
+                { reason: 'الالتزام بالدرس', amount: 5 },
+                { reason: 'الحضور المبكر لصلاة الفجر قبل الإقامة', amount: 6 },
+                { reason: 'الحضور بعد الإقامة مباشرة', amount: 1 },
+                { reason: 'الالتزام بجدول الاعتكاف', amount: 5 },
+                { reason: 'التعاون مع المشرفين وإنجاز المهام', amount: 5 }
+            ] },
+            { name: 'مطاعن جبيع', role: 'مسؤول الجدول والاشراف', parts: 27, status: 'active', history: [ 
+                { reason: 'الرصيد السابق', amount: 75 },
+                { reason: 'الحضور المبكر لصلاة الفجر قبل الإقامة', amount: 6 },
+                { reason: 'الصلاة في الصف الأول', amount: 5 },
+                { reason: 'الحضور بعد الإقامة مباشرة', amount: 1 },
+                { reason: 'الالتزام بالدرس', amount: 5 },
+                { reason: 'الالتزام بحضور الحلقة القرانية', amount: 5 },
+                { reason: 'تسميع ممتاز في الحلقة', amount: 4 },
+                { reason: 'قراءة الجزء المقرر', amount: 3 },
+                { reason: 'الالتزام بجدول الاعتكاف', amount: 5 },
+                { reason: 'الحضور المبكر لصلاة الفجر قبل الإقامة', amount: 6 },
+                { reason: 'الحضور بعد الإقامة مباشرة', amount: 1 },
+                { reason: 'قراءة الجزء المقرر', amount: 3 },
+                { reason: 'الالتزام بجدول الاعتكاف', amount: 5 },
+                { reason: 'التعاون مع المشرفين وإنجاز المهام', amount: 5 },
+                { reason: 'الالتزام بحضور الدروس', amount: 5 },
+                { reason: 'الالتزام بحضور الحلقة القرآنية', amount: 5 },
+                { reason: 'تسميع ممتاز في الحلقة', amount: 4 },
+                { reason: 'قراءة الجزء المقرر', amount: 3 },
+                { reason: 'الالتزام بجدول الاعتكاف', amount: 5 },
+                { reason: 'كثرة الخروج بدون حاجة', amount: -4 },
+                { reason: 'ترك صلاة الجماعة بدون عذر', amount: -8 },
+                // الإضافات الجديدة
                 { reason: 'الحضور المبكر لصلاة الفجر قبل الإقامة', amount: 6 },
                 { reason: 'الحضور بعد الإقامة مباشرة', amount: 1 },
                 { reason: 'قراءة الجزء المقرر', amount: 3 },
@@ -589,32 +614,134 @@
                 { reason: 'قراءة الجزء المقرر', amount: 3 },
                 { reason: 'الالتزام بجدول الاعتكاف', amount: 5 }
             ] },
-            { name: 'يزن الامير', role: 'مسؤول الترتيب', parts: 29, status: 'active', history: [ { reason: 'رصيد سابق', amount: 30 } ] },
-            { name: 'عبدالله غزواني', role: 'مسؤول الصلوات', parts: 15, status: 'excused', history: [ { reason: 'رصيد سابق', amount: 75 } ] }
+            { name: 'عبدالرحمن عسيري', role: 'ملقي الدرس الصباحي', parts: 30, status: 'active', history: [ 
+                { reason: 'الرصيد السابق', amount: 45 },
+                { reason: 'الحضور المبكر لصلاة الفجر قبل الإقامة', amount: 6 },
+                { reason: 'الصلاة في الصف الأول', amount: 5 },
+                { reason: 'الحضور بعد الإقامة مباشرة', amount: 1 },
+                { reason: 'الالتزام بالدرس', amount: 5 },
+                { reason: 'الالتزام بحضور الحلقة القرانية', amount: 5 },
+                { reason: 'تسميع ممتاز في الحلقة', amount: 4 },
+                { reason: 'الالتزام بجدول الاعتكاف', amount: 5 },
+                { reason: 'الحضور المبكر لصلاة الفجر قبل الإقامة', amount: 6 },
+                { reason: 'الالتزام بحضور الدروس', amount: 5 },
+                { reason: 'الالتزام بحضور الحلقة القرآنية', amount: 5 },
+                { reason: 'تسميع ممتاز في الحلقة', amount: 4 },
+                { reason: 'قراءة الجزء المقرر', amount: 3 },
+                { reason: 'الالتزام بجدول الاعتكاف', amount: 5 },
+                // الإضافات الجديدة
+                { reason: 'الحضور المبكر لصلاة الفجر قبل الإقامة', amount: 6 },
+                { reason: 'الالتزام بحضور الدروس', amount: 5 },
+                { reason: 'الالتزام بحضور الحلقة القرآنية', amount: 5 },
+                { reason: 'تسميع ممتاز في الحلقة', amount: 4 },
+                { reason: 'قراءة الجزء المقرر', amount: 3 },
+                { reason: 'الالتزام بجدول الاعتكاف', amount: 5 }
+            ] },
+            { name: 'عبدالرحمن العنزي', role: 'اللهم فرج كربه', parts: 0, status: 'excused', history: [ 
+                { reason: 'الرصيد السابق', amount: 5 },
+                { reason: 'الحضور المبكر لصلاة الفجر قبل الإقامة', amount: 6 },
+                { reason: 'الصلاة في الصف الأول', amount: 5 },
+                { reason: 'الحضور بعد الإقامة مباشرة', amount: 1 }
+            ] },
+            { name: 'بتال القبيسي', role: 'مسؤول الترتيب', parts: 22, status: 'active', history: [ 
+                { reason: 'الرصيد السابق', amount: 74 },
+                { reason: 'الحضور المبكر لصلاة الفجر قبل الإقامة', amount: 6 },
+                { reason: 'الصلاة في الصف الأول', amount: 5 },
+                { reason: 'الحضور بعد الإقامة مباشرة', amount: 1 },
+                { reason: 'الالتزام بالدرس', amount: 5 },
+                { reason: 'الالتزام بحضور الحلقة القرانية', amount: 5 },
+                { reason: 'تسميع ممتاز في الحلقة', amount: 4 },
+                { reason: 'قراءة الجزء المقرر', amount: 3 },
+                { reason: 'الالتزام بجدول الاعتكاف', amount: 5 },
+                { reason: 'الحضور المبكر لصلاة الفجر قبل الإقامة', amount: 6 },
+                { reason: 'حسن الأدب واحترام المعتكفين', amount: 4 },
+                { reason: 'الحضور بعد الإقامة مباشرة', amount: 1 },
+                { reason: 'قراءة الجزء المقرر', amount: 3 },
+                { reason: 'الالتزام بجدول الاعتكاف', amount: 5 },
+                { reason: 'التعاون مع المشرفين وإنجاز المهام', amount: 5 },
+                { reason: 'حسن الأدب واحترام المعتكفين', amount: 4 },
+                { reason: 'التعاون مع المشرفين وإنجاز المهام', amount: 5 },
+                { reason: 'مبادرة في خدمة المعتكفين / مساعدة زميل', amount: 5 },
+                { reason: 'ترتيب المسجد وتنظيفه بدون طلب', amount: 4 },
+                // الإضافات الجديدة
+                { reason: 'الحضور المبكر لصلاة الفجر قبل الإقامة', amount: 6 },
+                { reason: 'حسن الأدب واحترام المعتكفين', amount: 4 },
+                { reason: 'قراءة الجزء المقرر', amount: 3 },
+                { reason: 'الالتزام بجدول الاعتكاف', amount: 5 },
+                { reason: 'التعاون مع المشرفين وإنجاز المهام', amount: 5 },
+                { reason: 'التعاون مع المشرفين وإنجاز المهام', amount: 5 },
+                { reason: 'ترتيب المسجد وتنظيفه بدون طلب', amount: 4 }
+            ] },
+            { name: 'يزن الامير', role: 'مسؤول الترتيب', parts: 20, status: 'active', history: [ 
+                { reason: 'الرصيد السابق', amount: 30 },
+                { reason: 'الحضور المبكر لصلاة الفجر قبل الإقامة', amount: 6 },
+                { reason: 'الصلاة في الصف الأول', amount: 5 },
+                { reason: 'الحضور بعد الإقامة مباشرة', amount: 1 },
+                { reason: 'الالتزام بالدرس', amount: 5 },
+                { reason: 'التعاون مع المشرفين وإنجاز المهام', amount: 5 },
+                { reason: 'الالتزام بحضور الدروس', amount: 5 },
+                { reason: 'الالتزام بحضور الحلقة القرآنية', amount: 5 },
+                { reason: 'تسميع ممتاز في الحلقة', amount: 4 },
+                { reason: 'قراءة الجزء المقرر', amount: 3 },
+                { reason: 'الالتزام بجدول الاعتكاف', amount: 5 },
+                // الإضافات الجديدة
+                { reason: 'التعاون مع المشرفين وإنجاز المهام', amount: 5 },
+                { reason: 'الالتزام بحضور الدروس', amount: 5 },
+                { reason: 'الالتزام بحضور الحلقة القرآنية', amount: 5 },
+                { reason: 'تسميع ممتاز في الحلقة', amount: 4 },
+                { reason: 'قراءة الجزء المقرر', amount: 3 },
+                { reason: 'الالتزام بجدول الاعتكاف', amount: 5 }
+            ] },
+            { name: 'ريان عري', role: 'نائب المدير', parts: 9, status: 'active', history: [ 
+                { reason: 'الرصيد السابق', amount: 71 },
+                { reason: 'الحضور المبكر لصلاة الفجر قبل الإقامة', amount: 6 },
+                { reason: 'الصلاة في الصف الأول', amount: 5 },
+                { reason: 'الحضور بعد الإقامة مباشرة', amount: 1 },
+                { reason: 'الالتزام بالدرس', amount: 5 },
+                { reason: 'الالتزام بحضور الحلقة القرانية', amount: 5 },
+                { reason: 'تسميع ممتاز في الحلقة', amount: 4 },
+                { reason: 'الالتزام بجدول الاعتكاف', amount: 5 },
+                { reason: 'الحضور المبكر لصلاة الفجر قبل الإقامة', amount: 6 },
+                { reason: 'الحضور بعد الإقامة مباشرة', amount: 1 },
+                { reason: 'الالتزام بجدول الاعتكاف', amount: 5 },
+                { reason: 'التعاون مع المشرفين وإنجاز المهام', amount: 5 },
+                { reason: 'الالتزام بحضور الدروس', amount: 5 },
+                { reason: 'الالتزام بحضور الحلقة القرآنية', amount: 5 },
+                { reason: 'تسميع ممتاز في الحلقة', amount: 4 },
+                // الإضافات الجديدة
+                { reason: 'الحضور المبكر لصلاة الفجر قبل الإقامة', amount: 6 },
+                { reason: 'الالتزام بجدول الاعتكاف', amount: 5 },
+                { reason: 'التعاون مع المشرفين وإنجاز المهام', amount: 5 },
+                { reason: 'الالتزام بحضور الدروس', amount: 5 },
+                { reason: 'الالتزام بحضور الحلقة القرآنية', amount: 5 }
+            ] },
+            { name: 'محمد جبيع', role: 'الاحتياجات العامة', parts: 1, status: 'active', history: [ 
+                { reason: 'الرصيد السابق', amount: 38 },
+                { reason: 'الحضور المبكر لصلاة الفجر قبل الإقامة', amount: 6 },
+                { reason: 'الصلاة في الصف الأول', amount: 5 },
+                { reason: 'الحضور بعد الإقامة مباشرة', amount: 1 },
+                { reason: 'الالتزام بالدرس', amount: 5 },
+                { reason: 'الحضور المبكر لصلاة الفجر قبل الإقامة', amount: 6 },
+                { reason: 'الحضور بعد الإقامة مباشرة', amount: 1 },
+                { reason: 'الالتزام بجدول الاعتكاف', amount: 5 },
+                { reason: 'التعاون مع المشرفين وإنجاز المهام', amount: 5 },
+                { reason: 'الالتزام بحضور الدروس', amount: 5 },
+                { reason: 'الالتزام بحضور الحلقة القرآنية', amount: 5 },
+                { reason: 'تسميع ممتاز في الحلقة', amount: 4 },
+                { reason: 'الالتزام بجدول الاعتكاف', amount: 5 },
+                // الإضافات الجديدة
+                { reason: 'الحضور المبكر لصلاة الفجر قبل الإقامة', amount: 6 },
+                { reason: 'الحضور بعد الإقامة مباشرة', amount: 1 },
+                { reason: 'الالتزام بجدول الاعتكاف', amount: 5 },
+                { reason: 'التعاون مع المشرفين وإنجاز المهام', amount: 5 },
+                { reason: 'الالتزام بحضور الدروس', amount: 5 },
+                { reason: 'الالتزام بحضور الحلقة القرآنية', amount: 5 },
+                { reason: 'تسميع ممتاز في الحلقة', amount: 4 },
+                { reason: 'الالتزام بجدول الاعتكاف', amount: 5 }
+            ] }
         ];
 
-        // دالة حساب الفائزين بالأوسمة
-        function calculateAchievements() {
-            let activeMembers = membersConfig.filter(m => m.status === 'active');
-            
-            function getWinner(primaryReason, tieBreakReason = null) {
-                let winner = null; let maxScore = 0; let maxTie = 0;
-                activeMembers.forEach(m => {
-                    let score = m.history.filter(h => h.reason === primaryReason).reduce((sum, h) => sum + h.amount, 0);
-                    let tieScore = tieBreakReason ? m.history.filter(h => h.reason === tieBreakReason).reduce((sum, h) => sum + h.amount, 0) : 0;
-                    
-                    if (score > maxScore) { maxScore = score; maxTie = tieScore; winner = m; } 
-                    else if (score === maxScore && score > 0 && tieScore > maxTie) { maxTie = tieScore; winner = m; }
-                });
-                return maxScore > 0 ? winner.name : "لم يحدد بعد";
-            }
-
-            document.getElementById('ach-fajr').innerText = getWinner('الحضور المبكر لصلاة الفجر قبل الإقامة', 'الصلاة في الصف الأول');
-            document.getElementById('ach-time').innerText = getWinner('الالتزام بجدول الاعتكاف');
-            document.getElementById('ach-init').innerText = getWinner('مبادرة في خدمة المعتكفين');
-            document.getElementById('ach-quran').innerText = getWinner('قراءة الجزء المقرر');
-        }
-
+        // عداد الأرقام الحي
         function animateValue(obj, start, end, duration) {
             let startTimestamp = null;
             const step = (timestamp) => {
@@ -627,46 +754,82 @@
             window.requestAnimationFrame(step);
         }
 
+        // بناء التطبيق
         function renderApp() {
-            let membersWithTotals = membersConfig.map((m, index) => {
+            let membersWithTotals = membersConfig.map((m, originalIndex) => {
                 let total = m.history.reduce((sum, record) => sum + record.amount, 0);
-                return { ...m, totalPoints: total, originalIndex: index };
+                return { ...m, totalPoints: total, originalIndex: originalIndex };
             });
 
+            // فصل المعتذرين
             let activeMembers = membersWithTotals.filter(m => m.status === 'active').sort((a, b) => b.totalPoints - a.totalPoints);
             let excusedMembers = membersWithTotals.filter(m => m.status === 'excused');
 
-            calculateAchievements(); // تشغيل حساب الإنجازات
+            // حساب المتميز
+            if(activeMembers.length > 0) {
+                let topMutakif = activeMembers.reduce((prev, current) => (prev.parts > current.parts) ? prev : current);
+                document.getElementById('featuredName').innerText = topMutakif.name;
+            }
 
             let leaderboardHTML = "";
+            
+            // رسم النشطين
             activeMembers.forEach((member, index) => {
+                let currentParts = member.parts > 30 ? 30 : member.parts;
+                let percentage = Math.round((currentParts / 30) * 100);
                 let rankClass = index === 0 ? "rank-1" : index === 1 ? "rank-2" : index === 2 ? "rank-3" : "";
+                
                 leaderboardHTML += `
                     <div class="student-card ${rankClass}">
                         <div class="rank-badge">${index + 1}</div>
-                        <div class="points-display"><span class="points-number counter-target" data-target="${member.totalPoints}">0</span><span class="points-text">نقطة</span></div>
+                        <div class="points-display">
+                            <span class="points-number counter-target" data-target="${member.totalPoints}">0</span>
+                            <span class="points-text">نقطة</span>
+                        </div>
                         <h3>${member.name}</h3><p>${member.role}</p>
-                        <button class="history-btn ripple-btn" onclick="openHistory(${member.originalIndex})">📜 عرض السجل</button>
+                        <button class="history-btn ripple-btn" onclick="vibrate(); openHistory(${member.originalIndex})">📜 عرض السجل</button>
+                        <div class="progress-container">
+                            <div class="progress-header"><span>إنجاز الختمة</span><span>${currentParts} / 30 جزء</span></div>
+                            <div class="progress-bar"><div class="progress-fill" style="width: ${percentage}%;"></div></div>
+                        </div>
                     </div>`;
             });
 
+            // رسم المعتذرين في النهاية
             excusedMembers.forEach((member) => {
                 leaderboardHTML += `
                     <div class="student-card excused-card">
                         <div style="flex-grow:1; text-align:right;">
-                            <h3 style="margin:0; color:#555;">${member.name} <span style="font-size:12px; color:#e74c3c;">(معتذر)</span></h3>
+                            <h3 class="name" style="margin:0; color:#555;">${member.name}</h3>
+                            <span style="font-size:12px; color:#e74c3c;">(معتذر)</span>
                         </div>
-                        <button class="history-btn ripple-btn" onclick="openHistory(${member.originalIndex})" style="margin-top:10px;">📜 عرض السجل</button>
+                        <button class="history-btn ripple-btn" onclick="vibrate(); openHistory(${member.originalIndex})">📜 عرض السجل</button>
                     </div>`;
             });
 
             document.getElementById('leaderboard-container').innerHTML = leaderboardHTML;
         }
 
-        function openHistory(index) {
+        // مشاركة الإحصائيات
+        function shareStats() {
             vibrate();
+            const shareText = `🌟 إحصائيات برنامج الاعتكاف - العشر الأواخر 🌟\n\n📖 9600 صفحة مقروءة من القرآن\n✨ 480 جزءاً تم إنجازه\n🎙️ 8 دروس وتصحيح تلاوة\n👥 10 معتكفين\n⏳ 10 أيام من العبادة والذكر\n\nنسأل الله القبول ومضاعفة الأجر 🤲`;
+
+            if (navigator.share) {
+                navigator.share({
+                    title: 'إحصائيات الاعتكاف',
+                    text: shareText
+                }).catch(err => console.log('مشاركة تم إلغاؤها أو غير مدعومة.', err));
+            } else {
+                navigator.clipboard.writeText(shareText);
+                alert("تم نسخ الإحصائيات! يمكنك الآن لصقها في الواتساب أو تويتر.");
+            }
+        }
+
+        // فتح سجل النقاط
+        function openHistory(index) {
             const member = membersConfig[index]; 
-            document.getElementById('historyUserName').innerText = "الاسم: " + member.name;
+            document.getElementById('historyUserName').innerText = "الاسم: " + member.name + (member.status === 'excused' ? ' (معتذر)' : '');
             let tbodyHTML = ""; let total = 0;
             if(member.history.length === 0) { tbodyHTML = "<tr><td colspan='2'>لا يوجد سجل نقاط.</td></tr>"; } 
             else { 
@@ -682,6 +845,7 @@
             document.getElementById('historyModal').style.display = 'flex';
         }
 
+        // النوافذ المنبثقة
         function openInfoModal(t, m, c) { 
             document.getElementById('infoTitle').innerText = t; 
             document.getElementById('infoManager').innerText = m; 
@@ -691,6 +855,7 @@
         function closeModal(id) { document.getElementById(id).style.display='none'; }
         window.onclick = function(e) { if(e.target.className.includes('modal')) e.target.style.display="none"; }
 
+        // تمييز الحدث الحالي (الآن)
         function highlightCurrentEvent() {
             const now = new Date();
             const currentTimeStr = now.getHours() + (now.getMinutes() / 60);
@@ -715,16 +880,51 @@
             });
         }
 
+        // عداد الصلاة
+        const prayerTimes = [{ name: "الفجر", h: 5, m: 29 }, { name: "الظهر", h: 12, m: 15 }, { name: "العصر", h: 16, m: 0 }, { name: "المغرب", h: 19, m: 0 }, { name: "العشاء", h: 20, m: 0 }];
+        function updatePrayerCountdown() {
+            const now = new Date();
+            const currentTotalSecs = (now.getHours() * 3600) + (now.getMinutes() * 60) + now.getSeconds();
+            let nextPrayer = null; let nextPrayerTotalSecs = 0;
+
+            for (let prayer of prayerTimes) {
+                let prayerSecs = (prayer.h * 3600) + (prayer.m * 60);
+                if (prayerSecs > currentTotalSecs) { nextPrayer = prayer; nextPrayerTotalSecs = prayerSecs; break; }
+            }
+
+            if (!nextPrayer) { nextPrayer = prayerTimes[0]; nextPrayerTotalSecs = (24 * 3600) + (nextPrayer.h * 3600) + (nextPrayer.m * 60); }
+
+            let diffSecs = nextPrayerTotalSecs - currentTotalSecs;
+            let hours = Math.floor(diffSecs / 3600); diffSecs %= 3600;
+            let minutes = Math.floor(diffSecs / 60); let seconds = diffSecs % 60;
+            document.getElementById('prayer-countdown').innerText = `باقي على صلاة ${nextPrayer.name}: ${hours}:${minutes < 10 ? '0'+minutes : minutes}:${seconds < 10 ? '0'+seconds : seconds}`;
+        }
+
+        function requestNotificationPermission() {
+            if (!("Notification" in window)) alert("متصفحك لا يدعم الإشعارات.");
+            else if (Notification.permission === "granted") alert("الإشعارات مفعلة مسبقاً! ✔️");
+            else if (Notification.permission !== "denied") {
+                Notification.requestPermission().then(permission => {
+                    if (permission === "granted") new Notification("تم التفعيل", { body: "ستصلك الإشعارات الآن.", icon: "🕌" });
+                });
+            }
+        }
+
+        // التشغيل عند فتح الصفحة
         window.addEventListener('load', () => {
             if(localStorage.getItem('theme') === 'dark') {
                 document.getElementById('darkModeToggle').checked = true;
                 document.body.classList.add('dark-mode');
             }
-            setTimeout(hideSplash, 2000); 
+
+            setTimeout(hideSplash, 3000); 
+            
             renderApp();
             highlightCurrentEvent(); 
             loadChecklist();
+            
             setInterval(highlightCurrentEvent, 60000); 
+            setInterval(updatePrayerCountdown, 1000);
         });
     </script>
 </body>
